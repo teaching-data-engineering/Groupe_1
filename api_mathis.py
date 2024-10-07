@@ -33,3 +33,4 @@ def scrap_one_page(url_api,num_page):
     return liste_concert
 
 print(scrap_one_page("https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents",2))
+
