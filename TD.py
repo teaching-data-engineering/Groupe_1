@@ -16,6 +16,7 @@ def scrap_multiple_pages(url,start_date,end_date,max_page=30):
     date_current=start_date
     date_fin=end_date
     date_fin_jour=datetime(start_date.year,start_date.month,start_date.day,23,0,0)
+    prev=[]
     while date_fin_jour<=date_fin:
         sleep(5+random.uniform(-1, 2))
         date_iso_debut = date_current.isoformat()
@@ -26,7 +27,7 @@ def scrap_multiple_pages(url,start_date,end_date,max_page=30):
             sleep(3+random.uniform(-1, 2))
             contenu=scrap_one_page(url,j,f"{date_iso_debut},{date_iso_fin}")
             save_json(contenu,f"{date_iso_debut}"+"page"+str(j))
-            if(contenu["urlForNextPageOfEvents"]==None | contenu == prev |j>=max_page):
+            if(contenu == prev |j>=max_page):
                 stop=True
             else:
                 j+=1
@@ -36,3 +37,4 @@ def scrap_multiple_pages(url,start_date,end_date,max_page=30):
         date_fin_jour=date_fin_jour+datetime.timedelta(days=1)
     return listecontenu
 
+print(scrap_multiple_pages(url,date_time_debut,date_time_fin))
