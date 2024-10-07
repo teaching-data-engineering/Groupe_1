@@ -1,2 +1,4 @@
 projet de team, description succincte, modif pour la branch branch dev
- new modif
+math modif
+manon modif
+mathurin modif
