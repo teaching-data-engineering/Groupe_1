@@ -1,4 +1,5 @@
 import requests
+<<<<<<< HEAD
 import re
 from time import sleep
 from datetime import datetime
@@ -44,3 +45,22 @@ def scrap_multiple_pages(url):
                 j+=1
             listecontenu.append(contenu)
     print(listecontenu)
+=======
+
+# URL de l'API
+url = "https://www.bandsintown.com/this-month/fetch-next/upcomingEvents"
+
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+params = {
+    "city_id": 2988507,
+    "page": 2,  # Change le numéro de page ici
+    "longitude": 2.3488,
+    "latitude": 48.85341,
+    "genre_query": "all-genres"
+}
+reponse = requests.get(url,headers=headers,params=params)
+print(reponse.json())
+>>>>>>> 4ae1bf83ff1a20c68ca6fc14b10175264bcfb83b
