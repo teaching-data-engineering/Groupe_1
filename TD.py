@@ -1,66 +1,37 @@
 import requests
-<<<<<<< HEAD
 import re
 from time import sleep
 from datetime import datetime
 import random
-url = "https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents?"
-header={"User-Agent":"Mozilla/5.0"}
-listecontenu=[]
-for i in range(7,32):
-    sleep(5+random.uniform(-1, 2))
-    date_time_debut = datetime(2024, 10, i, 0, 0, 0)
-    date_time_fin = datetime(2024, 10, i, 23, 0, 0)
-    date_iso_debut = date_time_debut.isoformat()
-    date_iso_fin = date_time_fin.isoformat()
-    stop=False
-    j=1
-    while stop==False:
-        sleep(3+random.uniform(-1, 2))
-        contenu=scrap_one_page()
-        if(contenu["urlForNextPageOfEvents"]==None & contenu in listecontenu):
-            stop=True
-        else:
-            j+=1
-        listecontenu.append(contenu)
-print(listecontenu)
+from api_mathis import scrap_one_page
 
-def scrap_multiple_pages(url):
+url = "https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents?"
+
+date_time_debut = datetime(2024, 10, 7, 0, 0, 0)
+date_time_fin = datetime(2024, 10, 31, 23, 0, 0)
+
+def scrap_multiple_pages(url,start_date,end_date,max_page=30):
     header={"User-Agent":"Mozilla/5.0"}
     listecontenu=[]
-    for i in range(7,32):
+    date_current=start_date
+    date_fin=end_date
+    date_fin_jour=datetime(start_date.year,start_date.month,start_date.day,23,0,0)
+    while date_fin_jour<=date_fin:
         sleep(5+random.uniform(-1, 2))
-        date_time_debut = datetime(2024, 10, i, 0, 0, 0)
-        date_time_fin = datetime(2024, 10, i, 23, 0, 0)
-        date_iso_debut = date_time_debut.isoformat()
-        date_iso_fin = date_time_fin.isoformat()
+        date_iso_debut = date_current.isoformat()
+        date_iso_fin = date_fin_jour.isoformat()
         stop=False
         j=1
         while stop==False:
             sleep(3+random.uniform(-1, 2))
-            contenu=scrap_one_page()
-            if(contenu["urlForNextPageOfEvents"]==None & contenu in listecontenu):
+            contenu=scrap_one_page(url,j,f"{date_iso_debut},{date_iso_fin}")
+            if(contenu["urlForNextPageOfEvents"]==None | contenu == prev |j>=max_page):
                 stop=True
             else:
                 j+=1
+                prev=contenu
             listecontenu.append(contenu)
-    print(listecontenu)
-=======
+        date_current=date_current+datetime.timedelta(days=1)
+        date_fin_jour=date_fin_jour+datetime.timedelta(days=1)
+    return listecontenu
 
-# URL de l'API
-url = "https://www.bandsintown.com/this-month/fetch-next/upcomingEvents"
-
-headers = {
-    "User-Agent": "Mozilla/5.0"
-}
-
-params = {
-    "city_id": 2988507,
-    "page": 2,  # Change le numéro de page ici
-    "longitude": 2.3488,
-    "latitude": 48.85341,
-    "genre_query": "all-genres"
-}
-reponse = requests.get(url,headers=headers,params=params)
-print(reponse.json())
->>>>>>> 4ae1bf83ff1a20c68ca6fc14b10175264bcfb83b
