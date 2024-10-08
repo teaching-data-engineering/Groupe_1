@@ -6,7 +6,7 @@ from save_json import save_json
 
 url = "https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents?"
 
-date_time_debut = datetime.datetime(2024, 10, 7, 0, 0, 0)
+date_time_debut = datetime.datetime(2024, 10, 8, 0, 0, 0)
 date_time_fin = datetime.datetime(2024, 10, 31, 23, 0, 0)
 
 def scrap_multiple_pages(url,start_date,end_date,max_page=30):
@@ -21,14 +21,13 @@ def scrap_multiple_pages(url,start_date,end_date,max_page=30):
         date_iso_fin = date_fin_jour.isoformat()
         stop=False
         j=1
-        while stop==False:
+        for j in range(max_page):
             sleep(3+random.uniform(-1, 2))
             contenu=scrap_one_page(url,j,f"{date_iso_debut},{date_iso_fin}")
-            save_json(contenu,f"{date_iso_debut}"+"page"+str(j))
-            if (contenu == prev) | (j>=max_page):
-                stop=True
+            save_json(contenu,f"Paris{date_iso_debut}"+"page"+str(j))
+            if (contenu == prev):
+                break
             else:
-                j+=1
                 prev=contenu
             listecontenu.append(contenu)
         date_current=date_current+datetime.timedelta(days=1)
