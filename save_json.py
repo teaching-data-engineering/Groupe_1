@@ -1,19 +1,11 @@
-import pickle
-fichier_pickle = 'dico.pickle'
+import json
+debut_fichier_json = 'data'
 
 
 # Question 9
 def save_json(response, idx_page):
-    try:
-        with open(fichier_pickle, 'rb') as fichier:
-            dico = pickle.load(fichier)
-    except FileNotFoundError:
-        # Si le fichier n'existe pas, créer un nouveau dictionnaire
-        dico = {}
-
-    dico[idx_page] = response
-
-    # 3. Réécrire le fichier pickle avec le dictionnaire mis à jour
-    with open(fichier_pickle, 'wb') as fichier:
-        pickle.dump(dico, fichier)
-    return None
+    contenu = response
+    if os.path.exists(debut_fichier_json+str(idx_page)+".json"):
+        os.remove(debut_fichier_json+str(idx_page)+".json")
+    with open(debut_fichier_json+str(idx_page)+".json", 'w') as fichier:
+        json.dump(response, fichier)

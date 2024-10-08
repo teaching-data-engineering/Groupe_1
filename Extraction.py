@@ -20,10 +20,10 @@ def scrap_multiple_pages(url,start_date,end_date,max_page=30):
         date_iso_debut = date_current.isoformat()
         date_iso_fin = date_fin_jour.isoformat()
         j=1
-        for j in range(max_page):
+        for j in range(1,max_page+1):
             sleep(3+random.uniform(-1, 2))
             contenu=scrap_one_page(url,j,f"{date_iso_debut},{date_iso_fin}")
-            save_json(contenu,f"Paris{date_iso_debut}"+"page"+str(j))
+            save_json(contenu,f"Paris{date_current.year}{date_current.month}{date_current.day}"+"page"+str(j))
             if (contenu == prev)|(contenu==[]):
                 break
             else:
