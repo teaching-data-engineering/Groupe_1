@@ -2,6 +2,7 @@ from geopy.geocoders import Nominatim
 import pandas as pd
 from datetime import datetime
 from creation_table import df
+import re
 
 # Coordonnées géographiques
 
@@ -75,4 +76,25 @@ if df["heure_fin"] is not None:
 else :
     df["duree"] = None
 
-print(df)
+q1 = df["rsvpCount"].quantile(0.25)  # Premier quartile (25%)
+q2 = df["rsvpCount"].quantile(0.50)  # Deuxième quartile (50%, médiane)
+q3 = df["rsvpCount"].quantile(0.75)
+def popularite(val,q1=q1,q2=q2,q3=q3):
+    if(val>q3):
+        return 'Très populaire'
+    elif(val<q1):
+        return 'Pas populaire'
+    elif(val<q2):
+        return 'Peu populaire'
+    else:
+        return 'Assez populaire'
+df["Popularite"]=df["rsvpCount"].apply(popularite)
+print(df.columns)
+def detectfestival(str):
+    if re.search(r"festival",str):
+        return 'festival'
+    else:
+        return 'concert'
+df["Type"]=df['artistImageSrc'].apply(detectfestival)
+
+print(df.columns)
