@@ -3,10 +3,15 @@ import pandas as pd
 from datetime import datetime
 from creation_table import df
 import re
+import json
+import pandas_gbq
+from google.oauth2 import service_account
+
+credentials = service_account.Credentials.from_service_account_file('sa-key-group-1.json')
 
 # Coordonnées géographiques
 
-geolocator = Nominatim(user_agent="geopiExercises",timeout=2)
+geolocator = Nominatim(user_agent="geopiExercises",timeout=10)
 
 df["locationText"] = df["locationText"].str.lower()
 df["venueName"] = df["venueName"].str.lower()
@@ -71,11 +76,7 @@ else:
 df["heure"] = pd.to_datetime(df["heure"])
 df["heure_fin"] = pd.to_datetime(df["heure_fin"])
 
-if df["heure_fin"] is not None:
-    df["duree"] = df["heure_fin"]-df["heure"]
-else :
-    df["duree"] = None
-
+df["rsvpCount"]=df["rsvpCount"].apply(lambda x:int(x))
 q1 = df["rsvpCount"].quantile(0.25)  # Premier quartile (25%)
 q2 = df["rsvpCount"].quantile(0.50)  # Deuxième quartile (50%, médiane)
 q3 = df["rsvpCount"].quantile(0.75)
@@ -98,3 +99,9 @@ def detectfestival(str):
 df["Type"]=df['artistImageSrc'].apply(detectfestival)
 
 print(df.columns)
+with open("artiste_natio.json","r",encoding='UTF-8') as fp:
+    contenu=json.load(fp)
+df["Nationalite"]=df["artistName"].apply(lambda x:contenu.get(x.replace(" ",""),'Inconnu'))
+table_id = "dataset_groupe_1.df"
+pandas_gbq.to_gbq(df, table_id, project_id="ai-technologies-ur2",if_exists='replace',credentials=credentials)
+print('Fait')
