@@ -1,8 +1,10 @@
 import requests
 
+# URL de l'API
+
 
 # Question 8
-def scrap_one_page(url_api,num_page,date):
+def scrap_one_page(url_api,num_page):
     url = url_api
 
     headers = {
@@ -14,7 +16,7 @@ def scrap_one_page(url_api,num_page,date):
         "page": num_page,  # Change le numéro de page ici
         "longitude": 2.3488,
         "latitude": 48.85341,
-        "date": date,
+        "date": "2024-10-07T00:00:00,2024-10-09T22:00:00",
         "genre_query": "all-genres"
     }
     reponse = requests.get(url,headers=headers,params=params).json()
@@ -24,14 +26,10 @@ def scrap_one_page(url_api,num_page,date):
     for events in evenement:
         dico = {}
         dico["Artiste"] = events["artistName"]
-        dico["Salle"] = events['venueName']
-        dico["Lieu"] = events['locationText']
-        dico["Titre"] = events["title"]
+        dico["Lieu"] = f"{events['venueName']},{events['locationText']}"
         dico["Date"] = events["startsAt"]
-        dico["RSVP"] = events["rsvpCount"]
-        dico["page"]=num_page
         liste_concert.append(dico)
 
     return liste_concert
 
-#print(scrap_one_page("https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents",2))
+print(scrap_one_page("https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents",2))
