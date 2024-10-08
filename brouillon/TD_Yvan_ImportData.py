@@ -46,6 +46,8 @@ for j in date_mois:
     sleep(k)
     params["date"]=j
     for i in range(1,5):
+        k1 = random.uniform(0,1)
+        sleep(k1)
         params['page']=i
         rep_inter = requests.get(url, headers=headers,params=params).json()
         data.append(rep_inter)

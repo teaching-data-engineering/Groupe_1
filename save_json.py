@@ -2,6 +2,7 @@ import pickle
 fichier_pickle = 'dico.pickle'
 
 
+# Question 9
 def save_json(response, idx_page):
     try:
         with open(fichier_pickle, 'rb') as fichier:
