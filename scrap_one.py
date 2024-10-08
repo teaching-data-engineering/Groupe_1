@@ -1,5 +1,5 @@
 import requests
-
+import datetime
 
 # Question 8
 def scrap_one_page(url_api,num_page,date):
@@ -22,16 +22,13 @@ def scrap_one_page(url_api,num_page,date):
     liste_concert = []
     evenement = reponse["events"]
     for events in evenement:
-        dico = {}
-        dico["Artiste"] = events["artistName"]
-        dico["Salle"] = events['venueName']
-        dico["Lieu"] = events['locationText']
-        dico["Titre"] = events["title"]
-        dico["Date"] = events["startsAt"]
-        dico["RSVP"] = events["rsvpCount"]
-        dico["page"]=num_page
-        liste_concert.append(dico)
+        liste_concert.append(events)
 
     return liste_concert
 
-#print(scrap_one_page("https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents",2))
+
+date_time_debut = datetime.datetime(2024, 10, 8, 0, 0, 0)
+date_time_fin = datetime.datetime(2024, 10, 31, 23, 0, 0)
+date_iso_debut = date_time_debut.isoformat()
+date_iso_fin = date_time_fin.isoformat()
+print(scrap_one_page("https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents",2,f"{date_iso_debut},{date_iso_fin}"))

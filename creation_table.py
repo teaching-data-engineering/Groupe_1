@@ -1,9 +1,12 @@
-import pickle
+import json
 import pandas as pd
-with open("dico.pickle","rb") as data:
-    contenu=pickle.load(data)
-listeglobale=[]
-for i in contenu.values():
-    listeglobale+=i
-df = pd.DataFrame(listeglobale)
+import os
+liste=[]
+dossier_script = os.path.dirname(os.path.abspath(__file__))
+for fichier in os.listdir(dossier_script):
+    if fichier.endswith(".json"):
+        with open(fichier,"r") as data:
+            contenu=json.load(data)
+        liste+=contenu
+df = pd.DataFrame(liste)
 print(df)
