@@ -1,5 +1,3 @@
-import requests
-import re
 from time import sleep
 import datetime
 import random
