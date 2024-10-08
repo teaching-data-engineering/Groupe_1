@@ -3,6 +3,8 @@ from save_json import save_json
 from datetime import datetime
 
 
+
+
 # Question 10
 def scrap_multiple_pages(start_date, end_date, max_page):
     url = pass

@@ -1,21 +1,17 @@
 from geopy.geocoders import Nominatim
 import pandas as pd
 from datetime import datetime
-
-# dataframe test
-data = {'startat': ['2024-10-08T08:00:00', '2024-10-12T09:30:00'], "Lieu":["Ivry-sur-Seine, France", "Paris, France"], "Salle":["adidas arena", "Zenith Paris - La Villette"]}
-table = pd.DataFrame(data)
-
+from creation_table import df
 
 # Coordonnées géographiques
 
-geolocator = Nominatim(user_agent="geopiExercises")
+geolocator = Nominatim(user_agent="geopiExercises",timeout=2)
 
-table["Lieu"] = table["Lieu"].str.lower()
-table["Salle"] = table["Salle"].str.lower()
+df["locationText"] = df["locationText"].str.lower()
+df["venueName"] = df["venueName"].str.lower()
 
-table["adresse_complete"] = table["Salle"] + ', ' + table["Lieu"]
-liste_lieux = list(set(table["adresse_complete"]))
+df["adresse_complete"] = df["venueName"] + ', ' + df["locationText"]
+liste_lieux = list(set(df["adresse_complete"]))
 
 adresse_paris = "Paris, France"
 location_paris = geolocator.geocode(adresse_paris)
@@ -33,36 +29,50 @@ for lieu in liste_lieux:
 
 liste_lat = []
 liste_long = []
-for adresse in list(table["adresse_complete"]):
+for adresse in list(df["adresse_complete"]):
     liste_lat.append(dico_coordonnees[adresse]['latitude'])
     liste_long.append(dico_coordonnees[adresse]['longitude'])
 
-table["latitude"] = liste_lat
-table["longitude"] = liste_long
+df["latitude"] = liste_lat
+df["longitude"] = liste_long
 
 
 # Enrichissement date
 
-table[['date', 'heure']] = table['startat'].str.split('T', expand=True)
+df[['date', 'heure']] = df['startsAt'].str.split('T', expand=True)
 
-table["Weekend"] = 0
+df["Weekend"] = 0
 
 # ### weekend
-table["date"] = pd.to_datetime(table["date"])
+df["date"] = pd.to_datetime(df["date"])
 liste_date = []
 
-for date in list(table["date"]):
+for date in list(df["date"]):
     if date.weekday() >= 5:
         liste_date.append(True)
     else : 
         liste_date.append(False)
 
-table["Weekend"]=liste_date
+df["Weekend"]=liste_date
 
 # Nb jour avant l'évènement
 
 date_current = datetime.now()
 
-table["Nb_jours_avant"] = ((table["date"] - date_current).dt.days)+1
+df["Nb_jours_avant"] = ((df["date"] - date_current).dt.days)+1
 
-print(table)
+# Durée de l'event
+if df["endsAt"] is not None:
+    df['heure_fin'] = df['endsAt'].str.split('T', expand=True)[1]
+else:
+    df['heure_fin'] = None
+
+df["heure"] = pd.to_datetime(df["heure"])
+df["heure_fin"] = pd.to_datetime(df["heure_fin"])
+
+if df["heure_fin"] is not None:
+    df["duree"] = df["heure_fin"]-df["heure"]
+else :
+    df["duree"] = None
+
+print(df)
