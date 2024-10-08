@@ -1,5 +1,7 @@
 import requests
 
+# URL de l'API
+
 
 # Question 8
 def scrap_one_page(url_api,num_page):
@@ -24,12 +26,8 @@ def scrap_one_page(url_api,num_page):
     for events in evenement:
         dico = {}
         dico["Artiste"] = events["artistName"]
-        dico["Salle"] = events['venueName']
-        dico["Lieu"] = events['locationText']
-        dico["Titre"] = events["title"]
+        dico["Lieu"] = f"{events['venueName']},{events['locationText']}"
         dico["Date"] = events["startsAt"]
-        dico["RSVP"] = events["rsvpCount"]
-        dico["page"]=num_page
         liste_concert.append(dico)
 
     return liste_concert
