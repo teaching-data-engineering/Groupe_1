@@ -6,7 +6,7 @@ import re
 
 # Coordonnées géographiques
 
-geolocator = Nominatim(user_agent="geopiExercises",timeout=2)
+geolocator = Nominatim(user_agent="geopiExercises",timeout=10)
 
 df["locationText"] = df["locationText"].str.lower()
 df["venueName"] = df["venueName"].str.lower()
@@ -98,3 +98,4 @@ def detectfestival(str):
 df["Type"]=df['artistImageSrc'].apply(detectfestival)
 
 print(df.columns)
+
