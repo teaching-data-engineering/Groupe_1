@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import os
+import re
 liste=[]
 dossier_script = os.path.dirname(os.path.abspath(__file__))
 for fichier in os.listdir(dossier_script):
@@ -25,4 +26,9 @@ def popularite(val,q1=q1,q2=q2,q3=q3):
         return 'Assez populaire'
 df["Popularite"]=df["rsvpCount"].apply(popularite)
 print(df.columns)
-    
+def detectfestival(str):
+    if re.search(r"festival",str):
+        return 'festival'
+    else:
+        return 'concert'
+df["Type"]=df['artistImageSrc'].apply(detectfestival)
