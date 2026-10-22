@@ -6,4 +6,9 @@ Alexandre HAYOUN -> Branch en _cours
 =======
 Alexandre HAYOUN
 c'est Hoang
+<<<<<<< HEAD
 >>>>>>> 8b86217368544e5f5012f84d0dbdb3f5310f38ac
+=======
+
+Hoang a ajouté la branch
+>>>>>>> 555c6c7edbde6433ae682d9ef02bc0a112dd210b
