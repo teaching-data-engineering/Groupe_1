@@ -39,7 +39,6 @@ response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     data = response.json()
     events = data if isinstance(data, list) else data.get("events", [])
-    pprint(events)
 
     print(f"✅ succès ({response.status_code}) : {len(events)} événements récupérés.\n")
 
@@ -57,6 +56,7 @@ if response.status_code == 200:
 
     df = pd.DataFrame(events_list)
 
+    print(df)
 
     # Exportation CSV
     #df.to_csv("events_bandsintown_test.scsv", index=False, encoding="utf-8-sig")
