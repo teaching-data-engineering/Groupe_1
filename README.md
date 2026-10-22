@@ -4,4 +4,3 @@ Web Scraping d'un site qui proposent des places de concert + prédiction + BigQu
 Alexandre HAYOUN -> Branch en _cours
 c'est Hoang
 Hoang a ajouté la branch
-SORO Doba Issiaka (Doba97)
