@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 url = "https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents"
 
@@ -28,9 +29,25 @@ try:
         # Si le site renvoie du JSON, on le convertit en dictionnaire Python
         data_json = response.json()
         #print(data_json)
-        
+        events = data_json.get("events", [])
+        events_list = [
+                {
+                    "id": event.get("id"),
+                    "artiste": event.get("artistName"),
+                    "lieu": event.get("venueName"),
+                    "date": event.get("startsAt"),
+                    "url_evenement": event.get("eventUrl"),
+                }
+                for event in events
+            ]
+
+        df = pd.DataFrame(events_list)
+        print(len(df))
+
+
     else:
         print(f"Erreur : Le serveur a répondu avec le code {response.status_code}")
 
 except requests.exceptions.RequestException as e:
     print(f"Erreur lors de la requête : {e}")
+
