@@ -18,36 +18,54 @@ headers = {
     "Upgrade-Insecure-Requests" : "1"
 }
 
-try:
-    # 3. Envoyer la requête GET
-    response = requests.get(url, headers=headers)
+vide = False
+events_list = {
+    "id": [],
+    "artiste": [],
+    "lieu": [],
+    "date": [],
+    "url_evenement":[]
+    }
+i = 1
+while not vide :
+    params = {
+    "use_current_location": "1",
+    "calendarTrigger": "false",
+    "page" : i,
+    "city_id" : "2988507",
+    "genre_query" : "all-genres"
+    #"date" : "2026-10-22T00%3A00%3A00%2C2026-11-30T23%3A00%3A00"
+    }
+    
+    i += 1
 
-    # 4. Vérifier si la requête a réussi (code 200 = OK)
-    if response.status_code == 200:
-        print("Succès !")
+    try:
+        # 3. Envoyer la requête GET
+        response = requests.get(url, headers=headers, params=params)
+
+        # 4. Vérifier si la requête a réussi (code 200 = OK)
+        if response.status_code == 200:
+            # Si le site renvoie du JSON, on le convertit en dictionnaire Python
+            data_json = response.json()
+            #print(data_json)
+            events = data_json.get("events", [])
+            if events == [] :
+                vide = True
+            else :
+                for event in events :
+                    events_list["id"].append(event.get("id"))
+                    events_list["artiste"].append(event.get("artistName"))
+                    events_list["lieu"].append(event.get("venueName"))
+                    events_list["date"].append(event.get("startsAt"))
+                    events_list["url_evenement"].append(event.get("eventUrl"))
+
         
-        # Si le site renvoie du JSON, on le convertit en dictionnaire Python
-        data_json = response.json()
-        #print(data_json)
-        events = data_json.get("events", [])
-        events_list = [
-                {
-                    "id": event.get("id"),
-                    "artiste": event.get("artistName"),
-                    "lieu": event.get("venueName"),
-                    "date": event.get("startsAt"),
-                    "url_evenement": event.get("eventUrl"),
-                }
-                for event in events
-            ]
+        else:
+            print(f"Erreur : Le serveur a répondu avec le code {response.status_code}")
 
-        df = pd.DataFrame(events_list)
-        print(len(df))
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la requête : {e}")
 
-
-    else:
-        print(f"Erreur : Le serveur a répondu avec le code {response.status_code}")
-
-except requests.exceptions.RequestException as e:
-    print(f"Erreur lors de la requête : {e}")
-
+print(f"{i-1} pages analysées")
+df = pd.DataFrame(events_list)
+print(f"{len(df)} évènements récupérés")
