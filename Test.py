@@ -17,6 +17,7 @@ periode = f"{date_debut:%Y-%m-%d}T00:00:00,{date_fin:%Y-%m-%d}T23:00:00"
 
 # Paramètres de la requête GET (dates et géolocalisation)
 nb_page = 1
+ids_vus = set()  # id des événements déjà récupérés, pour détecter les pages en double
 while True:
     params = {
         "date": periode,
@@ -52,12 +53,15 @@ while True:
 
         print(f"page {nb_page} : succès ({response.status_code}) : {len(events)} événements récupérés.\n")
 
-        # Page vide : plus d'événements, on s'arrête
-        if not events:
+        # Page vide ou déjà vue (l'API répète la dernière page à l'infini) : on s'arrête
+        nouveaux = [event for event in events if event.get("id") not in ids_vus]
+        if not nouveaux:
+            print(f"page {nb_page} : aucun nouvel événement (page en double), arrêt.\n")
             break
+        ids_vus.update(event.get("id") for event in nouveaux)
 
-        # Ajout des événements de cette page à la liste globale
-        for event in events:
+        # Ajout des nouveaux événements de cette page à la liste globale
+        for event in nouveaux:
             events_list.append({
                 "id": event.get("id"),
                 "artiste": event.get("artistName"),
