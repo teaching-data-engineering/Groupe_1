@@ -1,7 +1,7 @@
 # Groupe_1 — Scraper Bandsintown
 
 Scraping des concerts proposés par [Bandsintown](https://www.bandsintown.com) autour de Paris, puis transformation, prédiction et chargement dans BigQuery (GCP).
-
+**écrire votre nom dans Membres**
 **Membres :** Alexandre HAYOUN, Hoang
 
 ## Structure du repository
