@@ -29,7 +29,7 @@ def parse_args():
     parser.add_argument(
         "--enrich-online",
         action="store_true",
-        help="interroger MusicBrainz et Nominatim pour la nationalité des artistes et les coordonnées GPS "
+        help="interroger Nominatim pour les coordonnées GPS des salles "
              "(résultats mis en cache dans data/cache/)",
     )
     args = parser.parse_args()

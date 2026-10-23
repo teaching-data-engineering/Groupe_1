@@ -18,17 +18,14 @@ MAX_TOO_MANY_REQUESTS_RETRIES = 3
 RAW_DATA_DIR = Path("data") / "raw"
 OUTPUT_CSV = Path("data") / "events_bandsintown.csv"
 
-# Enrichissement via des API externes (1 requête par seconde maximum pour les deux)
+# Géocodage des salles via Nominatim (1 requête par seconde maximum)
 CACHE_DIR = Path("data") / "cache"
-MUSICBRAINZ_URL = "https://musicbrainz.org/ws/2/artist/"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 EXTERNAL_API_USER_AGENT = "Groupe1BandsintownScraper/1.0 (https://github.com/teaching-data-engineering/Groupe_1)"
 EXTERNAL_API_DELAY_SECONDS = 1.1
 EXTERNAL_API_MAX_RETRIES = 3
-MUSICBRAINZ_MIN_SCORE = 90
 # Île-de-France (lon min, lat max, lon max, lat min) : sinon "Montreuil" peut être celui du Pas-de-Calais
 GEOCODING_VIEWBOX = "1.4,49.25,3.6,48.1"
-LOCAL_COUNTRY_CODE = "FR"
 
 # Navigateurs imités par curl_cffi, un tiré au hasard à chaque requête. curl_cffi envoie l'empreinte TLS
 # ET le User-Agent du navigateur choisi : les deux restent cohérents, sinon Cloudflare détecte le robot.

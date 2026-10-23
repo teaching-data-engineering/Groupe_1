@@ -4,6 +4,7 @@ import time
 
 import pandas as pd
 from curl_cffi import requests
+from curl_cffi.requests.exceptions import RequestException
 
 from bandsintown_scraper.config import (
     CACHE_DIR,
@@ -11,9 +12,6 @@ from bandsintown_scraper.config import (
     EXTERNAL_API_MAX_RETRIES,
     EXTERNAL_API_USER_AGENT,
     GEOCODING_VIEWBOX,
-    LOCAL_COUNTRY_CODE,
-    MUSICBRAINZ_MIN_SCORE,
-    MUSICBRAINZ_URL,
     NOMINATIM_URL,
     RAW_DATA_DIR,
 )
@@ -44,7 +42,6 @@ DEFAULT_EVENT_TYPE = "concert"
 POPULARITY_BINS = [-1, 0, 9, 99, float("inf")]
 POPULARITY_LABELS = ["aucune", "faible", "moyenne", "forte"]
 
-ARTISTS_CACHE_PATH = CACHE_DIR / "artistes.json"
 VENUES_CACHE_PATH = CACHE_DIR / "lieux.json"
 
 
@@ -101,10 +98,23 @@ def save_cache(cache, cache_path):
         json.dump(cache, file, ensure_ascii=False, indent=2)
 
 
+class ExternalApiUnavailable(Exception):
+    """Le service ne répond plus du tout (réseau bloqué, serveur injoignable...)."""
+
+
 def fetch_external_json(url, params):
-    """Renvoie la réponse JSON, ou None en cas d'échec (le résultat ne doit alors pas être mis en cache)."""
+    """Renvoie la réponse JSON, ou None en cas d'échec (le résultat ne doit alors pas être mis en cache).
+
+    Lève ExternalApiUnavailable si la connexion échoue à chaque tentative.
+    """
     for attempt in range(1, EXTERNAL_API_MAX_RETRIES + 1):
-        response = requests.get(url, params=params, headers={"User-Agent": EXTERNAL_API_USER_AGENT})
+        try:
+            response = requests.get(url, params=params, headers={"User-Agent": EXTERNAL_API_USER_AGENT})
+        except RequestException as error:
+            if attempt == EXTERNAL_API_MAX_RETRIES:
+                raise ExternalApiUnavailable(f"{url} injoignable ({type(error).__name__})") from error
+            time.sleep(EXTERNAL_API_DELAY_SECONDS * attempt * 5)
+            continue
         time.sleep(EXTERNAL_API_DELAY_SECONDS * attempt)
         if response.status_code == 200:
             return response.json()
@@ -112,21 +122,6 @@ def fetch_external_json(url, params):
             break
     print(f"{url} : échec ({response.status_code})")
     return None
-
-
-def obtenir_nationalite(artiste):
-    """Code pays ISO de l'artiste selon MusicBrainz ("" si inconnu), ou None si la requête échoue."""
-    data = fetch_external_json(
-        MUSICBRAINZ_URL,
-        {"query": f'artist:"{artiste.replace(chr(34), "")}"', "fmt": "json", "limit": 1},
-    )
-    if data is None:
-        return None
-    artists = data.get("artists", [])
-    # Sans ce score minimum, MusicBrainz renvoie souvent un homonyme
-    if not artists or int(artists[0].get("score", 0)) < MUSICBRAINZ_MIN_SCORE:
-        return ""
-    return artists[0].get("country", "")
 
 
 def obtenir_coordonnees(lieu, ville, pays):
@@ -144,7 +139,11 @@ def obtenir_coordonnees(lieu, ville, pays):
 
 
 def fill_cache(cache, cache_path, keys, fetch):
-    """Interroge l'API pour les clés absentes du cache. Le cache est sauvegardé même en cas d'interruption."""
+    """Interroge l'API pour les clés absentes du cache. Le cache est sauvegardé même en cas d'interruption.
+
+    Si le service devient injoignable, la recherche s'arrête mais le reste de la transformation continue :
+    les valeurs manquantes resteront vides jusqu'au prochain --enrich-online.
+    """
     missing_keys = [key for key in keys if key not in cache]
     if not missing_keys:
         return
@@ -157,33 +156,30 @@ def fill_cache(cache, cache_path, keys, fetch):
             if done % 50 == 0:
                 print(f"  {done}/{len(missing_keys)}")
                 save_cache(cache, cache_path)
+    except ExternalApiUnavailable as error:
+        print(f"{error} : recherche arrêtée, {len(missing_keys) - done + 1} restent à faire. "
+              "Relancez --enrich-online plus tard pour compléter.")
     finally:
         save_cache(cache, cache_path)
 
 
 def add_external_columns(df, enrich_online):
-    """Nationalité de l'artiste et coordonnées GPS de la salle, lues depuis le cache.
+    """Coordonnées GPS de la salle, lues depuis le cache.
 
-    Avec enrich_online=True, les valeurs absentes du cache sont d'abord demandées aux API.
+    Avec enrich_online=True, les salles absentes du cache sont d'abord demandées à Nominatim.
     """
-    artists_cache = load_cache(ARTISTS_CACHE_PATH)
     venues_cache = load_cache(VENUES_CACHE_PATH)
 
     venue_keys = df["lieu"] + "|" + df["ville"].fillna("") + "|" + df["pays"].fillna("")
 
     if enrich_online:
-        fill_cache(artists_cache, ARTISTS_CACHE_PATH, df["artiste"].dropna().unique(), obtenir_nationalite)
         fill_cache(
             venues_cache,
             VENUES_CACHE_PATH,
             venue_keys.dropna().unique(),
-            lambda key: obtenir_coordonnees(*key.split("|")),
+            # Découpage par la droite : certains noms de salle contiennent eux-mêmes un "|"
+            lambda key: obtenir_coordonnees(*key.rsplit("|", 2)),
         )
-
-    df["pays_artiste"] = df["artiste"].map(artists_cache).replace("", None)
-    df["artiste_local"] = df["pays_artiste"].map(
-        lambda country: None if pd.isna(country) else country == LOCAL_COUNTRY_CODE
-    )
 
     venues = venue_keys.map(venues_cache)
     df["longitude"] = venues.map(lambda venue: venue["longitude"] if isinstance(venue, dict) else None)

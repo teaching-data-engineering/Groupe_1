@@ -1,0 +1,3782 @@
+{
+  "Bar Italia Records|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Backstage By The Mill|Paris|France": {
+    "longitude": 2.3321006,
+    "latitude": 48.8842402,
+    "source": "salle"
+  },
+  "Église Saint-Ephrem|Paris|France": {
+    "longitude": 2.3476992,
+    "latitude": 48.8483553,
+    "source": "salle"
+  },
+  "La Maison Bistrot|Paris|France": {
+    "longitude": 2.3718669,
+    "latitude": 48.8762359,
+    "source": "salle"
+  },
+  "Atomic Cat|Paris|France": {
+    "longitude": 2.3746499,
+    "latitude": 48.8535351,
+    "source": "salle"
+  },
+  "Accor Arena|Paris|France": {
+    "longitude": 2.3787666,
+    "latitude": 48.8387085,
+    "source": "salle"
+  },
+  "La Marbrerie|Montreuil|France": {
+    "longitude": 2.4404879,
+    "latitude": 48.8642497,
+    "source": "salle"
+  },
+  "Mains d'Œuvres|Saint-Ouen|France": {
+    "longitude": 2.3391163,
+    "latitude": 48.9051903,
+    "source": "salle"
+  },
+  "Bus Palladium|Paris|France": {
+    "longitude": 2.3350696,
+    "latitude": 48.8808349,
+    "source": "salle"
+  },
+  "SUPERSONIC|Paris|France": {
+    "longitude": 2.3697074,
+    "latitude": 48.8501393,
+    "source": "salle"
+  },
+  "Le NOUVEAU COMPTOIR|Fontenay-sous-Bois|France": {
+    "longitude": 2.4749347,
+    "latitude": 48.8490721,
+    "source": "ville"
+  },
+  "Péniche Marcounet|Paris|France": {
+    "longitude": 2.3570369,
+    "latitude": 48.8532111,
+    "source": "salle"
+  },
+  "Cirque Electrique|Paris|France": {
+    "longitude": 2.4094785,
+    "latitude": 48.8764605,
+    "source": "salle"
+  },
+  "Petit Bain|Paris|France": {
+    "longitude": 2.3767186,
+    "latitude": 48.8354259,
+    "source": "salle"
+  },
+  "Generator Paris|Paris|France": {
+    "longitude": 2.3693958,
+    "latitude": 48.878253,
+    "source": "salle"
+  },
+  "Bal Chavaux|Montreuil|France": {
+    "longitude": 2.4359092,
+    "latitude": 48.85872,
+    "source": "salle"
+  },
+  "THEATRE DE NESLE|Paris|France": {
+    "longitude": 2.3391068,
+    "latitude": 48.8552492,
+    "source": "salle"
+  },
+  "Théâtre du Gymnase Marie Bell|Paris|France": {
+    "longitude": 2.3488388,
+    "latitude": 48.8709178,
+    "source": "salle"
+  },
+  "Le Point Virgule|Paris|France": {
+    "longitude": 2.3568352,
+    "latitude": 48.8578948,
+    "source": "salle"
+  },
+  "Le Son de la Terre|Paris|France": {
+    "longitude": 2.3511611,
+    "latitude": 48.8515354,
+    "source": "salle"
+  },
+  "Le Baiser Salé|Paris|France": {
+    "longitude": 2.3478047,
+    "latitude": 48.8598453,
+    "source": "salle"
+  },
+  "Panic Room|Paris|France": {
+    "longitude": 2.3676094,
+    "latitude": 48.861244,
+    "source": "salle"
+  },
+  "Salle Jules Menet|La Ferté-Alais|France": {
+    "longitude": 2.3476234,
+    "latitude": 48.4824089,
+    "source": "ville"
+  },
+  "Théâtre Montparnasse & Petit Montparnasse|Paris|France": {
+    "longitude": 2.32356,
+    "latitude": 48.839465,
+    "source": "salle"
+  },
+  "Babour Sauvage|Paris|France": {
+    "longitude": 2.3924228,
+    "latitude": 48.8951551,
+    "source": "salle"
+  },
+  "Baiser salé|Paris|France": {
+    "longitude": 2.3478047,
+    "latitude": 48.8598453,
+    "source": "salle"
+  },
+  "Théâtre de Dix Heures|Paris|France": {
+    "longitude": 2.3364532,
+    "latitude": 48.8828739,
+    "source": "salle"
+  },
+  "JASS CLUB PARIS|Paris|France": {
+    "longitude": 2.359189,
+    "latitude": 48.8260337,
+    "source": "salle"
+  },
+  "FGO-Barbara|Paris|France": {
+    "longitude": 2.3538553,
+    "latitude": 48.884294,
+    "source": "salle"
+  },
+  "Nouveau Casino|Paris|France": {
+    "longitude": 2.3778547,
+    "latitude": 48.8658943,
+    "source": "salle"
+  },
+  "Badaboum|Paris|France": {
+    "longitude": 2.3757106,
+    "latitude": 48.8535911,
+    "source": "salle"
+  },
+  "Palais de l'Épi d'Or.|Villejuif|France": {
+    "longitude": 2.3633048,
+    "latitude": 48.7921098,
+    "source": "ville"
+  },
+  "La Place|Paris|France": {
+    "longitude": 2.3571209,
+    "latitude": 48.8636566,
+    "source": "salle"
+  },
+  "Le Duc des Lombards|Paris|France": {
+    "longitude": 2.3486049,
+    "latitude": 48.8596927,
+    "source": "salle"
+  },
+  "La Scène Parisienne|Paris|France": {
+    "longitude": 2.3445255,
+    "latitude": 48.8741194,
+    "source": "salle"
+  },
+  "Théâtre La Commune - Centre Dramatique National|Aubervilliers|France": {
+    "longitude": 2.3821895,
+    "latitude": 48.9146078,
+    "source": "ville"
+  },
+  "THEATRE DU MARAIS|Paris|France": {
+    "longitude": 2.3577542,
+    "latitude": 48.8662975,
+    "source": "salle"
+  },
+  "Le Grand Rex|Paris|France": {
+    "longitude": 2.3476486,
+    "latitude": 48.8705334,
+    "source": "salle"
+  },
+  "POPUP!|Paris|France": {
+    "longitude": 2.3632918,
+    "latitude": 48.8636055,
+    "source": "salle"
+  },
+  "La Station - Gare des Mines|Paris|France": {
+    "longitude": 2.3698427,
+    "latitude": 48.9012203,
+    "source": "salle"
+  },
+  "River's King|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "BOOM BOOM VILLETTE|Paris|France": {
+    "longitude": 2.3890524,
+    "latitude": 48.8962817,
+    "source": "salle"
+  },
+  "La Bellevilloise|Paris|France": {
+    "longitude": 2.3920001,
+    "latitude": 48.8683449,
+    "source": "salle"
+  },
+  "Salle André-Malraux|Sarcelles|France": {
+    "longitude": 2.5083669,
+    "latitude": 49.0519394,
+    "source": "salle"
+  },
+  "Théâtre des Deux Anes|Paris|France": {
+    "longitude": 2.3316336,
+    "latitude": 48.8842781,
+    "source": "salle"
+  },
+  "La Cigale|Paris|France": {
+    "longitude": 2.3401302,
+    "latitude": 48.8824754,
+    "source": "salle"
+  },
+  "Zenith Paris - La Villette|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Maison De Radio France|Paris|France": {
+    "longitude": 2.2786707,
+    "latitude": 48.8524793,
+    "source": "salle"
+  },
+  "Lucid Interval|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Péniche Antipode|Paris|France": {
+    "longitude": 2.3751504,
+    "latitude": 48.8865826,
+    "source": "salle"
+  },
+  "Philharmonie de Paris|Paris|France": {
+    "longitude": 2.3941386,
+    "latitude": 48.8919212,
+    "source": "salle"
+  },
+  "La Maroquinerie|Paris|France": {
+    "longitude": 2.3920592,
+    "latitude": 48.8685287,
+    "source": "salle"
+  },
+  "La Boule Noire|Paris|France": {
+    "longitude": 2.3402758,
+    "latitude": 48.882343,
+    "source": "salle"
+  },
+  "La Machine du Moulin Rouge|Paris|France": {
+    "longitude": 2.3322002,
+    "latitude": 48.8841454,
+    "source": "salle"
+  },
+  "Le Chinois|Montreuil|France": {
+    "longitude": 2.434182,
+    "latitude": 48.8582338,
+    "source": "salle"
+  },
+  "Maison des Métallos|Paris|France": {
+    "longitude": 2.3780287,
+    "latitude": 48.8673647,
+    "source": "salle"
+  },
+  "Les jardiniers - Montrouge|Montrouge|France": {
+    "longitude": 2.3108094,
+    "latitude": 48.8175001,
+    "source": "salle"
+  },
+  "Supersonic Records|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Eglise de la Madeleine|Paris|France": {
+    "longitude": 2.3245425,
+    "latitude": 48.8701338,
+    "source": "salle"
+  },
+  "Le Hasard Ludique|Paris|France": {
+    "longitude": 2.3286601,
+    "latitude": 48.8956581,
+    "source": "salle"
+  },
+  "Le Triangle|Paris|France": {
+    "longitude": 2.3856326,
+    "latitude": 48.8329414,
+    "source": "salle"
+  },
+  "La Dame de Canton|Paris|France": {
+    "longitude": 2.3775952,
+    "latitude": 48.8346664,
+    "source": "salle"
+  },
+  "New Morning|Paris|France": {
+    "longitude": 2.3534809,
+    "latitude": 48.8730035,
+    "source": "salle"
+  },
+  "The City Theatre - National Drama Centre|Aubervilliers|France": {
+    "longitude": 2.3821895,
+    "latitude": 48.9146078,
+    "source": "ville"
+  },
+  "Lido 2 - Paris|Paris|France": {
+    "longitude": 2.3046052,
+    "latitude": 48.871694,
+    "source": "salle"
+  },
+  "Café de la Danse|Paris|France": {
+    "longitude": 2.3728424,
+    "latitude": 48.8541122,
+    "source": "salle"
+  },
+  "Théâtre du Petit Saint-Martin|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "CATHEDRALE|Senlis|France": {
+    "longitude": 2.5859374,
+    "latitude": 49.206871,
+    "source": "salle"
+  },
+  "Salle Gaveau|Paris|France": {
+    "longitude": 2.3141502,
+    "latitude": 48.8735064,
+    "source": "salle"
+  },
+  "Le Danube Palace Café|Paris|France": {
+    "longitude": 2.3915888,
+    "latitude": 48.8837801,
+    "source": "salle"
+  },
+  "Ligne 13|Gennevilliers|France": {
+    "longitude": 2.2940122,
+    "latitude": 48.9254221,
+    "source": "ville"
+  },
+  "Le Triton|Les Lilas|France": {
+    "longitude": 2.4151886,
+    "latitude": 48.8784707,
+    "source": "salle"
+  },
+  "Eglise Saint-Germain-des-Prés|Paris|France": {
+    "longitude": 2.3345177,
+    "latitude": 48.8539677,
+    "source": "salle"
+  },
+  "STUDIO RASPAIL|Paris|France": {
+    "longitude": 2.3297119,
+    "latitude": 48.8406659,
+    "source": "salle"
+  },
+  "Le TLM|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Maison 3|Paris|France": {
+    "longitude": 2.3579605,
+    "latitude": 48.825949,
+    "source": "salle"
+  },
+  "Le Solo|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "YUJIN|Paris|France": {
+    "longitude": 2.3416429,
+    "latitude": 48.8710941,
+    "source": "salle"
+  },
+  "Louloute|Paris|France": {
+    "longitude": 2.3787862,
+    "latitude": 48.8534002,
+    "source": "salle"
+  },
+  "Bar Gallia|Pantin|France": {
+    "longitude": 2.4132537,
+    "latitude": 48.8893798,
+    "source": "salle"
+  },
+  "La Petite Halle|Paris|France": {
+    "longitude": 2.390848,
+    "latitude": 48.8902779,
+    "source": "salle"
+  },
+  "Le Métropole|Paris|France": {
+    "longitude": 2.3461888,
+    "latitude": 48.8702624,
+    "source": "salle"
+  },
+  "Le République - Salle 1|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Bourse de Commerce – Pinault Collection|Paris|France": {
+    "longitude": 2.3428364,
+    "latitude": 48.8628174,
+    "source": "salle"
+  },
+  "Le République|Paris|France": {
+    "longitude": 2.3619007,
+    "latitude": 48.8677584,
+    "source": "salle"
+  },
+  "Le Grand Point-Virgule - Apostrophe|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Institut du Monde Arabe|Paris|France": {
+    "longitude": 2.3571469,
+    "latitude": 48.8489159,
+    "source": "salle"
+  },
+  "Grand Marché Stalingrad - La Rotonde|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Disquaires|Paris|France": {
+    "longitude": 2.375577,
+    "latitude": 48.8538619,
+    "source": "salle"
+  },
+  "Vice Versa|Paris|France": {
+    "longitude": 2.3757315,
+    "latitude": 48.8550992,
+    "source": "salle"
+  },
+  "EMG Prod|Grisy-les-Plâtres|France": {
+    "longitude": 2.0499726,
+    "latitude": 49.130876,
+    "source": "ville"
+  },
+  "BIZZ'ART|Paris|France": {
+    "longitude": 2.3664351,
+    "latitude": 48.8790716,
+    "source": "salle"
+  },
+  "Silencio Club|Paris|France": {
+    "longitude": 2.3434141,
+    "latitude": 48.8688835,
+    "source": "salle"
+  },
+  "T7 CLUB|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "EMORIA EVENT|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "TERMINUS CLUB|Pantin|France": {
+    "longitude": 2.4019804,
+    "latitude": 48.8965023,
+    "source": "ville"
+  },
+  "Sacré|Paris|France": {
+    "longitude": 2.3430153,
+    "latitude": 48.8868058,
+    "source": "salle"
+  },
+  "YOYO - Palais de Tokyo|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "GATE CLUB PARIS|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Club La Nuit|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Twenty One Sound Bar|Paris|France": {
+    "longitude": 2.3807628,
+    "latitude": 48.851686,
+    "source": "salle"
+  },
+  "Solum Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Virage Paris|Paris|France": {
+    "longitude": 2.322105,
+    "latitude": 48.9005296,
+    "source": "salle"
+  },
+  "211|Paris|France": {
+    "longitude": 2.42035,
+    "latitude": 48.8551512,
+    "source": "salle"
+  },
+  "Rex Club|Paris|France": {
+    "longitude": 2.3473378,
+    "latitude": 48.8705803,
+    "source": "salle"
+  },
+  "Kilomètre25|Paris|France": {
+    "longitude": 2.3943382,
+    "latitude": 48.8959943,
+    "source": "salle"
+  },
+  "Le Klub|Paris|France": {
+    "longitude": 2.3478378,
+    "latitude": 48.8591148,
+    "source": "salle"
+  },
+  "Mia Mao|Paris|France": {
+    "longitude": 2.3954621,
+    "latitude": 48.8964692,
+    "source": "salle"
+  },
+  "Trabendo|Paris|France": {
+    "longitude": 2.3939617,
+    "latitude": 48.8926471,
+    "source": "salle"
+  },
+  "42 Marches|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Elec Assistance Paris 19e|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Banana Café|Paris|France": {
+    "longitude": 2.3476003,
+    "latitude": 48.8601859,
+    "source": "salle"
+  },
+  "Pamela|Paris|France": {
+    "longitude": 2.3379538,
+    "latitude": 48.8545508,
+    "source": "salle"
+  },
+  "La Gare - Le Gore|Paris|France": {
+    "longitude": 2.3815508,
+    "latitude": 48.8953576,
+    "source": "salle"
+  },
+  "La Maison Sonore|Malakoff|France": {
+    "longitude": 2.3019814,
+    "latitude": 48.8211559,
+    "source": "ville"
+  },
+  "Central Chapelle|Paris|France": {
+    "longitude": 2.3613849,
+    "latitude": 48.899637,
+    "source": "salle"
+  },
+  "Baron x noir|Saint Denis|France": {
+    "longitude": 2.3627508,
+    "latitude": 48.9383732,
+    "source": "ville"
+  },
+  "Le Zéralda|Bagnolet|France": {
+    "longitude": 2.4173658,
+    "latitude": 48.8688199,
+    "source": "ville"
+  },
+  "Glazart|Paris|France": {
+    "longitude": 2.3866102,
+    "latitude": 48.899283,
+    "source": "salle"
+  },
+  "Place Vendôme|Paris|France": {
+    "longitude": 2.3294281,
+    "latitude": 48.8674634,
+    "source": "salle"
+  },
+  "Pavillon Cambon|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "FVTVR|Paris|France": {
+    "longitude": 2.370991,
+    "latitude": 48.8401903,
+    "source": "salle"
+  },
+  "Apollo Théâtre|Paris|France": {
+    "longitude": 2.3661301,
+    "latitude": 48.8682932,
+    "source": "salle"
+  },
+  "Le Bar à Loot|Paris|France": {
+    "longitude": 2.4004455,
+    "latitude": 48.8526199,
+    "source": "salle"
+  },
+  "djoon|Paris|France": {
+    "longitude": 2.3714028,
+    "latitude": 48.8365782,
+    "source": "salle"
+  },
+  "La Divine Comédie - Salle 2|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Yoga Center Kundalini Saadh Sangat|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Kilowatt|Vitry-sur-Seine|France": {
+    "longitude": 2.4142163,
+    "latitude": 48.7886159,
+    "source": "salle"
+  },
+  "SAVANA PARIS|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Palais des Congrès de Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Mazette|Paris|France": {
+    "longitude": 2.3693705,
+    "latitude": 48.8432577,
+    "source": "salle"
+  },
+  "Les Frigos|Paris|France": {
+    "longitude": 2.378764,
+    "latitude": 48.8312126,
+    "source": "salle"
+  },
+  "Studio Raspail|Paris|France": {
+    "longitude": 2.3297119,
+    "latitude": 48.8406659,
+    "source": "salle"
+  },
+  "Château Éphémère - fabrique sonore et numérique.|Carrières-sous-Poissy|France": {
+    "longitude": 2.0341747,
+    "latitude": 48.9437694,
+    "source": "ville"
+  },
+  "La Démesure|Paris|France": {
+    "longitude": 2.3415278,
+    "latitude": 48.8745179,
+    "source": "salle"
+  },
+  "KOJOBA|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Truskel|Paris|France": {
+    "longitude": 2.3413421,
+    "latitude": 48.8701133,
+    "source": "salle"
+  },
+  "Little Italy Factory|Saint-Maximin|France": {
+    "longitude": 2.4644512,
+    "latitude": 49.237718,
+    "source": "salle"
+  },
+  "CLUB VENDOME|Paris|France": {
+    "longitude": 2.3315164,
+    "latitude": 48.8664744,
+    "source": "salle"
+  },
+  "La Cité Fertile|Pantin|France": {
+    "longitude": 2.3975302,
+    "latitude": 48.8991583,
+    "source": "salle"
+  },
+  "Le CiNey|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Jass Club Paris|Paris|France": {
+    "longitude": 2.359189,
+    "latitude": 48.8260337,
+    "source": "salle"
+  },
+  "La Seine Musicale - La Grande Seine|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "Le Point Fort d'Aubervilliers|Aubervilliers|France": {
+    "longitude": 2.4048073,
+    "latitude": 48.9109584,
+    "source": "salle"
+  },
+  "Duc des Lombards|Paris|France": {
+    "longitude": 2.3486027,
+    "latitude": 48.8596664,
+    "source": "salle"
+  },
+  "Le Petit République|Paris|France": {
+    "longitude": 2.3681098,
+    "latitude": 48.8716683,
+    "source": "salle"
+  },
+  "Sunset-Sunside|Paris|France": {
+    "longitude": 2.3477284,
+    "latitude": 48.8598645,
+    "source": "salle"
+  },
+  "Le Loft|Deuil-la-Barre|France": {
+    "longitude": 2.3269451,
+    "latitude": 48.976001,
+    "source": "salle"
+  },
+  "Moxy Paris La Villette|Paris|France": {
+    "longitude": 2.385325,
+    "latitude": 48.8969199,
+    "source": "salle"
+  },
+  "Alhambra|Paris|France": {
+    "longitude": 2.3629757,
+    "latitude": 48.8705912,
+    "source": "salle"
+  },
+  "Espace Jules Verne|Livry-Gargan|France": {
+    "longitude": 2.5353857,
+    "latitude": 48.9217716,
+    "source": "salle"
+  },
+  "Salle Cortot|Paris|France": {
+    "longitude": 2.3093,
+    "latitude": 48.88416,
+    "source": "salle"
+  },
+  "File 7|Magny-Le-Hongre|France": {
+    "longitude": 2.8135257,
+    "latitude": 48.8631156,
+    "source": "ville"
+  },
+  "Bateau El Alamein|Paris|France": {
+    "longitude": 2.3779952,
+    "latitude": 48.8343257,
+    "source": "salle"
+  },
+  "La télévision|Paris|France": {
+    "longitude": 2.2712769,
+    "latitude": 48.8388048,
+    "source": "salle"
+  },
+  "Canal 93|Bobigny|France": {
+    "longitude": 2.4401868,
+    "latitude": 48.9018604,
+    "source": "salle"
+  },
+  "L’Olympia|Paris|France": {
+    "longitude": 2.3283595,
+    "latitude": 48.8702443,
+    "source": "salle"
+  },
+  "Théâtre du Châtelet|Paris|France": {
+    "longitude": 2.3462635,
+    "latitude": 48.8577942,
+    "source": "salle"
+  },
+  "Culture Rapide|Paris|France": {
+    "longitude": 2.3819081,
+    "latitude": 48.8730257,
+    "source": "salle"
+  },
+  "La Gare eXPérimentale|Paris|France": {
+    "longitude": 2.4063226,
+    "latitude": 48.878497,
+    "source": "salle"
+  },
+  "Point Éphémère|Paris|France": {
+    "longitude": 2.3685729,
+    "latitude": 48.8815168,
+    "source": "salle"
+  },
+  "La Halle aux Oliviers - La Bellevilloise|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Maison pour Tous|Savins|France": {
+    "longitude": 3.2008947,
+    "latitude": 48.5113958,
+    "source": "ville"
+  },
+  "adidas arena|Paris|France": {
+    "longitude": 2.3607486,
+    "latitude": 48.8995985,
+    "source": "salle"
+  },
+  "Michou Comedy Club|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Salle Pleyel|Paris|France": {
+    "longitude": 2.3010998,
+    "latitude": 48.8770119,
+    "source": "salle"
+  },
+  "Maxim's de Paris|Paris|France": {
+    "longitude": 2.3222252,
+    "latitude": 48.867315,
+    "source": "salle"
+  },
+  "Salle Polyvalente Guy Bonin|Angerville|France": {
+    "longitude": 2.0008347,
+    "latitude": 48.3116343,
+    "source": "salle"
+  },
+  "Cathédrale américaine|Paris|France": {
+    "longitude": 2.3006339,
+    "latitude": 48.8675001,
+    "source": "salle"
+  },
+  "Le gobe lune|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Péniche Anako|Paris|France": {
+    "longitude": 2.3734198,
+    "latitude": 48.8850187,
+    "source": "salle"
+  },
+  "Cartilage|Paris|France": {
+    "longitude": 2.3860744,
+    "latitude": 48.8497405,
+    "source": "salle"
+  },
+  "La Pointe Lafayette|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "EGLISE SAINT SULPICE|Paris|France": {
+    "longitude": 2.3348702,
+    "latitude": 48.8509871,
+    "source": "salle"
+  },
+  "Bizz'Art|Paris|France": {
+    "longitude": 2.3664351,
+    "latitude": 48.8790716,
+    "source": "salle"
+  },
+  "Nanna|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "The Hoxton, Paris|Paris|France": {
+    "longitude": 2.346506,
+    "latitude": 48.870201,
+    "source": "salle"
+  },
+  "L'Européen|Paris|France": {
+    "longitude": 2.3265034,
+    "latitude": 48.8837701,
+    "source": "salle"
+  },
+  "Le Gambetta|Paris|France": {
+    "longitude": 2.4030888,
+    "latitude": 48.8595367,
+    "source": "salle"
+  },
+  "Tout Le Monde En Parle - restaurant festif anniversaire paris 15 montparnasse club|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Halo Paris|Paris|France": {
+    "longitude": 2.3489349,
+    "latitude": 48.8660267,
+    "source": "salle"
+  },
+  "La Palmeraie|Paris|France": {
+    "longitude": 2.3194799,
+    "latitude": 48.8911447,
+    "source": "salle"
+  },
+  "UNISSON|Le Kremlin-Bicêtre|France": {
+    "longitude": 2.3570028,
+    "latitude": 48.8125893,
+    "source": "ville"
+  },
+  "Phantom Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Morézienne|Paris|France": {
+    "longitude": 2.3793387,
+    "latitude": 48.8670736,
+    "source": "salle"
+  },
+  "L'Alimentation Générale|Paris|France": {
+    "longitude": 2.3744164,
+    "latitude": 48.8668127,
+    "source": "salle"
+  },
+  "La Péniche Cinéma - Le Baruda|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'EMPIRE CLUB|Chilly-Mazarin|France": {
+    "longitude": 2.3123582,
+    "latitude": 48.7026161,
+    "source": "ville"
+  },
+  "MIRAGE|Paris|France": {
+    "longitude": 2.3525494,
+    "latitude": 48.8213502,
+    "source": "salle"
+  },
+  "La Java|Paris|France": {
+    "longitude": 2.3736247,
+    "latitude": 48.871312,
+    "source": "salle"
+  },
+  "Les Étoiles|Paris|France": {
+    "longitude": 2.3734876,
+    "latitude": 48.8478177,
+    "source": "salle"
+  },
+  "Palais de Tokyo|Paris|France": {
+    "longitude": 2.2965215,
+    "latitude": 48.8639905,
+    "source": "salle"
+  },
+  "Stade de France|Paris|France": {
+    "longitude": 2.3535027,
+    "latitude": 48.8557562,
+    "source": "salle"
+  },
+  "Listener|Paris|France": {
+    "longitude": 2.3393876,
+    "latitude": 48.8674511,
+    "source": "salle"
+  },
+  "Société Théâtre de la Madeleine|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Cabaret Sauvage|Paris|France": {
+    "longitude": 2.3923457,
+    "latitude": 48.8956182,
+    "source": "salle"
+  },
+  "Essaim|Paris|France": {
+    "longitude": 2.3620619,
+    "latitude": 48.8822517,
+    "source": "salle"
+  },
+  "THE HANG ART|Bagnolet|France": {
+    "longitude": 2.4173658,
+    "latitude": 48.8688199,
+    "source": "ville"
+  },
+  "The Hang Art|Bagnolet|France": {
+    "longitude": 2.4173658,
+    "latitude": 48.8688199,
+    "source": "ville"
+  },
+  "Église Saint-Eustache|Paris|France": {
+    "longitude": 2.3451276,
+    "latitude": 48.8633997,
+    "source": "salle"
+  },
+  "Théâtre de Ménilmontant|Paris|France": {
+    "longitude": 2.3943422,
+    "latitude": 48.8680189,
+    "source": "salle"
+  },
+  "Le Montorgueil - Scène des Halles|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LEU AIR FESTIVAL|Saint-Leu-la-Forêt|France": {
+    "longitude": 2.2480799,
+    "latitude": 49.0212001,
+    "source": "ville"
+  },
+  "Grande salle Pierre Boulez - Philharmonie de Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LE BATEAU PHARE|Paris|France": {
+    "longitude": 2.3792822,
+    "latitude": 48.8333859,
+    "source": "salle"
+  },
+  "SALLE PLEYEL|Paris|France": {
+    "longitude": 2.3010998,
+    "latitude": 48.8770119,
+    "source": "salle"
+  },
+  "Maya Klub|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Abricot|Paris|France": {
+    "longitude": 2.372159,
+    "latitude": 48.8713858,
+    "source": "salle"
+  },
+  "La Gaîté Lyrique|Paris|France": {
+    "longitude": 2.3533873,
+    "latitude": 48.8665807,
+    "source": "salle"
+  },
+  "Rosa Bonheur sur Seine|Paris|France": {
+    "longitude": 2.3156535,
+    "latitude": 48.8630835,
+    "source": "salle"
+  },
+  "Studio de l'Ermitage|Paris|France": {
+    "longitude": 2.391711,
+    "latitude": 48.8700266,
+    "source": "salle"
+  },
+  "Caveau de la Huchette|Paris|France": {
+    "longitude": 2.3462981,
+    "latitude": 48.8527871,
+    "source": "salle"
+  },
+  "STUDIO 56 PARIS|Paris|France": {
+    "longitude": 2.3736128,
+    "latitude": 48.8680786,
+    "source": "salle"
+  },
+  "Le siège de l'UNESCO|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Chinois|Paris|France": {
+    "longitude": 2.3614944,
+    "latitude": 48.8552588,
+    "source": "salle"
+  },
+  "Mains d'œuvres|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Palais Garnier|Paris|France": {
+    "longitude": 2.3323339,
+    "latitude": 48.8720949,
+    "source": "salle"
+  },
+  "Bataclan|Paris|France": {
+    "longitude": 2.3706465,
+    "latitude": 48.8630357,
+    "source": "salle"
+  },
+  "Théâtre des Bouffes du Nord|Paris|France": {
+    "longitude": 2.3588579,
+    "latitude": 48.8839948,
+    "source": "salle"
+  },
+  "Les Folies Bergère|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Comédie des 3 Bornes|Paris|France": {
+    "longitude": 2.3754516,
+    "latitude": 48.8674856,
+    "source": "salle"
+  },
+  "Parc de Mézières - Salle de l'Orangerie|Eaubonne|France": {
+    "longitude": 2.2792058,
+    "latitude": 48.9911296,
+    "source": "ville"
+  },
+  "Comédie Bastille|Paris|France": {
+    "longitude": 2.3700779,
+    "latitude": 48.8588953,
+    "source": "salle"
+  },
+  "Les Rendez-Vous D'Ailleurs|Paris|France": {
+    "longitude": 2.4042383,
+    "latitude": 48.8558868,
+    "source": "salle"
+  },
+  "Théâtre Le Lieu|Paris|France": {
+    "longitude": 2.3453546,
+    "latitude": 48.8752784,
+    "source": "salle"
+  },
+  "Le Trianon|Paris|France": {
+    "longitude": 2.3429332,
+    "latitude": 48.8830683,
+    "source": "salle"
+  },
+  "NONSENSE MONTMARTRE|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LA MAZ|Paris|France": {
+    "longitude": 2.3481463,
+    "latitude": 48.8637732,
+    "source": "salle"
+  },
+  "Bouffes du Nord theater|Paris|France": {
+    "longitude": 2.3588579,
+    "latitude": 48.8839948,
+    "source": "salle"
+  },
+  "Élysée Montmartre|Paris|France": {
+    "longitude": 2.3434196,
+    "latitude": 48.8831149,
+    "source": "salle"
+  },
+  "Cathédrale Notre-Dame de Paris|Paris|France": {
+    "longitude": 2.3500501,
+    "latitude": 48.8529371,
+    "source": "salle"
+  },
+  "Centre Culturel Paul B|Massy|France": {
+    "longitude": 2.2766735,
+    "latitude": 48.730158,
+    "source": "ville"
+  },
+  "Sonorium|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Mecanique Ondulatoire|Paris|France": {
+    "longitude": 2.3746138,
+    "latitude": 48.8535667,
+    "source": "salle"
+  },
+  "mezzanine|Paris|France": {
+    "longitude": 2.334406,
+    "latitude": 48.883544,
+    "source": "salle"
+  },
+  "Dr Feelgood - Rocket|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Local des Autrices|Paris|France": {
+    "longitude": 2.3756096,
+    "latitude": 48.8698621,
+    "source": "salle"
+  },
+  "Casino de Paris|Paris|France": {
+    "longitude": 2.3305095,
+    "latitude": 48.8784442,
+    "source": "salle"
+  },
+  "Les Caves Saint-Sabin|Paris|France": {
+    "longitude": 2.3691284,
+    "latitude": 48.8586675,
+    "source": "salle"
+  },
+  "Les Trois Baudets|Paris|France": {
+    "longitude": 2.3344474,
+    "latitude": 48.8834709,
+    "source": "salle"
+  },
+  "Center Culturel Paul B|Massy|France": {
+    "longitude": 2.2766735,
+    "latitude": 48.730158,
+    "source": "ville"
+  },
+  "La Scala Paris|Paris|France": {
+    "longitude": 2.3545773,
+    "latitude": 48.8703281,
+    "source": "salle"
+  },
+  "L'Archipel|Paris|France": {
+    "longitude": 2.3546023,
+    "latitude": 48.8704786,
+    "source": "salle"
+  },
+  "LE TRABENDO (Parc de la Villette)|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'harmonie des ombres|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Dynamo de Banlieues Bleues|Pantin|France": {
+    "longitude": 2.3932928,
+    "latitude": 48.9033524,
+    "source": "salle"
+  },
+  "Serpent A Plume|Paris|France": {
+    "longitude": 2.3666252,
+    "latitude": 48.8561637,
+    "source": "salle"
+  },
+  "Monkey Pigalle|Paris|France": {
+    "longitude": 2.3352557,
+    "latitude": 48.8806727,
+    "source": "salle"
+  },
+  "THEATRE BO SAINT MARTIN|Paris|France": {
+    "longitude": 2.3597739,
+    "latitude": 48.868142,
+    "source": "salle"
+  },
+  "Café Oz Châtelet|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Église suédoise|Paris|France": {
+    "longitude": 2.3031681,
+    "latitude": 48.8807541,
+    "source": "salle"
+  },
+  "Extra Bal|Saint-Ouen-Sur-Seine|France": {
+    "longitude": 2.334267,
+    "latitude": 48.911729,
+    "source": "ville"
+  },
+  "Olympic Café|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Club Sonore|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Marbrerie Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "WAB : We Are Brewers // Brewerie & taproom|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Village Monge|Paris|France": {
+    "longitude": 2.3515306,
+    "latitude": 48.8407886,
+    "source": "salle"
+  },
+  "Dover Street Market Paris|Paris|France": {
+    "longitude": 2.3604119,
+    "latitude": 48.8576596,
+    "source": "salle"
+  },
+  "Le Café des Sports|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Digital Village Paris|Paris|France": {
+    "longitude": 2.3580955,
+    "latitude": 48.8310538,
+    "source": "salle"
+  },
+  "Le Cabaret Sauvage|Paris|France": {
+    "longitude": 2.3923457,
+    "latitude": 48.8956182,
+    "source": "salle"
+  },
+  "Le Pigalle - Restaurant|Paris|France": {
+    "longitude": 2.3348471,
+    "latitude": 48.8803922,
+    "source": "salle"
+  },
+  "Le Melville|Paris|France": {
+    "longitude": 2.3121232,
+    "latitude": 48.8714413,
+    "source": "salle"
+  },
+  "Faites entrer les musiciens|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Bridge Club|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Comédie Saint-Michel|Paris|France": {
+    "longitude": 2.3397828,
+    "latitude": 48.8445229,
+    "source": "salle"
+  },
+  "WASTED PARTY|Fontainebleau|France": {
+    "longitude": 2.7015872,
+    "latitude": 48.4049375,
+    "source": "ville"
+  },
+  "Pavillon Tilsitt|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Petit Prince|Paris|France": {
+    "longitude": 2.3604625,
+    "latitude": 48.8318684,
+    "source": "salle"
+  },
+  "Chez Moune|Paris|France": {
+    "longitude": 2.3359923,
+    "latitude": 48.8809909,
+    "source": "salle"
+  },
+  "Parc des expositions Paris Nord Villepinte|Villepinte|France": {
+    "longitude": 2.5347541,
+    "latitude": 48.9636566,
+    "source": "ville"
+  },
+  "38 Riv|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Grange à Dîmes|Écouen|France": {
+    "longitude": 2.3799378,
+    "latitude": 49.0196554,
+    "source": "ville"
+  },
+  "Centre d'animation Paris Anim' Nouvelle Athènes|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Grande Halle de la Villette|Paris|France": {
+    "longitude": 2.3906572,
+    "latitude": 48.8910622,
+    "source": "salle"
+  },
+  "Église Saint-Philippe-du-Roule|Paris|France": {
+    "longitude": 2.3105585,
+    "latitude": 48.8733341,
+    "source": "salle"
+  },
+  "NRJ Radio|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre Municipal Berthelot - Jean Guerrin|Montreuil|France": {
+    "longitude": 2.4379796,
+    "latitude": 48.8561158,
+    "source": "salle"
+  },
+  "Les Bêtises|Paris|France": {
+    "longitude": 2.380409,
+    "latitude": 48.8664918,
+    "source": "salle"
+  },
+  "Le Marilyn - Terrasse - Bar dansant - Salle privatisable|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "A LA FOLIE|Paris|France": {
+    "longitude": 2.3715121,
+    "latitude": 48.8642612,
+    "source": "salle"
+  },
+  "Parc des Expositions de Villepinte|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Quai de la Photo|Paris|France": {
+    "longitude": 2.3754059,
+    "latitude": 48.8366207,
+    "source": "salle"
+  },
+  "The Marble - concerts, parties, bar and canteen|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "THE HEADQUARTERS OBERKAMPF|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "O'225|Villenoy|France": {
+    "longitude": 2.8596553,
+    "latitude": 48.9412182,
+    "source": "salle"
+  },
+  "Le Ziquodrome|Compiègne|France": {
+    "longitude": 2.3535076,
+    "latitude": 48.8798289,
+    "source": "ville"
+  },
+  "L'Armony|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "Palais de la Porte Dorée|Paris|France": {
+    "longitude": 2.4093649,
+    "latitude": 48.8352731,
+    "source": "salle"
+  },
+  "Le Plan|Ris-Orangis|France": {
+    "longitude": 2.4043013,
+    "latitude": 48.6373122,
+    "source": "salle"
+  },
+  "Le M. - Restaurant du Musée du Vin|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Larocafé|Romainville|France": {
+    "longitude": 2.4358326,
+    "latitude": 48.8852958,
+    "source": "ville"
+  },
+  "L'alternative|Beauvais|France": {
+    "longitude": 1.7606875,
+    "latitude": 48.5726822,
+    "source": "ville"
+  },
+  "L'Ampli|Fontenay-le-Fleury|France": {
+    "longitude": 2.0461549,
+    "latitude": 48.8106578,
+    "source": "ville"
+  },
+  "La bicyclette|Montreuil|France": {
+    "longitude": 2.4358345,
+    "latitude": 48.8584535,
+    "source": "salle"
+  },
+  "Le Caveau des Oubliettes|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LE MAJESTIC - SCENE DE MONTEREAU|Montereau-Fault-Yonne|France": {
+    "longitude": 2.9557006,
+    "latitude": 48.3849647,
+    "source": "ville"
+  },
+  "La Casbah|Paris|France": {
+    "longitude": 2.3806787,
+    "latitude": 48.8515536,
+    "source": "salle"
+  },
+  "Club Haussmann|Paris|France": {
+    "longitude": 2.3302054,
+    "latitude": 48.8731154,
+    "source": "salle"
+  },
+  "LA FAV|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Planches|Paris|France": {
+    "longitude": 2.3200709,
+    "latitude": 48.8913866,
+    "source": "salle"
+  },
+  "FLOW Paris|Paris|France": {
+    "longitude": 2.3148857,
+    "latitude": 48.8633299,
+    "source": "salle"
+  },
+  "Le Bazar|Paris|France": {
+    "longitude": 2.3662371,
+    "latitude": 48.865362,
+    "source": "salle"
+  },
+  "GRILLAGE PROD|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre de la Ville – Sarah Bernhardt|Paris|France": {
+    "longitude": 2.3480696,
+    "latitude": 48.857285,
+    "source": "salle"
+  },
+  "Opéra Bastille|Paris|France": {
+    "longitude": 2.3707417,
+    "latitude": 48.8515018,
+    "source": "salle"
+  },
+  "Théâtre de l'Île Saint-Louis|Paris|France": {
+    "longitude": 2.3681825,
+    "latitude": 48.8714948,
+    "source": "salle"
+  },
+  "DOME DE PARIS|Paris|France": {
+    "longitude": 2.2862915,
+    "latitude": 48.8327642,
+    "source": "salle"
+  },
+  "Théâtre du Temps|Paris|France": {
+    "longitude": 2.3815463,
+    "latitude": 48.8601015,
+    "source": "salle"
+  },
+  "ESPACE BERNANOS|Paris|France": {
+    "longitude": 2.3273404,
+    "latitude": 48.8745019,
+    "source": "salle"
+  },
+  "MAIN ROOM|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre Gaité-Rive Gauche|Paris|France": {
+    "longitude": 2.3243234,
+    "latitude": 48.840783,
+    "source": "salle"
+  },
+  "Théâtre Mogador|Paris|France": {
+    "longitude": 2.3306107,
+    "latitude": 48.8754041,
+    "source": "salle"
+  },
+  "La Manufacture Chanson|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Musée d'Orsay|Paris|France": {
+    "longitude": 2.3265849,
+    "latitude": 48.8599179,
+    "source": "salle"
+  },
+  "Centre Evénementiel et Culturel|Courbevoie|France": {
+    "longitude": 2.2561602,
+    "latitude": 48.8953328,
+    "source": "ville"
+  },
+  "Péniche Adélaïde|Paris|France": {
+    "longitude": 2.3757943,
+    "latitude": 48.8869083,
+    "source": "salle"
+  },
+  "Mairie de Paris Centre|Paris|France": {
+    "longitude": 2.3617859,
+    "latitude": 48.8638732,
+    "source": "salle"
+  },
+  "El Clan Destino|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Lafayette Anticipations – Galeries Lafayette Corporate Foundation|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre Roger Barat|Herblay|France": {
+    "longitude": 2.1663775,
+    "latitude": 48.9919047,
+    "source": "salle"
+  },
+  "Goethe Institut|Paris|France": {
+    "longitude": 2.2943866,
+    "latitude": 48.8661684,
+    "source": "salle"
+  },
+  "Chez Georges|Paris|France": {
+    "longitude": 2.2848987,
+    "latitude": 48.8778621,
+    "source": "salle"
+  },
+  "Eglise Saint Germain Des Prés|Paris|France": {
+    "longitude": 2.3345177,
+    "latitude": 48.8539677,
+    "source": "salle"
+  },
+  "Théâtre des Sablons|Neuilly-sur-Seine|France": {
+    "longitude": 2.27599,
+    "latitude": 48.8835613,
+    "source": "salle"
+  },
+  "Théâtre de la Bastille|Paris|France": {
+    "longitude": 2.3755799,
+    "latitude": 48.8558275,
+    "source": "salle"
+  },
+  "Le Sax - Espace Musical|Achères|France": {
+    "longitude": 2.0698106,
+    "latitude": 48.9606321,
+    "source": "ville"
+  },
+  "Église Saint-Pierre de Montmartre|Paris|France": {
+    "longitude": 2.3420378,
+    "latitude": 48.8867202,
+    "source": "salle"
+  },
+  "Auditorium Patrick Devedjian - La Seine musicale|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "Espace Michel Simon|Noisy-le-Grand|France": {
+    "longitude": 2.553469,
+    "latitude": 48.8461161,
+    "source": "salle"
+  },
+  "La Cave|Argenteuil|France": {
+    "longitude": 2.2486964,
+    "latitude": 48.943112,
+    "source": "salle"
+  },
+  "Multi-lieux : Badaboum, Le Café de la Danse, Les Disquaires, La Mécanique Ondulatoire, POPUP!, Supersonic, Supersonic Records|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "MIRA|Paris|France": {
+    "longitude": 2.3497266,
+    "latitude": 48.8659019,
+    "source": "salle"
+  },
+  "Le Consulat|Paris|France": {
+    "longitude": 2.3796151,
+    "latitude": 48.8596055,
+    "source": "salle"
+  },
+  "Le Cirque Electrique|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Auditorium de La Seine Musicale|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "Studio L'Accord Parfait|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Espace culture Jean-Jacques Robert|Mennecy|France": {
+    "longitude": 2.4347044,
+    "latitude": 48.5666645,
+    "source": "ville"
+  },
+  "Castel|Paris|France": {
+    "longitude": 2.3346195,
+    "latitude": 48.8520409,
+    "source": "salle"
+  },
+  "Kúkú|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Usine Bar, Cave, Café/Concert|Marcoussis|France": {
+    "longitude": 2.230811,
+    "latitude": 48.6427131,
+    "source": "ville"
+  },
+  "Les Invalides|Paris|France": {
+    "longitude": 2.3118779,
+    "latitude": 48.8570374,
+    "source": "salle"
+  },
+  "La Marberie|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Chinois de Bercy|Paris|France": {
+    "longitude": 2.3828405,
+    "latitude": 48.8376963,
+    "source": "salle"
+  },
+  "Médiathèque Madeleine Odent|Bresles|France": {
+    "longitude": null,
+    "latitude": null,
+    "source": ""
+  },
+  "Maison La Feuilleraie|Varennes-Jarcy|France": {
+    "longitude": 2.5579616,
+    "latitude": 48.6823402,
+    "source": "ville"
+  },
+  "La Divine Comédie - Salle 1|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Balades Sonores|Paris|France": {
+    "longitude": 2.3463417,
+    "latitude": 48.8847592,
+    "source": "salle"
+  },
+  "Salle des concerts - Cité de la Musique-Philharmonie|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Cité de la musique|Paris|France": {
+    "longitude": 2.3940699,
+    "latitude": 48.8898938,
+    "source": "salle"
+  },
+  "Espace Pierre Bachelet|Dammarie-les-Lys|France": {
+    "longitude": 2.6223536,
+    "latitude": 48.5188778,
+    "source": "salle"
+  },
+  "El Alamein Sarl|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Pédiluve|Châtenay-Malabry|France": {
+    "longitude": 2.2691129,
+    "latitude": 48.7646854,
+    "source": "salle"
+  },
+  "PALAIS DES GLACES|Paris|France": {
+    "longitude": 2.3137305,
+    "latitude": 48.8687182,
+    "source": "salle"
+  },
+  "Sunset|Paris|France": {
+    "longitude": 2.34468,
+    "latitude": 48.871432,
+    "source": "salle"
+  },
+  "Chez Papa Jazz Club|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Carré Belle-Feuille|Boulogne-Billancourt|France": {
+    "longitude": 2.2437848,
+    "latitude": 48.8360234,
+    "source": "salle"
+  },
+  "La Clef|Saint-Germain-en-Laye|France": {
+    "longitude": 2.0884919,
+    "latitude": 48.8940549,
+    "source": "salle"
+  },
+  "CEC - Théâtre de Yerres|Yerres|France": {
+    "longitude": 2.4879753,
+    "latitude": 48.716811,
+    "source": "ville"
+  },
+  "Theatre of the Vesinet|Le Vésinet|France": {
+    "longitude": 2.1347291,
+    "latitude": 48.894254,
+    "source": "ville"
+  },
+  "Salle Colonne|Paris|France": {
+    "longitude": 2.3452795,
+    "latitude": 48.8313483,
+    "source": "salle"
+  },
+  "JO&JOE Paris - Nation|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Sunside|Paris|France": {
+    "longitude": 2.3477284,
+    "latitude": 48.8598645,
+    "source": "salle"
+  },
+  "La Planque|Paris|France": {
+    "longitude": 2.3701321,
+    "latitude": 48.8719184,
+    "source": "salle"
+  },
+  "Ground Control|Paris|France": {
+    "longitude": 2.3811638,
+    "latitude": 48.8433293,
+    "source": "salle"
+  },
+  "Communale Saint-Ouen|Saint-Ouen|France": {
+    "longitude": 2.3290179,
+    "latitude": 48.9129138,
+    "source": "salle"
+  },
+  "Espace Vasarely|Antony|France": {
+    "longitude": 2.3002885,
+    "latitude": 48.7498986,
+    "source": "salle"
+  },
+  "Boris Vian Cultural Space, Rue Du Morvan Les Ulis|Les Ulis|France": {
+    "longitude": 2.1701573,
+    "latitude": 48.681708,
+    "source": "ville"
+  },
+  "Centre des Arts d'Enghien-les-Bains|Enghien-les-Bains|France": {
+    "longitude": 2.3053387,
+    "latitude": 48.9723354,
+    "source": "salle"
+  },
+  "La belle étoile|Saint-Denis|France": {
+    "longitude": 2.5012485,
+    "latitude": 48.976919,
+    "source": "salle"
+  },
+  "Le Forum|Vaureal|France": {
+    "longitude": 2.0218937,
+    "latitude": 49.0313663,
+    "source": "salle"
+  },
+  "La Loingtaine|Montigny-sur-Loing|France": {
+    "longitude": 2.757804,
+    "latitude": 48.3405032,
+    "source": "ville"
+  },
+  "Église Saint-Julien-le-Pauvre|Paris|France": {
+    "longitude": 2.3471337,
+    "latitude": 48.8520486,
+    "source": "salle"
+  },
+  "Extra-LaserBowl|Ballainvilliers|France": {
+    "longitude": 2.282614,
+    "latitude": 48.6698801,
+    "source": "salle"
+  },
+  "Ora Farmhouse - Pavillon du Lac|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre de Longjumeau|LONGJUMEAU|France": {
+    "longitude": 2.2993138,
+    "latitude": 48.6954266,
+    "source": "salle"
+  },
+  "Collège des Bernardins|Paris|France": {
+    "longitude": 2.3519829,
+    "latitude": 48.8488342,
+    "source": "salle"
+  },
+  "Le 360 Paris Music Factory|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "METAXU|Pantin|France": {
+    "longitude": 2.4137542,
+    "latitude": 48.8948961,
+    "source": "salle"
+  },
+  "Le Milton Pub 2.0|Bois-le-Roi|France": {
+    "longitude": 2.6939537,
+    "latitude": 48.4754789,
+    "source": "ville"
+  },
+  "Maison de la musique de Nanterre|Nanterre|France": {
+    "longitude": 2.1984177,
+    "latitude": 48.891382,
+    "source": "salle"
+  },
+  "l'entrepôt|Paris|France": {
+    "longitude": 2.3938208,
+    "latitude": 48.8887735,
+    "source": "salle"
+  },
+  "Le Patio Opéra|Paris|France": {
+    "longitude": 2.3333518,
+    "latitude": 48.8717877,
+    "source": "salle"
+  },
+  "Covent Garden Studios|Éragny|France": {
+    "longitude": 2.0910817,
+    "latitude": 49.0192178,
+    "source": "ville"
+  },
+  "MJC François Rabelais de Savigny Sur Orge|Savigny-sur-Orge|France": {
+    "longitude": 2.3458417,
+    "latitude": 48.6794572,
+    "source": "ville"
+  },
+  "Cc Du Pays de Valois|Crépy-en-Valois|France": {
+    "longitude": 2.8900507,
+    "latitude": 49.2358509,
+    "source": "ville"
+  },
+  "Les Cuizines|Chelles|France": {
+    "longitude": 2.6142012,
+    "latitude": 48.887467,
+    "source": "salle"
+  },
+  "STANISLAS FISZER|Saint-Quentin-en-Yvelines|France": {
+    "longitude": 2.0159521,
+    "latitude": 48.7818613,
+    "source": "ville"
+  },
+  "EMB Sannois|Sannois|France": {
+    "longitude": 2.2631211,
+    "latitude": 48.9728432,
+    "source": "salle"
+  },
+  "Oratoire du Louvre|Paris|France": {
+    "longitude": 2.3400228,
+    "latitude": 48.8619283,
+    "source": "salle"
+  },
+  "Théâtre Mandapa|Paris|France": {
+    "longitude": 2.3451825,
+    "latitude": 48.8276174,
+    "source": "salle"
+  },
+  "Tamanoir|Gennevilliers|France": {
+    "longitude": 2.2864228,
+    "latitude": 48.9340572,
+    "source": "salle"
+  },
+  "Manufacture Chanson|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Sax|Achères|France": {
+    "longitude": 2.0656472,
+    "latitude": 48.958881,
+    "source": "salle"
+  },
+  "Centre Culturel J.Prevert|Villeparisis|France": {
+    "longitude": 2.6176193,
+    "latitude": 48.939344,
+    "source": "ville"
+  },
+  "Le Douze|Cergy|France": {
+    "longitude": 2.034681,
+    "latitude": 49.0474935,
+    "source": "salle"
+  },
+  "Le PIC - Petit Ivry Cabaret|Ivry-sur-Seine|France": {
+    "longitude": 2.3872525,
+    "latitude": 48.8122302,
+    "source": "ville"
+  },
+  "Eglise Saint-Philippe du Roule|Paris|France": {
+    "longitude": 2.3105585,
+    "latitude": 48.8733341,
+    "source": "salle"
+  },
+  "Blues Sur Seine|Conflans-Sainte-Honorine|France": {
+    "longitude": 2.0949768,
+    "latitude": 48.9938791,
+    "source": "ville"
+  },
+  "Punk Paradise|Paris|France": {
+    "longitude": 2.3724207,
+    "latitude": 48.863692,
+    "source": "salle"
+  },
+  "Basement France|Paris|France": {
+    "longitude": 2.3459586,
+    "latitude": 48.879072,
+    "source": "salle"
+  },
+  "Junky May Production|Palaiseau|France": {
+    "longitude": 2.2453842,
+    "latitude": 48.7144587,
+    "source": "ville"
+  },
+  "Espace Salvador Allende|Palaiseau|France": {
+    "longitude": 2.258943,
+    "latitude": 48.713711,
+    "source": "salle"
+  },
+  "Médiathèque intercommunale à Juilly|Juilly|France": {
+    "longitude": 2.7045957,
+    "latitude": 49.0138981,
+    "source": "ville"
+  },
+  "Médiathèque de l'Abbaye - Nelson Mandela|Créteil|France": {
+    "longitude": 2.469844,
+    "latitude": 48.7774041,
+    "source": "salle"
+  },
+  "Le Loft|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "Le Loft - Montreuil|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "Église Saint-Éphrem|Paris|France": {
+    "longitude": 2.3476992,
+    "latitude": 48.8483553,
+    "source": "salle"
+  },
+  "Théâtre 71|Malakoff|France": {
+    "longitude": 2.3013158,
+    "latitude": 48.8211081,
+    "source": "salle"
+  },
+  "Le 6b|Saint-Denis|France": {
+    "longitude": 2.3426664,
+    "latitude": 48.9382801,
+    "source": "salle"
+  },
+  "L'Empreinte|Savigny-Le-Temple|France": {
+    "longitude": 2.5851089,
+    "latitude": 48.5953564,
+    "source": "salle"
+  },
+  "Église luthérienne du Bon-Secours|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Marbrerie|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Abeille du Chenet|Dannemois|France": {
+    "longitude": 2.4778402,
+    "latitude": 48.4538873,
+    "source": "ville"
+  },
+  "Amaluna - Bar festif de Nuit, restaurant Paris 18|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Usine à Chapeaux|Rambouillet|France": {
+    "longitude": 1.819207,
+    "latitude": 48.6452851,
+    "source": "ville"
+  },
+  "Le Zénith Paris – La Villette|Paris|France": {
+    "longitude": 2.3931778,
+    "latitude": 48.8942078,
+    "source": "salle"
+  },
+  "Sarafan Salon|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Church of St. Marcel|Paris|France": {
+    "longitude": 2.3551029,
+    "latitude": 48.8420709,
+    "source": "salle"
+  },
+  "Salle Olympe de Gouges|Paris|France": {
+    "longitude": 2.3847984,
+    "latitude": 48.860374,
+    "source": "salle"
+  },
+  "REBELS|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "THEATRE SILVIA MONFORT-GRANDE SALLE|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Batterie|Guyancourt|France": {
+    "longitude": 2.0588557,
+    "latitude": 48.783089,
+    "source": "salle"
+  },
+  "L'Accord Parfait|Paris|France": {
+    "longitude": 2.2780688,
+    "latitude": 48.8646805,
+    "source": "salle"
+  },
+  "Festival Blues sur Scene|Mantes-la-Ville|France": {
+    "longitude": 1.7109449,
+    "latitude": 48.9748938,
+    "source": "ville"
+  },
+  "Salle Molière|Aulnay-sous-Bois|France": {
+    "longitude": 2.499789,
+    "latitude": 48.934231,
+    "source": "ville"
+  },
+  "Espace Charles Vanel|Lagny Sur  Marne|France": {
+    "longitude": 2.7068386,
+    "latitude": 48.876152,
+    "source": "salle"
+  },
+  "Théâtre des Arcades|BUC|France": {
+    "longitude": 2.1266337,
+    "latitude": 48.7748855,
+    "source": "salle"
+  },
+  "Théâtre André Malraux|Rueil-Malmaison|France": {
+    "longitude": 2.183894,
+    "latitude": 48.8801004,
+    "source": "salle"
+  },
+  "Cinéma Le Palace|Beaumont-sur-Oise|France": {
+    "longitude": 2.2829736,
+    "latitude": 49.141525,
+    "source": "salle"
+  },
+  "Espace Sorano|Vincennes|France": {
+    "longitude": 2.4357144,
+    "latitude": 48.8498933,
+    "source": "salle"
+  },
+  "Le Colisée|Chartres|France": {
+    "longitude": 1.4782898,
+    "latitude": 48.4476871,
+    "source": "salle"
+  },
+  "La Merise|Trappes|France": {
+    "longitude": 1.9856298,
+    "latitude": 48.7767833,
+    "source": "salle"
+  },
+  "Theater of Poissy|Poissy|France": {
+    "longitude": 2.0426301,
+    "latitude": 48.9274192,
+    "source": "ville"
+  },
+  "CATHEDRALE SAINT-LOUIS|Versailles|France": {
+    "longitude": 2.1242554,
+    "latitude": 48.7982877,
+    "source": "salle"
+  },
+  "L'Éco-Créatif|Paris|France": {
+    "longitude": 2.3798609,
+    "latitude": 48.866525,
+    "source": "salle"
+  },
+  "Musique Pour Tous-Café La Bassecour|Nanterre|France": {
+    "longitude": 2.2071267,
+    "latitude": 48.8924273,
+    "source": "ville"
+  },
+  "ADDICTION.TECHNO|Pontault-Combault|France": {
+    "longitude": 2.6068064,
+    "latitude": 48.8009132,
+    "source": "ville"
+  },
+  "Gibus Club|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Association Maison Giquel|Rueil-Malmaison|France": {
+    "longitude": 2.1802832,
+    "latitude": 48.87778,
+    "source": "ville"
+  },
+  "Grange à dîmes|Écouen|France": {
+    "longitude": 2.3799378,
+    "latitude": 49.0196554,
+    "source": "ville"
+  },
+  "Eglise Saint-Pierre|Dreux|France": {
+    "longitude": 1.4126063,
+    "latitude": 48.8578502,
+    "source": "salle"
+  },
+  "Saint Merry Church|Paris|France": {
+    "longitude": 2.3508047,
+    "latitude": 48.8590829,
+    "source": "salle"
+  },
+  "Pôle Musical d'Orgemont|Épinay-sur-Seine|France": {
+    "longitude": 2.2952453,
+    "latitude": 48.9530396,
+    "source": "salle"
+  },
+  "Église Saint-Quentin|Valmondois|France": {
+    "longitude": 2.1910707,
+    "latitude": 49.0961301,
+    "source": "salle"
+  },
+  "Théâtre des Champs-Elysées|Paris|France": {
+    "longitude": 2.3029039,
+    "latitude": 48.8658174,
+    "source": "salle"
+  },
+  "SOLEXPROD|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Dôme de Paris|Paris|France": {
+    "longitude": 2.2862915,
+    "latitude": 48.8327642,
+    "source": "salle"
+  },
+  "Les Grandes-Serres|Pantin|11": {
+    "longitude": 2.4019804,
+    "latitude": 48.8965023,
+    "source": "ville"
+  },
+  "Maison des Arts - Créteil|Créteil|France": {
+    "longitude": 2.4544371,
+    "latitude": 48.7768605,
+    "source": "salle"
+  },
+  "La Maison étudiante|Paris|France": {
+    "longitude": 2.3564358,
+    "latitude": 48.847874,
+    "source": "salle"
+  },
+  "Les Instants Chavirés|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "Boubalé|Paris|France": {
+    "longitude": 2.3542783,
+    "latitude": 48.8573199,
+    "source": "salle"
+  },
+  "Cirque d'hiver Bouglione|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Cabaret Jazz Club|Courbevoie|France": {
+    "longitude": 2.2561602,
+    "latitude": 48.8953328,
+    "source": "ville"
+  },
+  "Terminus (Formerly Noct)|Pantin|France": {
+    "longitude": 2.4019804,
+    "latitude": 48.8965023,
+    "source": "ville"
+  },
+  "Institute Saint-Thomas De Villeneuve|Bry-sur-Marne|France": {
+    "longitude": 2.5193322,
+    "latitude": 48.8352872,
+    "source": "ville"
+  },
+  "Sous-préfecture de Mantes-la-Jolie|Mantes-la-Jolie|France": {
+    "longitude": 1.7144157,
+    "latitude": 48.9873144,
+    "source": "salle"
+  },
+  "Institut Culturel Italien|Paris|France": {
+    "longitude": 2.3231048,
+    "latitude": 48.8548944,
+    "source": "salle"
+  },
+  "Le Bal Blomet|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Cafe De La Danse|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Auguste Théâtre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Points communs - Théâtre des Louvrais|Pontoise|France": {
+    "longitude": 2.1008067,
+    "latitude": 49.0508845,
+    "source": "ville"
+  },
+  "Le Théâtre Traversière|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Seine Musicale|Boulogne Billancourt|France": {
+    "longitude": 2.2298304,
+    "latitude": 48.8259675,
+    "source": "salle"
+  },
+  "SEINE MUSICALE - AUDITORIUM P.DEVEDJIAN|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "Le Grand Point-Virgule - Majuscule|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Péniches de Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Espace culturel Christiane Faure|Limay|France": {
+    "longitude": 1.7353686,
+    "latitude": 48.9921015,
+    "source": "ville"
+  },
+  "Sabiá Arte & Cultura|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Chair de Poule|Paris|France": {
+    "longitude": 2.3754366,
+    "latitude": 48.8676394,
+    "source": "salle"
+  },
+  "Aux Spatules cuisine de partage|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Maroquinerie|Paris|France": {
+    "longitude": 2.3920592,
+    "latitude": 48.8685287,
+    "source": "salle"
+  },
+  "The People Paris Nation|Paris|France": {
+    "longitude": 2.3973148,
+    "latitude": 48.8476885,
+    "source": "salle"
+  },
+  "Foyer de Grenelle|Paris|France": {
+    "longitude": 2.2978039,
+    "latitude": 48.8479552,
+    "source": "salle"
+  },
+  "Hark Records|Paris|France": {
+    "longitude": 2.3850153,
+    "latitude": 48.8573736,
+    "source": "salle"
+  },
+  "Chapelle Royale|Versailles|France": {
+    "longitude": 2.1221817,
+    "latitude": 48.8050214,
+    "source": "salle"
+  },
+  "Swiss Cultural Centre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Espace culturel Alain-Poher|Ablon-sur-Seine|France": {
+    "longitude": 2.4216096,
+    "latitude": 48.7247785,
+    "source": "ville"
+  },
+  "La Maz|Paris|France": {
+    "longitude": 2.3481463,
+    "latitude": 48.8637732,
+    "source": "salle"
+  },
+  "Théâtre de la Concorde|Paris|France": {
+    "longitude": 2.3186956,
+    "latitude": 48.8673917,
+    "source": "salle"
+  },
+  "Centre Culturel E. Desouches|Lucé|France": {
+    "longitude": 1.4628645,
+    "latitude": 48.4364696,
+    "source": "ville"
+  },
+  "Scène Libre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Église de la Madeleine|Paris|France": {
+    "longitude": 2.3245425,
+    "latitude": 48.8701338,
+    "source": "salle"
+  },
+  "Le Forum|Vauréal|France": {
+    "longitude": 2.0218937,
+    "latitude": 49.0313663,
+    "source": "salle"
+  },
+  "CHAPELLE ST SYMPHORIEN|Paris|France": {
+    "longitude": 2.3339105,
+    "latitude": 48.8539434,
+    "source": "salle"
+  },
+  "Cultural Center Edmond Desouches|Lucé|France": {
+    "longitude": 1.4628645,
+    "latitude": 48.4364696,
+    "source": "ville"
+  },
+  "Espace Carpeaux|Courbevoie|France": {
+    "longitude": 2.259914,
+    "latitude": 48.900532,
+    "source": "salle"
+  },
+  "Espace Carpeaux - Camille Saint-Saëns|Courbevoie|France": {
+    "longitude": 2.2561602,
+    "latitude": 48.8953328,
+    "source": "ville"
+  },
+  "Pop Up|Paris|France": {
+    "longitude": 2.3496845,
+    "latitude": 48.8738148,
+    "source": "salle"
+  },
+  "L'Estaminet - Café Culture|Magny-les-Hameaux|France": {
+    "longitude": 2.0839562,
+    "latitude": 48.724051,
+    "source": "ville"
+  },
+  "Course Theater Cinema Paris Stéphane Gildas|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "38 RIV - Jazz Club & Bar|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre de Sartrouville|Sartrouville|France": {
+    "longitude": 2.1927688,
+    "latitude": 48.940242,
+    "source": "salle"
+  },
+  "Notre-Dame du Perpétuel Secours|Asnières-sur-Seine|France": {
+    "longitude": 2.2823773,
+    "latitude": 48.9144058,
+    "source": "salle"
+  },
+  "Marguerite Duras Media Library|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Conservatory|Gennevilliers|France": {
+    "longitude": 2.2940122,
+    "latitude": 48.9254221,
+    "source": "ville"
+  },
+  "L’Orange Bleue|Eaubonne|France": {
+    "longitude": 2.2778669,
+    "latitude": 48.9926538,
+    "source": "salle"
+  },
+  "LA BARBACANE|Beynes|France": {
+    "longitude": 1.876176,
+    "latitude": 48.8557194,
+    "source": "salle"
+  },
+  "ATHENEE THEATRE LOUIS-JOUVET - Gde Salle|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Centre Culturel Jean Vilar|Marly-le-Roi|France": {
+    "longitude": 2.0965935,
+    "latitude": 48.8681762,
+    "source": "ville"
+  },
+  "THEATRE ALEXANDRE DUMAS|Saint-Germain-en-Laye|France": {
+    "longitude": 2.097105,
+    "latitude": 48.8968256,
+    "source": "salle"
+  },
+  "Versailles Palais des Congrès|Versailles|France": {
+    "longitude": 2.1266886,
+    "latitude": 48.8035403,
+    "source": "ville"
+  },
+  "Théâtre Impérial de Compiègne|Compiègne|France": {
+    "longitude": 2.3535076,
+    "latitude": 48.8798289,
+    "source": "ville"
+  },
+  "Le Rack'am|Brétigny-sur-Orge|France": {
+    "longitude": 2.309301,
+    "latitude": 48.621538,
+    "source": "salle"
+  },
+  "Le POC / Salle de Spectacle|Alfortville|France": {
+    "longitude": 2.4197113,
+    "latitude": 48.8051624,
+    "source": "ville"
+  },
+  "Maison Populaire|Montreuil|France": {
+    "longitude": 2.4500675,
+    "latitude": 48.864296,
+    "source": "salle"
+  },
+  "Espace Mozaïk|Noisy-le-Sec|France": {
+    "longitude": 2.4516055,
+    "latitude": 48.8897751,
+    "source": "ville"
+  },
+  "New Chalet du Lac|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L’indus bar|Morangis|France": {
+    "longitude": 2.3367599,
+    "latitude": 48.7022956,
+    "source": "ville"
+  },
+  "Extended Sessions|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Dissociate|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Médiathèque Edmond Rostand|Paris|France": {
+    "longitude": 2.3034488,
+    "latitude": 48.8883391,
+    "source": "salle"
+  },
+  "Centre Culturel|Sucy-en-Brie|France": {
+    "longitude": 2.5200946,
+    "latitude": 48.7752553,
+    "source": "salle"
+  },
+  "Mission Bretonne, Ti Ar Vretoned|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Palais de la Femme|Paris|France": {
+    "longitude": 2.3830829,
+    "latitude": 48.8538459,
+    "source": "salle"
+  },
+  "ELYS1UM|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Our Lady of the Assumption Church|Chantilly|France": {
+    "longitude": 2.4636686,
+    "latitude": 49.1931736,
+    "source": "ville"
+  },
+  "Belushi's Paris (Canal)|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Events center of Courbevoie|Courbevoie|France": {
+    "longitude": 2.2561602,
+    "latitude": 48.8953328,
+    "source": "ville"
+  },
+  "Atelier du Verbe|Paris|France": {
+    "longitude": 2.3271438,
+    "latitude": 48.8351899,
+    "source": "salle"
+  },
+  "Eglise Protestante Luthérienne de Bon Secours|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Palais des Sports|Paris|France": {
+    "longitude": 2.2873078,
+    "latitude": 48.8322364,
+    "source": "salle"
+  },
+  "Community Center Madeleine Rebérioux|Créteil|France": {
+    "longitude": 2.464714,
+    "latitude": 48.7697199,
+    "source": "salle"
+  },
+  "International City Theatre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Saint Exupéry Space|Wissous|France": {
+    "longitude": 2.3268669,
+    "latitude": 48.7316381,
+    "source": "ville"
+  },
+  "L'Embarcadère|Aubervilliers|France": {
+    "longitude": 2.3829816,
+    "latitude": 48.9103614,
+    "source": "salle"
+  },
+  "Le Chaudron|Le Mée-sur-Seine|France": {
+    "longitude": 2.6335912,
+    "latitude": 48.5381859,
+    "source": "ville"
+  },
+  "Centre Culturel Guy Gambu|Saint-Marcel|France": {
+    "longitude": 1.4503304,
+    "latitude": 49.0980537,
+    "source": "salle"
+  },
+  "Pan Piper|Paris|France": {
+    "longitude": 2.388678,
+    "latitude": 48.8580133,
+    "source": "salle"
+  },
+  "Jacques Prévert Theatre and Cinema|Aulnay-sous-Bois|France": {
+    "longitude": 2.499789,
+    "latitude": 48.934231,
+    "source": "ville"
+  },
+  "Salle Mère Marie Pia|Quincy-sous-Sénart|France": {
+    "longitude": 2.5386769,
+    "latitude": 48.6716164,
+    "source": "salle"
+  },
+  "Théâtre Jean-Arp|Clamart|France": {
+    "longitude": 2.264172,
+    "latitude": 48.803007,
+    "source": "salle"
+  },
+  "Théâtre de la Clarté|Boulogne  Billancourt|France": {
+    "longitude": 2.2371442,
+    "latitude": 48.8320102,
+    "source": "salle"
+  },
+  "La Scène Watteau|Nogent-sur-Marne|France": {
+    "longitude": 2.4916592,
+    "latitude": 48.8387639,
+    "source": "ville"
+  },
+  "Magasins généraux|Pantin|France": {
+    "longitude": 2.4163474,
+    "latitude": 48.8948558,
+    "source": "salle"
+  },
+  "FHOMO|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Folies Pigalle|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LXVIBES|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre de Passy|Paris|France": {
+    "longitude": 2.2753773,
+    "latitude": 48.8580397,
+    "source": "salle"
+  },
+  "Le Temps des Cerises|Issy-les-Moulineaux|France": {
+    "longitude": 2.2672219,
+    "latitude": 48.8161452,
+    "source": "salle"
+  },
+  "Maison de la Challe|Éragny|France": {
+    "longitude": 2.0997377,
+    "latitude": 49.0189872,
+    "source": "salle"
+  },
+  "La Challe Multi Services|Éragny|France": {
+    "longitude": 2.0910817,
+    "latitude": 49.0192178,
+    "source": "ville"
+  },
+  "Musée du Quai Branly - Théâtre Claude Lévi-Strauss|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Espace Brassens|Mantes-la-Jolie|France": {
+    "longitude": 1.7101584,
+    "latitude": 48.9918086,
+    "source": "salle"
+  },
+  "Grand Rex|Paris|France": {
+    "longitude": 2.3476486,
+    "latitude": 48.8705334,
+    "source": "salle"
+  },
+  "Le Zorba|Paris|France": {
+    "longitude": 2.376404,
+    "latitude": 48.871966,
+    "source": "salle"
+  },
+  "Lumiere Grand Hall|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Élysée Montmartre|Paris|France": {
+    "longitude": 2.3252374,
+    "latitude": 48.87653,
+    "source": "salle"
+  },
+  "Le Caveau De la Huchette|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Théâtre Libre - le Comedia|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Hasard Lidique, Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "MADAME SIMONE|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Athénée-Théâtre Louis Jouvet|Paris|France": {
+    "longitude": 2.3288943,
+    "latitude": 48.8719199,
+    "source": "salle"
+  },
+  "Théâtre Juliette Récamier|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Bobino|Paris|France": {
+    "longitude": 2.3231602,
+    "latitude": 48.8399471,
+    "source": "salle"
+  },
+  "Cultural Space La Briqueterie|Montmorency|France": {
+    "longitude": 2.3197111,
+    "latitude": 48.9891693,
+    "source": "ville"
+  },
+  "Théâtre André Malraux|Chevilly-Larue|France": {
+    "longitude": 2.3507752,
+    "latitude": 48.7702445,
+    "source": "salle"
+  },
+  "CENTRE CULTUREL JACQUES PREVERT|Villeparisis|France": {
+    "longitude": 2.6143914,
+    "latitude": 48.9427925,
+    "source": "salle"
+  },
+  "Théâtre des Bergeries|Noisy-le-Sec|France": {
+    "longitude": 2.4539958,
+    "latitude": 48.891289,
+    "source": "salle"
+  },
+  "LE PRISME|Élancourt|France": {
+    "longitude": 1.9481315,
+    "latitude": 48.7668047,
+    "source": "salle"
+  },
+  "Eglise St Sulpice|Paris|France": {
+    "longitude": 2.3348702,
+    "latitude": 48.8509871,
+    "source": "salle"
+  },
+  "Espace Lumière|Épinay-sur-Seine|France": {
+    "longitude": 2.3139488,
+    "latitude": 48.9547118,
+    "source": "salle"
+  },
+  "Centre d'art et de culture|Meudon|France": {
+    "longitude": 2.2361052,
+    "latitude": 48.8139585,
+    "source": "salle"
+  },
+  "Théâtre de la Gaîté-Montparnasse|Paris|France": {
+    "longitude": 2.3231395,
+    "latitude": 48.8393508,
+    "source": "salle"
+  },
+  "Le Bataclan|Paris|France": {
+    "longitude": 2.3706465,
+    "latitude": 48.8630357,
+    "source": "salle"
+  },
+  "19 paul fort|Paris|France": {
+    "longitude": 2.3293054,
+    "latitude": 48.8237451,
+    "source": "salle"
+  },
+  "Blues sur Seine|Triel-sur-Seine|France": {
+    "longitude": 2.0030818,
+    "latitude": 48.980925,
+    "source": "ville"
+  },
+  "Royal Chapel|Versailles|France": {
+    "longitude": 2.1266886,
+    "latitude": 48.8035403,
+    "source": "ville"
+  },
+  "Boulogne-Billancourt|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "salle"
+  },
+  "Eglise Saint-Denys du Saint-Sacrement|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LE TOM|Saint-Georges-Motel|France": {
+    "longitude": null,
+    "latitude": null,
+    "source": ""
+  },
+  "Espace René Fallet|Crosne|France": {
+    "longitude": 2.4586816,
+    "latitude": 48.7150072,
+    "source": "salle"
+  },
+  "Peniche Anako|Paris|France": {
+    "longitude": 2.3734198,
+    "latitude": 48.8850187,
+    "source": "salle"
+  },
+  "salle des fêtes de Jaux|jaux|France": {
+    "longitude": null,
+    "latitude": null,
+    "source": ""
+  },
+  "Ritz Paris|Paris|France": {
+    "longitude": 2.3288445,
+    "latitude": 48.8679688,
+    "source": "salle"
+  },
+  "Hôtel Lutetia|Paris|France": {
+    "longitude": 2.3274844,
+    "latitude": 48.8510984,
+    "source": "salle"
+  },
+  "Musée national des arts asiatiques Guimet|Paris|France": {
+    "longitude": 2.2935933,
+    "latitude": 48.865379,
+    "source": "salle"
+  },
+  "La Scène Adamoise|L'Isle-Adam|France": {
+    "longitude": 2.2155978,
+    "latitude": 49.1157812,
+    "source": "salle"
+  },
+  "Théâtre El Duende|Ivry-sur-Seine|France": {
+    "longitude": 2.3782777,
+    "latitude": 48.8110214,
+    "source": "salle"
+  },
+  "Almora - Publishing and Bookstore|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "La Ferronnerie-Centre d'animation Montgallet|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Festival Monte le Son|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Centre Paris Anim' Pina Bausch/Montgallet|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Kibele|Paris|France": {
+    "longitude": 2.3520796,
+    "latitude": 48.8712594,
+    "source": "salle"
+  },
+  "Bloc A Bleau|Samoreau|France": {
+    "longitude": 2.7560769,
+    "latitude": 48.4255477,
+    "source": "ville"
+  },
+  "Sum Asso|Sèvres|France": {
+    "longitude": 2.2127083,
+    "latitude": 48.8247407,
+    "source": "ville"
+  },
+  "La Grange à Musique|Creil|France": {
+    "longitude": 2.4704886,
+    "latitude": 49.2467389,
+    "source": "salle"
+  },
+  "Théâtre du Blanc-Mesnil - Salle Barbara|Le Blanc-Mesnil|France": {
+    "longitude": 2.4631476,
+    "latitude": 48.9385489,
+    "source": "ville"
+  },
+  "Maison du Danemark|Paris|France": {
+    "longitude": 2.2988573,
+    "latitude": 48.8730311,
+    "source": "salle"
+  },
+  "Le Scarabée|La Verrière|France": {
+    "longitude": 1.9575213,
+    "latitude": 48.7565393,
+    "source": "salle"
+  },
+  "Théâtre de l'Atelier|Paris|France": {
+    "longitude": 2.3424435,
+    "latitude": 48.8834502,
+    "source": "salle"
+  },
+  "Alimentation Generale|Paris|France": {
+    "longitude": 2.3521154,
+    "latitude": 48.8693574,
+    "source": "salle"
+  },
+  "Hall|Mainvilliers|France": {
+    "longitude": 1.4582655,
+    "latitude": 48.4488219,
+    "source": "ville"
+  },
+  "Theater of the Eiffel Tower|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Espace Florence Leblond|Leuville-sur-Orge|France": {
+    "longitude": 2.2674029,
+    "latitude": 48.6155573,
+    "source": "ville"
+  },
+  "Espace Julien Green|Andrésy|France": {
+    "longitude": 2.0605574,
+    "latitude": 48.9817828,
+    "source": "salle"
+  },
+  "ESPACES V ROGER LEFORT|Villepinte|France": {
+    "longitude": 2.5347541,
+    "latitude": 48.9636566,
+    "source": "ville"
+  },
+  "Cité du Cinéma|Saint-Denis|France": {
+    "longitude": 2.336524,
+    "latitude": 48.922536,
+    "source": "salle"
+  },
+  "Péniche henjo|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Galerie 22Visconti|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Cresco|Saint-Mandé|France": {
+    "longitude": 2.4243402,
+    "latitude": 48.8444783,
+    "source": "salle"
+  },
+  "Auditorium Rostropovitch|Beauvais|France": {
+    "longitude": 1.7606875,
+    "latitude": 48.5726822,
+    "source": "ville"
+  },
+  "Théâtre de Corbeil-Essonnes|Corbeil-Essonnes|France": {
+    "longitude": 2.4766885,
+    "latitude": 48.6114584,
+    "source": "salle"
+  },
+  "Theater Le Blanc-Mesnil|Le Blanc-Mesnil|France": {
+    "longitude": 2.4631476,
+    "latitude": 48.9385489,
+    "source": "ville"
+  },
+  "House Music Dance De Fontenay-Aux-Roses|Fontenay-aux-Roses|France": {
+    "longitude": 2.2870373,
+    "latitude": 48.7911052,
+    "source": "ville"
+  },
+  "Cultural Center Jean Vilar|Marly-le-Roi|France": {
+    "longitude": 2.0965935,
+    "latitude": 48.8681762,
+    "source": "ville"
+  },
+  "Espace Sportif Guy Drut|Émerainville|France": {
+    "longitude": 2.5950207,
+    "latitude": 48.8300055,
+    "source": "salle"
+  },
+  "Espace 93|Clichy-sous-Bois|France": {
+    "longitude": 2.5476564,
+    "latitude": 48.9108688,
+    "source": "salle"
+  },
+  "NETH|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Bayou|Saint-Félix|France": {
+    "longitude": 3.3660607,
+    "latitude": 49.0013205,
+    "source": "ville"
+  },
+  "Le Palace|Montataire|France": {
+    "longitude": 2.3832662,
+    "latitude": 49.2474054,
+    "source": "ville"
+  },
+  "Club Pierre Charron|Paris|France": {
+    "longitude": 2.3037089,
+    "latitude": 48.8695417,
+    "source": "salle"
+  },
+  "Salle des Fêtes|Villeneuve-la-Garenne|France": {
+    "longitude": 2.3226039,
+    "latitude": 48.9376323,
+    "source": "salle"
+  },
+  "Espace Rive Gauche - parc du Château Blanc|Mériel|France": {
+    "longitude": 2.2047966,
+    "latitude": 49.0790579,
+    "source": "ville"
+  },
+  "Moulin brosserie de Saint Félix|Saint-Félix|France": {
+    "longitude": 3.3660607,
+    "latitude": 49.0013205,
+    "source": "ville"
+  },
+  "Casino Barrière|Enghien-les-Bains|France": {
+    "longitude": 2.3068482,
+    "latitude": 48.9699732,
+    "source": "ville"
+  },
+  "Église Saint-Louis-en-l'Île|Paris|France": {
+    "longitude": 2.3575765,
+    "latitude": 48.8512775,
+    "source": "salle"
+  },
+  "Jazz Au Confluent|Conflans-Sainte-Honorine|France": {
+    "longitude": 2.0949768,
+    "latitude": 48.9938791,
+    "source": "ville"
+  },
+  "L'osteria|Rosny-sous-Bois|France": {
+    "longitude": 2.4875193,
+    "latitude": 48.8716626,
+    "source": "ville"
+  },
+  "L'odéon - Conservatoire|Tremblay-en-France|France": {
+    "longitude": 2.5704392,
+    "latitude": 48.9429919,
+    "source": "salle"
+  },
+  "La Luciole|Méry-sur-Oise|France": {
+    "longitude": 2.1716555,
+    "latitude": 49.0600261,
+    "source": "salle"
+  },
+  "Café-Théâtre|Thiais|France": {
+    "longitude": 2.3969686,
+    "latitude": 48.759786,
+    "source": "salle"
+  },
+  "Théâtre Gérard Philipe|Saint-Cyr-l'École|France": {
+    "longitude": 2.0516816,
+    "latitude": 48.8032034,
+    "source": "salle"
+  },
+  "Théâtre Luxembourg|Meaux|France": {
+    "longitude": 2.8788393,
+    "latitude": 48.9547675,
+    "source": "salle"
+  },
+  "EMB Sannois|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Classic Jazz Festival|Saint-Mandé|France": {
+    "longitude": 2.4159739,
+    "latitude": 48.8432434,
+    "source": "ville"
+  },
+  "Notre Dame de Mantes|Mantes-la-Jolie|France": {
+    "longitude": 1.5260436,
+    "latitude": 49.0443088,
+    "source": "salle"
+  },
+  "Institut du Judo|Paris|France": {
+    "longitude": 2.3160177,
+    "latitude": 48.8226378,
+    "source": "salle"
+  },
+  "BACK TO THE RAVE|Pantin|France": {
+    "longitude": 2.4019804,
+    "latitude": 48.8965023,
+    "source": "ville"
+  },
+  "Poinçon|Paris|France": {
+    "longitude": 2.3255885,
+    "latitude": 48.8246375,
+    "source": "salle"
+  },
+  "Tsugi Radio|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Elispace|Beauvais|France": {
+    "longitude": 1.7606875,
+    "latitude": 48.5726822,
+    "source": "ville"
+  },
+  "La Grange à Dîme|Écouen|France": {
+    "longitude": 2.3799378,
+    "latitude": 49.0196554,
+    "source": "ville"
+  },
+  "Jazz au Fil de l'Oise|Auvers-sur-Oise|France": {
+    "longitude": 2.1717936,
+    "latitude": 49.0704318,
+    "source": "ville"
+  },
+  "Espace culturel le blanc mesnil (93)|Le Blanc-Mesnil|France": {
+    "longitude": 2.4631476,
+    "latitude": 48.9385489,
+    "source": "ville"
+  },
+  "Eleven Village|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Opéra Royal|Versailles|France": {
+    "longitude": 2.1225467,
+    "latitude": 48.8060858,
+    "source": "salle"
+  },
+  "OPERA ROYAL|Versailles|France": {
+    "longitude": 2.1225467,
+    "latitude": 48.8060858,
+    "source": "salle"
+  },
+  "Two Rooms Kitchen|Le Blanc-mesnil|France": {
+    "longitude": 2.4631476,
+    "latitude": 48.9385489,
+    "source": "ville"
+  },
+  "Mairie d'Antony|Antony|France": {
+    "longitude": 2.2957105,
+    "latitude": 48.7536597,
+    "source": "salle"
+  },
+  "Librairie Le Delta|Paris|France": {
+    "longitude": 2.3308448,
+    "latitude": 48.850985,
+    "source": "salle"
+  },
+  "CHAPELLE ROYALE|Versailles|France": {
+    "longitude": 2.1221817,
+    "latitude": 48.8050214,
+    "source": "salle"
+  },
+  "Le Pop Up Parisien|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Giga Black Box|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LES ARENES DE GRAND PARIS SUD|Évry-Courcouronnes|France": {
+    "longitude": 2.4381816,
+    "latitude": 48.629966,
+    "source": "ville"
+  },
+  "Formation Cgt Courcelle|Gif-sur-Yvette|France": {
+    "longitude": 2.134529,
+    "latitude": 48.7018823,
+    "source": "ville"
+  },
+  "Espace Caravelle|Meaux|France": {
+    "longitude": 2.8773541,
+    "latitude": 48.9582708,
+    "source": "ville"
+  },
+  "Irish Cultural Centre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "olympia|Paris|France": {
+    "longitude": 2.3283595,
+    "latitude": 48.8702443,
+    "source": "salle"
+  },
+  "Cafe-Atelier Art'pero|Paris|France": {
+    "longitude": 2.3545195,
+    "latitude": 48.841815,
+    "source": "salle"
+  },
+  "Centre d'animation Victor Gelez|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "L'Avant Seine / Théâtre de Colombes|Colombes|France": {
+    "longitude": 2.2510934,
+    "latitude": 48.9244249,
+    "source": "salle"
+  },
+  "Grande Seine - La Seine musicale|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "La Sucrerie|Coulommiers|France": {
+    "longitude": 3.0736749,
+    "latitude": 48.8122589,
+    "source": "salle"
+  },
+  "Espace 1789|Saint-Ouen|France": {
+    "longitude": 2.3338521,
+    "latitude": 48.9080985,
+    "source": "salle"
+  },
+  "L'Astral|Montgeron|France": {
+    "longitude": 2.4675635,
+    "latitude": 48.700812,
+    "source": "salle"
+  },
+  "Ecuje - Cultural Space And University Juif D'europe|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Plenitude Arena|Nanterre|France": {
+    "longitude": 2.2296581,
+    "latitude": 48.8956767,
+    "source": "salle"
+  },
+  "La Chinoiserie|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Grande Arche de la Defense|La Defense|France": {
+    "longitude": 2.2358933,
+    "latitude": 48.8925554,
+    "source": "salle"
+  },
+  "Espace Saint Sulpice|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Foyer Django Reinhardt Association|Samois-sur-Seine|France": {
+    "longitude": 2.7502092,
+    "latitude": 48.4515892,
+    "source": "salle"
+  },
+  "MJC de la Vallée|Chaville|France": {
+    "longitude": 2.1882818,
+    "latitude": 48.8082192,
+    "source": "salle"
+  },
+  "Claude Debussy Theatre|Maisons-Alfort|France": {
+    "longitude": 2.4302562,
+    "latitude": 48.801288,
+    "source": "salle"
+  },
+  "Le Safran|Brie-Comte-Robert|France": {
+    "longitude": 2.6088638,
+    "latitude": 48.6802105,
+    "source": "salle"
+  },
+  "Théâtre de Saint-Maur|Saint-Maur-des-Fossés|France": {
+    "longitude": 2.4859217,
+    "latitude": 48.7985918,
+    "source": "salle"
+  },
+  "Théâtre Jean Cocteau|Franconville|France": {
+    "longitude": 2.2303498,
+    "latitude": 48.986025,
+    "source": "ville"
+  },
+  "CENTQUATRE|Paris|France": {
+    "longitude": 2.3707988,
+    "latitude": 48.8893547,
+    "source": "salle"
+  },
+  "Théâtre de Brunoy|Brunoy|France": {
+    "longitude": 2.5053829,
+    "latitude": 48.6974472,
+    "source": "salle"
+  },
+  "Billy Bob's Buffet La Grange Country Western Saloon|Chessy|France": {
+    "longitude": 2.7658363,
+    "latitude": 48.8798792,
+    "source": "ville"
+  },
+  "Municipal Theater of Fontainebleau|Fontainebleau|France": {
+    "longitude": 2.7015872,
+    "latitude": 48.4049375,
+    "source": "ville"
+  },
+  "París, Francia|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "salle"
+  },
+  "T7|Paris|France": {
+    "longitude": 2.2900185,
+    "latitude": 48.8275651,
+    "source": "salle"
+  },
+  "Espace Concorde-Francis Delage|Asnières-sur-Seine|France": {
+    "longitude": 2.290116,
+    "latitude": 48.9129641,
+    "source": "salle"
+  },
+  "FFA SUR L'EAU | Fédération Française de l'Apéritif|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Secret concert|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Case Ô Arts|Saint-Cyr-l'École|France": {
+    "longitude": 2.0617372,
+    "latitude": 48.8021601,
+    "source": "salle"
+  },
+  "Backstage Paris|Paris|France": {
+    "longitude": 2.3234452,
+    "latitude": 48.8393592,
+    "source": "salle"
+  },
+  "Le Stock|Mennecy|France": {
+    "longitude": 2.4483217,
+    "latitude": 48.5631326,
+    "source": "salle"
+  },
+  "Stella music|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Zénith de Paris - La Villette|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Bières de Papa|Moret-Loing-et-Orvanne|France": {
+    "longitude": 2.8384283,
+    "latitude": 48.3681017,
+    "source": "salle"
+  },
+  "Théâtre du Beauvaisis|Beauvais|France": {
+    "longitude": 1.7606875,
+    "latitude": 48.5726822,
+    "source": "ville"
+  },
+  "Plaisir|Plaisir|France": {
+    "longitude": 1.9523393,
+    "latitude": 48.8325775,
+    "source": "salle"
+  },
+  "L'atelier à Spectacle|Dreux|France": {
+    "longitude": 1.434341,
+    "latitude": 48.8121883,
+    "source": "ville"
+  },
+  "Onirique Bar|Montreuil|France": {
+    "longitude": 2.4278173,
+    "latitude": 48.8536019,
+    "source": "salle"
+  },
+  "L'Archipel - Théâtre Cinéma|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "GEORGIA|Paris|France": {
+    "longitude": 2.3611046,
+    "latitude": 48.8697616,
+    "source": "salle"
+  },
+  "L'Escale De Melun|Melun|France": {
+    "longitude": 2.6585942,
+    "latitude": 48.5391002,
+    "source": "salle"
+  },
+  "Espace WE WELCOME|Lagny-sur-Marne|France": {
+    "longitude": 2.7056056,
+    "latitude": 48.8773018,
+    "source": "ville"
+  },
+  "La P'tite Criée - Le Pré Saint-Gervais|Le Pré-Saint-Gervais|France": {
+    "longitude": 2.4021189,
+    "latitude": 48.8845385,
+    "source": "salle"
+  },
+  "Notre-Dame-des-Blancs-Manteaux|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Église Saint-Joseph Le Bienveillant|Voisins-le-Bretonneux|France": {
+    "longitude": 2.0434516,
+    "latitude": 48.7625549,
+    "source": "salle"
+  },
+  "Café de la Plage|Maurepas|France": {
+    "longitude": 1.9409645,
+    "latitude": 48.7691027,
+    "source": "salle"
+  },
+  "EMB Espace Michel Berger|Sannois|France": {
+    "longitude": 2.2568296,
+    "latitude": 48.9717267,
+    "source": "ville"
+  },
+  "Theater of Jouy|Jouy-le-Moutier|France": {
+    "longitude": 2.03194,
+    "latitude": 49.0116,
+    "source": "ville"
+  },
+  "Palais Congrès d'Issy|Issy-les-Moulineaux|France": {
+    "longitude": 2.2698389,
+    "latitude": 48.8229337,
+    "source": "salle"
+  },
+  "Théâtre de Saint-Quentin en Yvelines - Petite Salle|Montigny-le-Bretonneux|France": {
+    "longitude": 2.0381228,
+    "latitude": 48.7698937,
+    "source": "ville"
+  },
+  "Centre Culturel Arc-en-Ciel Le Théâtre de Rungis|Rungis|France": {
+    "longitude": 2.3472665,
+    "latitude": 48.7484048,
+    "source": "ville"
+  },
+  "Salle des fêtes de Chamarande|Chamarande|France": {
+    "longitude": 2.2174622,
+    "latitude": 48.5136159,
+    "source": "ville"
+  },
+  "Protestant church of the Oratory of the Louvre|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Théâtre Firmin Gémier / Patrick Devedjian|Antony|France": {
+    "longitude": 2.2964791,
+    "latitude": 48.7548498,
+    "source": "salle"
+  },
+  "Église Saint-Médard|Paris|France": {
+    "longitude": 2.3504963,
+    "latitude": 48.8399321,
+    "source": "salle"
+  },
+  "LCR de l'Aquarium|Les Ulis|France": {
+    "longitude": 2.1701573,
+    "latitude": 48.681708,
+    "source": "ville"
+  },
+  "Château de Dangu|Dangu|France": {
+    "longitude": 1.6951966,
+    "latitude": 49.2472808,
+    "source": "salle"
+  },
+  "THEATRE RUTEBEUF|Clichy|France": {
+    "longitude": 2.3093797,
+    "latitude": 48.9018691,
+    "source": "salle"
+  },
+  "Les Gémeaux|Sceaux|France": {
+    "longitude": 2.3060722,
+    "latitude": 48.7839665,
+    "source": "salle"
+  },
+  "Folies Bergère|Paris|France": {
+    "longitude": 2.3449211,
+    "latitude": 48.8744889,
+    "source": "salle"
+  },
+  "THEATRE ÉDOUARD VII|Paris|France": {
+    "longitude": 2.3293794,
+    "latitude": 48.8714072,
+    "source": "salle"
+  },
+  "Grande Seine La Seine Musicale|Boulogne-Billancourt|France": {
+    "longitude": 2.240206,
+    "latitude": 48.8356649,
+    "source": "ville"
+  },
+  "Increase The Groove|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Salle des fêtes d'Outarville|Outarville|France": {
+    "longitude": 2.0179646,
+    "latitude": 48.2104339,
+    "source": "ville"
+  },
+  "Smile World Gaité Montparnasse|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Quartier Général|Paris|France": {
+    "longitude": 2.3659278,
+    "latitude": 48.881505,
+    "source": "salle"
+  },
+  "Hôtel Pullman Paris Montparnasse|Paris|France": {
+    "longitude": 2.3209274,
+    "latitude": 48.8383719,
+    "source": "salle"
+  },
+  "L'Atrium|Rueil-Malmaison|France": {
+    "longitude": 2.2012409,
+    "latitude": 48.8720546,
+    "source": "salle"
+  },
+  "LE PETIT REPUBLIQUE|Paris|France": {
+    "longitude": 2.3681098,
+    "latitude": 48.8716683,
+    "source": "salle"
+  },
+  "Spot 13|Paris|France": {
+    "longitude": 2.3859121,
+    "latitude": 48.825711,
+    "source": "salle"
+  },
+  "Accorhotels Arena|Paris|France": {
+    "longitude": 2.3787666,
+    "latitude": 48.8387085,
+    "source": "salle"
+  },
+  "The Wandering Word|Montreuil|France": {
+    "longitude": 2.4412184,
+    "latitude": 48.8623357,
+    "source": "ville"
+  },
+  "Kolo Community Space|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Parc des expositions Paris Nord Villepinte|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Salons de Lord Phoebus|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Bascules|Paris|France": {
+    "longitude": 2.339853,
+    "latitude": 48.8693234,
+    "source": "salle"
+  },
+  "Restaurant Tout Le Monde En Parle club groupe anniversaire|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Cœur Sacré|Paris|France": {
+    "longitude": 2.3430153,
+    "latitude": 48.8868058,
+    "source": "salle"
+  },
+  "Palais des Congrès de Paris|Paris|France": {
+    "longitude": 2.2832742,
+    "latitude": 48.8792259,
+    "source": "salle"
+  },
+  "99stud|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Les Arenes de Grand Paris Sud|Évry|France": {
+    "longitude": 2.4289667,
+    "latitude": 48.6241665,
+    "source": "ville"
+  },
+  "Arena Grand Paris|Tremblay-en-France|France": {
+    "longitude": 2.5300418,
+    "latitude": 48.9764032,
+    "source": "salle"
+  },
+  "Palais des Rencontres|Château-Thierry|France": {
+    "longitude": 3.3862373,
+    "latitude": 49.0607055,
+    "source": "salle"
+  },
+  "Brasserie 3ienchs|Saint-Maur-des-Fossés|France": {
+    "longitude": 2.4853015,
+    "latitude": 48.8033057,
+    "source": "ville"
+  },
+  "Eglise Saint Sulpice|Paris|France": {
+    "longitude": 2.3348702,
+    "latitude": 48.8509871,
+    "source": "salle"
+  },
+  "Pavillon Baltard|Nogent-sur-Marne|France": {
+    "longitude": 2.4752369,
+    "latitude": 48.8329059,
+    "source": "salle"
+  },
+  "Le Chalet des Iles|Paris|France": {
+    "longitude": 2.2602856,
+    "latitude": 48.8635574,
+    "source": "salle"
+  },
+  "DISNEYLAND PARIS|MARNE LA VALLEE|France": {
+    "longitude": 2.6727019,
+    "latitude": 48.8494036,
+    "source": "ville"
+  },
+  "QUARTIER DE LA GARE|Massy|France": {
+    "longitude": 2.2595459,
+    "latitude": 48.7241898,
+    "source": "salle"
+  },
+  "Les Bains-Douches|Paris|France": {
+    "longitude": 2.3519964,
+    "latitude": 48.8639041,
+    "source": "salle"
+  },
+  "Café Fluctuat Nec Mergitur|Paris|France": {
+    "longitude": 2.362964,
+    "latitude": 48.8680162,
+    "source": "salle"
+  },
+  "LPDO|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LACASA|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "LA PARENTHÈSE - OPEN AIR|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Wanderlust|Paris|France": {
+    "longitude": 2.39899,
+    "latitude": 48.834843,
+    "source": "salle"
+  },
+  "Palais Brongniart|Paris|France": {
+    "longitude": 2.3413674,
+    "latitude": 48.8691395,
+    "source": "salle"
+  },
+  "Au Bureau - Pub et Brasserie|Dammarie-les-Lys|France": {
+    "longitude": 2.6347018,
+    "latitude": 48.5150876,
+    "source": "ville"
+  },
+  "Salle des Fêtes|Enghien-les-Bains|France": {
+    "longitude": 2.3034061,
+    "latitude": 48.9709165,
+    "source": "salle"
+  },
+  "Elysée Mariage|Mitry-Mory|France": {
+    "longitude": 2.6183971,
+    "latitude": 48.9839674,
+    "source": "ville"
+  },
+  "Dojo de Paris|Paris|France": {
+    "longitude": 2.3160177,
+    "latitude": 48.8226378,
+    "source": "salle"
+  },
+  "Ritual Paris|Champigny-sur-Marne|France": {
+    "longitude": 2.510611,
+    "latitude": 48.8137847,
+    "source": "ville"
+  },
+  "LA MIF PARIS|Corbeil-Essonnes|France": {
+    "longitude": 2.4818087,
+    "latitude": 48.6137734,
+    "source": "ville"
+  },
+  "Foreign Party|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "DOCK B|Pantin|France": {
+    "longitude": 2.4154655,
+    "latitude": 48.8948591,
+    "source": "salle"
+  },
+  "The Characters Bar Paris|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Pub La Station Paris – Restaurant, Bar & Soirées Karaoké|Paris|France": {
+    "longitude": 2.320041,
+    "latitude": 48.8588897,
+    "source": "ville"
+  },
+  "Le Noctis|Saint Denis|France": {
+    "longitude": 2.3627508,
+    "latitude": 48.9383732,
+    "source": "ville"
+  }
+}

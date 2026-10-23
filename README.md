@@ -22,7 +22,7 @@ Groupe_1/
     │   ├── page_001.json
     │   ├── page_002.json
     │   └── ...
-    ├── cache/               résultats de MusicBrainz et Nominatim (artistes.json, lieux.json)
+    ├── cache/               résultats de Nominatim (lieux.json)
     └── events_bandsintown.csv
 ```
 
@@ -83,13 +83,13 @@ python main.py --skip-scraping
 
 Le résultat est écrit dans `data/events_bandsintown.csv`, avec une ligne par événement.
 
-Ajouter la nationalité des artistes et les coordonnées GPS des salles (requêtes vers MusicBrainz et Nominatim) :
+Ajouter les coordonnées GPS des salles (requêtes vers Nominatim, OpenStreetMap) :
 
 ```bash
 python main.py --skip-scraping --enrich-online
 ```
 
-La première fois, il faut compter environ 20 à 40 minutes (1 requête par seconde, environ 1000 artistes et 300 salles). Les résultats sont gardés dans `data/cache/`, donc les lancements suivants sont instantanés. Le cache est sauvegardé au fur et à mesure : en cas d'interruption (Ctrl+C), relancer la commande reprend là où elle s'était arrêtée. Sans `--enrich-online`, ces colonnes sont remplies avec ce qui est déjà en cache, sans aucune requête.
+La première fois, il faut compter environ 15 à 30 minutes (1 requête par seconde, environ 750 salles). Les résultats sont gardés dans `data/cache/`, donc les lancements suivants sont instantanés. Le cache est sauvegardé au fur et à mesure : en cas d'interruption (Ctrl+C), relancer la commande reprend là où elle s'était arrêtée. Sans `--enrich-online`, ces colonnes sont remplies avec ce qui est déjà en cache, sans aucune requête.
 
 > Toutes les commandes se lancent **depuis le dossier `Groupe_1`**. Sinon : `ModuleNotFoundError: No module named 'bandsintown_scraper'`.
 
@@ -318,12 +318,8 @@ Enrichissement externe, rempli par `--enrich-online` puis lu depuis le cache :
 
 | Colonne | Source |
 |---|---|
-| `pays_artiste` | pays de l'artiste, en code ISO (`FR`, `US`…), selon MusicBrainz, si la correspondance du nom est jugée fiable (score de 90 ou plus) |
-| `artiste_local` | `True` si `pays_artiste` vaut `FR` |
 | `longitude`, `latitude` | coordonnées de la salle selon Nominatim (OpenStreetMap), cherchées en Île-de-France |
 | `source_geocodage` | `salle` si la salle a été trouvée, `ville` si ce sont les coordonnées de la ville |
-
-Limite : la nationalité est trouvée à partir du nom seul. Un artiste peu connu peut être confondu avec un homonyme.
 
 ## Éviter le ban
 
