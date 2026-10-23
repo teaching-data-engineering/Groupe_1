@@ -19,6 +19,7 @@ Groupe_1/
 ├── Test/                    essais et tests (voir section « Dossier Test »)
 └── data/                    généré à l'exécution (ignoré par git)
     ├── raw/<début>_<fin>/page_XXX.json
+    ├── cache/               résultats de MusicBrainz et Nominatim (artistes.json, lieux.json)
     └── events_bandsintown.csv
 ```
 
@@ -45,6 +46,14 @@ python main.py --skip-scraping
 ```
 
 Le résultat est écrit dans `data/events_bandsintown.csv`, avec une ligne par événement.
+
+Ajouter la nationalité des artistes et les coordonnées GPS des salles (requêtes vers MusicBrainz et Nominatim) :
+
+```bash
+python main.py --skip-scraping --enrich-online
+```
+
+La première fois, il faut compter environ 20 à 40 minutes (1 requête par seconde, environ 1000 artistes et 300 salles). Les résultats sont gardés dans `data/cache/`, donc les lancements suivants sont instantanés. Le cache est sauvegardé au fur et à mesure : en cas d'interruption (Ctrl+C), relancer la commande reprend là où elle s'était arrêtée. Sans `--enrich-online`, ces colonnes sont remplies avec ce qui est déjà en cache, sans aucune requête.
 
 > Toutes les commandes se lancent **depuis le dossier `Groupe_1`**. Sinon : `ModuleNotFoundError: No module named 'bandsintown_scraper'`.
 
@@ -143,20 +152,49 @@ Le `-m` est obligatoire. `python bandsintown_scraper/transform.py` provoque l'er
    - une page répétée : l'API renvoie en boucle une page déjà vue, sa limite est atteinte ;
    - la limite de 30 pages est atteinte.
 4. **Toutes les périodes** (`scrap_all_events`) : l'API renvoie les événements triés par date, mais limite le nombre de pages par période. Quand une période est coupée par cette limite, une nouvelle période démarre au jour du dernier événement reçu. Le nombre de périodes s'adapte donc tout seul au volume de données, que la date de fin soit fin novembre ou fin 2030.
-5. **Transformation** (`load_events_dataframe`) : lit tous les JSON, garde les champs utiles, supprime les doublons par `id` et trie par date.
+5. **Transformation** (`load_events_dataframe`) : lit tous les JSON, garde les champs utiles, supprime les doublons par `id`, ajoute les colonnes d'enrichissement et trie par date.
 
 ### Colonnes du CSV
+
+Champs de l'API :
 
 | Colonne | Description |
 |---|---|
 | `id` | identifiant Bandsintown de l'événement |
 | `artiste` | nom de l'artiste |
+| `titre` | titre de l'événement (souvent vide) |
 | `lieu` | salle de concert |
+| `localisation` | texte brut de l'API, par exemple « Paris, France » |
 | `debut` | date et heure de début |
 | `fin` | date et heure de fin (souvent vide) |
+| `nb_rsvp` | nombre de personnes ayant signalé leur intérêt |
 | `url_evenement` | lien vers la page de l'événement |
 | `streaming` | événement diffusé en ligne ou non |
 | `watch_live_text` | texte affiché pour le direct |
+
+Enrichissement calculé, sans requête :
+
+| Colonne | Calcul |
+|---|---|
+| `date_collecte` | date à laquelle la page JSON a été collectée |
+| `ville` | ville de la salle, tirée de `localisation`. « PARIS » et « Paris 19 Buttes-Chaumont » donnent « Paris » |
+| `jour_semaine`, `est_weekend` | jour de la semaine ; `True` le samedi et le dimanche |
+| `numero_semaine`, `mois`, `heure` | à partir de `debut` |
+| `jours_avant_evenement` | nombre de jours entre `date_collecte` et `debut` |
+| `duree_heures` | `fin` moins `debut` (vide quand `fin` est absente) |
+| `type_evenement` | `festival`, `soirée` ou `concert`, selon les mots-clés du titre (`EVENT_TYPE_PATTERNS`) |
+| `popularite` | `aucune` (0 RSVP), `faible` (1 à 9), `moyenne` (10 à 99) ou `forte` (100 et plus) |
+
+Enrichissement externe, rempli par `--enrich-online` puis lu depuis le cache :
+
+| Colonne | Source |
+|---|---|
+| `pays_artiste` | pays de l'artiste, en code ISO (`FR`, `US`…), selon MusicBrainz, si la correspondance du nom est jugée fiable (score de 90 ou plus) |
+| `artiste_local` | `True` si `pays_artiste` vaut `FR` |
+| `longitude`, `latitude` | coordonnées de la salle selon Nominatim (OpenStreetMap), cherchées en Île-de-France |
+| `source_geocodage` | `salle` si la salle a été trouvée, `ville` si ce sont les coordonnées de la ville |
+
+Limite : la nationalité est trouvée à partir du nom seul. Un artiste peu connu peut être confondu avec un homonyme.
 
 ## Éviter le ban
 
@@ -168,6 +206,5 @@ Le `-m` est obligatoire. `python bandsintown_scraper/transform.py` provoque l'er
 
 ## À venir
 
-- Enrichissement des champs
 - Algorithme de prédiction
 - Chargement des événements dans une table BigQuery (GCP)

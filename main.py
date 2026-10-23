@@ -17,6 +17,12 @@ def parse_args():
         action="store_true",
         help="ne pas scraper, seulement reconstruire le CSV à partir des JSON déjà sauvegardés",
     )
+    parser.add_argument(
+        "--enrich-online",
+        action="store_true",
+        help="interroger MusicBrainz et Nominatim pour la nationalité des artistes et les coordonnées GPS "
+             "(résultats mis en cache dans data/cache/)",
+    )
     args = parser.parse_args()
     if not args.skip_scraping and args.end_date is None:
         parser.error("--end-date est obligatoire pour scraper")
@@ -29,7 +35,7 @@ def main():
     if not args.skip_scraping:
         scrap_all_events(args.end_date)
 
-    events_df = load_events_dataframe()
+    events_df = load_events_dataframe(enrich_online=args.enrich_online)
     events_df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
     print(f"{len(events_df)} événements exportés dans {OUTPUT_CSV}")
 
