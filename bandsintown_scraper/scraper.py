@@ -3,13 +3,14 @@ import random
 import time
 from datetime import date, timedelta
 
-import requests
+from curl_cffi import requests
 
 from bandsintown_scraper.config import (
     API_URL,
     DEFAULT_RETRY_AFTER_SECONDS,
     GENRE_QUERY,
     HEADERS,
+    IMPERSONATE_BROWSER,
     MAX_DELAY_SECONDS,
     MAX_PAGE,
     MIN_DELAY_SECONDS,
@@ -30,7 +31,9 @@ def scrap_one_page(page_idx, start_date, end_date):
     }
 
     while True:
-        response = requests.get(API_URL, headers=HEADERS, params=params)
+        response = requests.get(
+            API_URL, headers=HEADERS, params=params, impersonate=IMPERSONATE_BROWSER
+        )
         if response.status_code != 429:
             break
         retry_after = int(response.headers.get("Retry-After", DEFAULT_RETRY_AFTER_SECONDS))

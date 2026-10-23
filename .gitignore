@@ -3,3 +3,4 @@ __pycache__/
 *.csv
 !Test/events_bandsintown_test.csv
 !Test/events_bandsintown_v2.csv
+!events_bandsintown_v2.csv
