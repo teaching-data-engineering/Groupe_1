@@ -2,41 +2,45 @@ import json
 import pandas as pd
 import requests
 from pprint import pprint
+from datetime import date
+# Liste qui accumule les événements de toutes les pages
+
 # 1. URL de l'API interne
 url = "https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents"
 
-# Liste qui accumule les événements de toutes les pages
 events_list = []
 
+# Période de recherche : d'aujourd'hui au 30/11/2026
+date_debut = date.today()
+date_fin = date(2026, 11, 30)
+periode = f"{date_debut:%Y-%m-%d}T00:00:00,{date_fin:%Y-%m-%d}T23:00:00"
+
 # Paramètres de la requête GET (dates et géolocalisation)
-nb_page = 0
+nb_page = 1
 while True:
     params = {
-        "city_id": "2988507",
-        "calendarTrigger": "false",
-        "date": "2026-10-22T00:00:00,2026-11-30T23:00:00",
-        "page" : nb_page
+        "date": periode,
+        "page": nb_page,
+        "longitude": "2.3488",
+        "latitude": "48.85341",
+        "genre_query": "all-genres",
     }
 
     # 2. En-têtes nettoyés (sans cookies, sans pseudo-headers ':', sans compression br/zstd)
     headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,"
-            " like Gecko) Chrome/128.0.0.0 Safari/537.36"
-        ),
-        "Accept": "application/json, text/plain, */*",
-        "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
-        "Accept-Encoding": "gzip, deflate",  # On évite br et zstd
-        "Referer": "https://www.bandsintown.com/",
-        "sec-ch-ua": (
-            '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"'
-        ),
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"Windows"',
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-    }
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/jxl,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Accept-language" : "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding" : "gzip, deflate, br, zstd",
+    "Referer" : "https://www.bandsintown.com/choose-dates/genre/all-genres?calendarTrigger=true",
+    "Sec-Ch-Ua": '"Google Chrome";v="155", "Chromium";v="155", "Not(A:Brand";v="24"',
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '"Windows"',
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Upgrade-Insecure-Requests" : "1"
+}
 
     # 3. Envoi de la requête HTTP GET
     response = requests.get(url, headers=headers, params=params)
@@ -58,8 +62,11 @@ while True:
                 "id": event.get("id"),
                 "artiste": event.get("artistName"),
                 "lieu": event.get("venueName"),
-                "date": event.get("startsAt"),
+                "debut": event.get("startsAt"),
+                "fin" :event.get("endsAt") ,
                 "url_evenement": event.get("eventUrl"),
+                "streaming" : event.get("streamingEvent") ,
+                "watchLiveText" :event.get("watchLiveText")
             })
     else:
         print(f"échec page {nb_page} ({response.status_code})")
@@ -73,4 +80,4 @@ print(df)
 print(nb_page)
 
 # Exportation CSV
-#df.to_csv("events_bandsintown_test.csv", index=False, encoding="utf-8-sig")
+df.to_csv("events_bandsintown_test.csv", index=False, encoding="utf-8-sig")
