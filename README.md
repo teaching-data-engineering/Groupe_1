@@ -11,7 +11,7 @@ Scraping des concerts proposés par [Bandsintown](https://www.bandsintown.com) a
 
 **écrire votre nom dans Membres**
 
-**Membres :** Alexandre HAYOUN, Hoang
+**Membres :** Alexandre HAYOUN, Hoang , Soro , Mathis
 
 ## Structure du repository
 
@@ -23,6 +23,7 @@ Groupe_1/
 │   ├── scraper.py           collecte des événements et sauvegarde des JSON bruts
 │   └── transform.py         agrégation des JSON en DataFrame pandas
 ├── main.py                  point d'entrée
+├── Test/                    essais et tests (voir section « Dossier Test »)
 └── data/                    généré à l'exécution (ignoré par git)
     ├── raw/<début>_<fin>/page_XXX.json
     └── events_bandsintown.csv
@@ -52,6 +53,94 @@ python main.py --skip-scraping
 
 Le résultat est écrit dans `data/events_bandsintown.csv`, avec une ligne par événement.
 
+> Toutes les commandes se lancent **depuis le dossier `Groupe_1`**. Sinon : `ModuleNotFoundError: No module named 'bandsintown_scraper'`.
+
+## Dossier Test
+
+Ce dossier contient des essais. Le projet ne les utilise pas : le code officiel est dans `bandsintown_scraper/` et `main.py`.
+
+| Fichier | Rôle |
+|---|---|
+| `Test.py` | teste uniquement la transformation (`load_events_dataframe`) sur les JSON de `data/raw/`, sans aucune requête, et affiche les 10 premiers événements |
+| `version_2.py` | ancienne version du scraper, en un seul fichier, avant le découpage en module. Gardée comme référence |
+| `events_bandsintown_v2.csv` | résultat d'une collecte complète faite avec `version_2.py` (3702 événements, du 23/10/2026 au 30/11/2026) |
+
+### Lancer Test.py
+
+```bash
+python Test/Test.py
+```
+
+ou le bouton ▶ de VS Code.
+
+Le module `bandsintown_scraper` est dans `Groupe_1/`, pas dans `Test/`. Le début de `Test.py` règle donc deux choses :
+
+```python
+PROJECT_ROOT = Path(__file__).resolve().parent.parent   # Test/Test.py -> Groupe_1
+sys.path.insert(0, str(PROJECT_ROOT))
+os.chdir(PROJECT_ROOT)
+```
+
+- `sys.path.insert` : permet à Python de trouver `bandsintown_scraper`. Sans cette ligne : `ModuleNotFoundError`.
+- `os.chdir` : se place dans `Groupe_1` (l'équivalent de `setwd()` en R). Sans cette ligne, le chemin relatif `data/raw` n'est pas trouvé et le DataFrame est vide, sans message d'erreur.
+
+Ce bloc sert uniquement aux fichiers de test. Il ne doit pas être ajouté dans le module.
+
+## Modifier le nettoyage sans refaire de requêtes
+
+Le CSV est toujours **reconstruit à partir des JSON bruts** de `data/raw/`. Ces JSON contiennent tous les champs renvoyés par l'API. On peut donc changer le nettoyage ou ajouter des colonnes **sans re-scraper**, et sans risque de se faire bloquer par le site.
+
+Cycle de travail :
+
+1. modifier `bandsintown_scraper/transform.py` ;
+2. lancer `python main.py --skip-scraping` (sur terminal)
+3. vérifier `data/events_bandsintown.csv`.
+
+On ne relance le scraping que pour récupérer des événements **plus récents**.
+
+### Ajouter un champ présent dans le JSON
+
+Ajouter une ligne dans `FIELDS`, au format `"nomDansLeJSON": "nom_de_colonne"` :
+
+```python
+FIELDS = {
+    "id": "id",
+    ...
+    "venueCity": "ville",   # nouvelle colonne
+}
+```
+
+Pour connaître les champs disponibles, ouvrir un fichier `data/raw/.../page_001.json`.
+
+### Créer une colonne calculée ou nettoyer
+
+Ajouter le code dans `load_events_dataframe`, avant le `return` :
+
+```python
+df["jour_semaine"] = df["debut"].dt.day_name()
+df["artiste"] = df["artiste"].str.strip()
+df = df.dropna(subset=["lieu"])
+```
+
+### Tester uniquement la transformation
+
+Pour afficher le DataFrame sans écrire le CSV :
+
+```bash
+python -m bandsintown_scraper.transform
+```
+
+Le `-m` est obligatoire. `python bandsintown_scraper/transform.py` provoque l'erreur `ModuleNotFoundError`. Cette commande demande d'avoir à la fin de `transform.py` un bloc `if __name__ == "__main__":` qui affiche le DataFrame.
+
+## En cas d'erreur
+
+| Message | Cause | Solution |
+|---|---|---|
+| `échec (403) : ... Just a moment...` | Cloudflare détecte un robot | vérifier que `curl_cffi` est installé (`pip install -r requirements.txt`) |
+| `429 (trop de requêtes)` | trop de requêtes en peu de temps | le scraper attend tout seul, puis réessaie |
+| `échec (416)` | le site bloque temporairement l'adresse IP | attendre (parfois plusieurs heures) ou changer de réseau (partage de connexion du téléphone). En attendant, travailler avec `--skip-scraping` |
+| `0 événements collectés` | la première page a échoué | lire la ligne `page 1 : ...` juste au-dessus pour connaître le code d'erreur |
+
 ## Fonctionnement
 
 1. **Une page** (`scrap_one_page`) : requête GET sur l'API interne `choose-dates/fetch-next/upcomingEvents` pour une période et un numéro de page.
@@ -78,9 +167,11 @@ Le résultat est écrit dans `data/events_bandsintown.csv`, avec une ligne par �
 
 ## Éviter le ban
 
+- Requêtes envoyées avec `curl_cffi`, qui imite l'empreinte d'un vrai navigateur Chrome. La librairie `requests` est bloquée par Cloudflare (erreur 403).
 - Pause aléatoire de 2 à 5 secondes entre deux requêtes.
+- Une seule collecte complète, puis tout le travail se fait sur les JSON sauvegardés (`--skip-scraping`).
 - En cas de réponse `429 Too Many Requests`, le scraper attend le délai indiqué par le serveur (60 s par défaut), puis redemande la même page.
-- Pas de proxy : le réseau de l'université ne le permet pas.
+
 
 ## À venir
 
