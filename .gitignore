@@ -1,6 +1,8 @@
 __pycache__/
 *.pyc
+.~lock*
 *.csv
+!data/events_bandsintown.csv
 !Test/events_bandsintown_test.csv
 !Test/events_bandsintown_v2.csv
 !events_bandsintown_v2.csv
