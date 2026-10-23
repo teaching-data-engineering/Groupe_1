@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 data/
 *.csv
+!Test/events_bandsintown_test.csv
+!Test/events_bandsintown_v2.csv
