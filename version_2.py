@@ -136,7 +136,7 @@ while curseur <= date_fin:
 
 # 5. Mise en forme dans un DataFrame Pandas (toutes périodes confondues)
 df = pd.DataFrame(events_list)
-print(df)
+#print(df)
 print(f"{len(df)} événements collectés en {nb_periode} période(s) et {nb_pages_total} pages au total.")
 
 # Exportation CSV
