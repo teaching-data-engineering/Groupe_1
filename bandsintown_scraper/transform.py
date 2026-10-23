@@ -1,7 +1,6 @@
 import json
 import re
 import time
-from datetime import date
 
 import pandas as pd
 from curl_cffi import requests
@@ -18,6 +17,7 @@ from bandsintown_scraper.config import (
     NOMINATIM_URL,
     RAW_DATA_DIR,
 )
+from bandsintown_scraper.scraper import list_page_files
 
 FIELDS = {
     "id": "id",
@@ -31,6 +31,7 @@ FIELDS = {
     "eventUrl": "url_evenement",
     "streamingEvent": "streaming",
     "watchLiveText": "watch_live_text",
+    "collectedAt": "date_collecte",
 }
 
 EVENT_TYPE_PATTERNS = {
@@ -48,13 +49,13 @@ VENUES_CACHE_PATH = CACHE_DIR / "lieux.json"
 
 
 def read_raw_events(raw_dir):
-    """Lit tous les JSON bruts. La date de collecte est la date d'écriture du fichier."""
+    """Lit toutes les pages, de la plus ancienne à la plus récente, et ajoute à chaque événement
+    la date de collecte de sa page."""
     events = []
-    for json_path in sorted(raw_dir.glob("*/page_*.json")):
-        collection_date = date.fromtimestamp(json_path.stat().st_mtime)
-        with open(json_path, encoding="utf-8") as file:
-            for event in json.load(file):
-                events.append({**event, "date_collecte": collection_date})
+    for page_path in list_page_files(raw_dir):
+        with open(page_path, encoding="utf-8") as file:
+            page = json.load(file)
+        events.extend({**event, "collectedAt": page["collectedAt"]} for event in page["events"])
     return events
 
 
@@ -192,11 +193,12 @@ def add_external_columns(df, enrich_online):
 
 
 def load_events_dataframe(raw_dir=RAW_DATA_DIR, enrich_online=False):
-    """Agrège tous les JSON bruts en un DataFrame enrichi, une ligne par événement."""
+    """Agrège toutes les pages JSON brutes en un DataFrame enrichi, une ligne par événement."""
     events = read_raw_events(raw_dir)
 
-    df = pd.DataFrame(events, columns=[*FIELDS, "date_collecte"]).rename(columns=FIELDS)
-    df = df.drop_duplicates(subset="id")
+    df = pd.DataFrame(events, columns=list(FIELDS)).rename(columns=FIELDS)
+    # Les pages sont lues dans l'ordre de collecte : on garde la version la plus récente (RSVP à jour)
+    df = df.drop_duplicates(subset="id", keep="last")
     df["debut"] = pd.to_datetime(df["debut"])
     df["fin"] = pd.to_datetime(df["fin"])
     df["date_collecte"] = pd.to_datetime(df["date_collecte"])
