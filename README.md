@@ -14,8 +14,9 @@ Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) a
 4. [Collecte des données](#collecte-des-données)
 5. [Transformation et enrichissement](#transformation-et-enrichissement)
 6. [Prédiction de la popularité](#prédiction-de-la-popularité)
-7. [Tests](#tests)
-8. [En cas d'erreur](#en-cas-derreur)
+7. [Notebooks](#notebooks)
+8. [Tests](#tests)
+9. [En cas d'erreur](#en-cas-derreur)
 
 ## Structure du repository
 
@@ -28,6 +29,9 @@ Groupe_1/
 │   ├── transform.py            nettoyage, enrichissement et géocodage → DataFrame pandas
 │   └── model.py                prédiction de la popularité des événements
 ├── main.py                     point d'entrée en ligne de commande
+├── notebooks/                  exploration et analyse du modèle (voir section « Notebooks »)
+│   ├── 01_exploration.ipynb
+│   └── 02_classification.ipynb
 ├── tests/                      tests automatiques (pytest)
 │   ├── test_model.py
 │   └── test_transform.py
@@ -37,7 +41,7 @@ Groupe_1/
 │   └── events_bandsintown.csv  résultat final : une ligne par événement
 ├── models/                     modèles entraînés (.joblib, ignorés par git) et leurs rapports (.json)
 ├── requirements.txt            dépendances du projet
-└── requirements-dev.txt        dépendances pour les tests
+└── requirements-dev.txt        dépendances pour les tests et les notebooks
 ```
 
 Les pages brutes, le cache et le CSV sont versionnés : un membre du groupe qui fait `git pull` peut travailler sur les données sans refaire la collecte.
@@ -51,7 +55,7 @@ python -m venv .venv                 # créer le .venv (une seule fois)
 .venv\Scripts\activate               # l'activer : Windows (PowerShell), à chaque nouveau terminal
 source .venv/bin/activate            #             Mac / Linux
 pip install -r requirements.txt      # installer les dépendances (une seule fois)
-pip install -r requirements-dev.txt  # en plus, pour lancer les tests
+pip install -r requirements-dev.txt  # en plus, pour les tests et les notebooks
 ```
 
 Quand le `.venv` est activé, `(.venv)` apparaît au début de la ligne du terminal. Dans VS Code : Ctrl+Shift+P → « Python: Select Interpreter » → choisir `.venv`. Les nouveaux terminaux l'activent alors automatiquement.
@@ -215,7 +219,7 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 | `ville` | ville de la salle (villes de moins de 20 événements regroupées dans « autres ») |
 | `distance_centre_km` | distance de la salle au centre de Paris, calculée à partir des coordonnées GPS |
 | `nb_evenements_salle` | nombre d'événements de la salle dans les données |
-| `nb_evenements_artiste` | nombre de concerts de l'artiste dans les données (indicateur de notoriété) |
+| `nb_evenements_artiste` | nombre de dates de l'artiste dans les données. Élevé pour les spectacles répétés (comédies musicales, résidences), dont chaque date attire peu de RSVP : ce n'est **pas** une mesure de notoriété |
 
 `nb_rsvp` et `popularite` sont exclues : elles sont calculées à partir de la cible, et les utiliser reviendrait à donner la réponse au modèle (fuite de données).
 
@@ -246,7 +250,28 @@ Encodage, imputation des valeurs manquantes et normalisation font partie d'un `P
 - Le modèle retrouve environ 7 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 3 (précision).
 - Random forest et gradient boosting sont quasiment à égalité : l'écart (0,001) est bien plus petit que la variation d'un pli à l'autre (± 0,015).
 - Variables les plus utiles : l'**heure** de l'événement, le **nombre de concerts de l'artiste**, la **distance au centre de Paris** et le **nombre d'événements de la salle**.
-- **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent qu'indirectement. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
+- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,50 et le rappel descend à 0,57 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
+- **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
+
+## Notebooks
+
+Les notebooks servent à **explorer** les données et à **analyser** le modèle. Ils **importent** les fonctions du module (`load_events_dataframe`, `build_features`, `train_model`…) au lieu de recopier leur code, et n'envoient aucune requête à Bandsintown. Ils sont enregistrés avec leurs résultats et leurs graphiques : on peut les lire sur GitHub sans les exécuter.
+
+| Notebook | Contenu |
+|---|---|
+| `01_exploration.ipynb` | distribution des RSVP, taux d'événements populaires selon l'heure, le jour, le type, la distance, la salle et l'artiste, qualité des données. Justifie les choix du modèle : seuil de 10 RSVP, variables, regroupement des villes |
+| `02_classification.ipynb` | comparaison des modèles, résultats sur le jeu de test, matrice de confusion, précision et rappel selon le seuil, courbe ROC, importance des variables |
+
+**Ouvrir un notebook :** dans VS Code, ouvrir le fichier `.ipynb`, choisir le noyau `.venv` en haut à droite, puis « Run All ». `02_classification.ipynb` met environ 1 minute à s'exécuter (entraînement du modèle).
+
+**Lire les graphiques de l'exploration :** la ligne pointillée « moyenne 12 % » est la part d'événements populaires sur l'ensemble des données (468 sur 3892). Une barre au-dessus indique une catégorie plus souvent populaire que la moyenne.
+
+**Ce que montre l'exploration :**
+- l'heure est le signal le plus net : environ 17 % d'événements populaires à 19h-20h, contre 1 à 3 % après 21h ;
+- les salles très actives (plus de 15 événements) ont 16 à 18 % d'événements populaires, contre 5 à 8 % pour les petites salles ;
+- l'effet de la distance au centre n'est pas régulier (6 % à moins de 2 km, 16 % entre 2 et 4 km), d'où l'intérêt des modèles à base d'arbres ;
+- les artistes qui ont beaucoup de dates (spectacles répétés, résidences) ont des événements **moins** populaires (0 % au-delà de 5 dates) ;
+- le week-end n'est pas plus populaire que la semaine (10 % contre 13 %).
 
 ## Tests
 

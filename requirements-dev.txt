@@ -1,2 +1,4 @@
 -r requirements.txt
 pytest>=8.0
+matplotlib>=3.11
+ipykernel>=7.4
