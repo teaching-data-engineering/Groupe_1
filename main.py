@@ -3,8 +3,9 @@ import sys
 from datetime import date
 
 from bandsintown_scraper import load_events_dataframe, scrap_all_events
-from bandsintown_scraper.scraper import ScrapingError
 from bandsintown_scraper.config import OUTPUT_CSV
+from bandsintown_scraper.model import print_report, save_model, train_model
+from bandsintown_scraper.scraper import ScrapingError
 
 
 def parse_args():
@@ -32,6 +33,11 @@ def parse_args():
         help="interroger Nominatim pour les coordonnées GPS des salles "
              "(résultats mis en cache dans data/cache/)",
     )
+    parser.add_argument(
+        "--train",
+        action="store_true",
+        help="entraîner le modèle de prédiction de popularité et le sauvegarder dans models/",
+    )
     args = parser.parse_args()
     if not args.skip_scraping and args.end_date is None:
         parser.error("--end-date est obligatoire pour scraper")
@@ -53,6 +59,12 @@ def main():
     events_df = load_events_dataframe(enrich_online=args.enrich_online)
     events_df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
     print(f"{len(events_df)} événements exportés dans {OUTPUT_CSV}")
+
+    if args.train:
+        print("\nEntraînement du modèle de popularité...")
+        model, report = train_model(events_df)
+        print_report(report)
+        print(f"\nModèle sauvegardé dans {save_model(model, report)}")
 
 
 if __name__ == "__main__":

@@ -67,7 +67,7 @@ def add_location_columns(df):
 
 def add_date_columns(df):
     df["jour_semaine"] = df["debut"].dt.day_name()
-    df["est_weekend"] = df["debut"].dt.dayofweek >= 5
+    df["est_weekend"] = df["debut"].dt.day_of_week >= 5
     df["numero_semaine"] = df["debut"].dt.isocalendar().week.astype(int)
     df["mois"] = df["debut"].dt.month
     df["heure"] = df["debut"].dt.hour

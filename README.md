@@ -14,9 +14,12 @@ Groupe_1/
 │   ├── __init__.py
 │   ├── config.py            constantes : URL de l'API, en-têtes HTTP, localisation, délais, dossiers
 │   ├── scraper.py           collecte des événements et sauvegarde des JSON bruts
-│   └── transform.py         agrégation des JSON en DataFrame pandas
+│   ├── transform.py         agrégation des JSON en DataFrame pandas
+│   └── model.py             prédiction de la popularité des événements
 ├── main.py                  point d'entrée
-├── Test/                    essais et tests (voir section « Dossier Test »)
+├── tests/                   tests automatiques (pytest)
+├── models/                  modèles entraînés (.joblib, ignorés par git) et leurs rapports (.json)
+├── Test/                    essais (voir section « Dossier Test »)
 └── data/                    généré à l'exécution (ignoré par git)
     ├── raw/                 toutes les pages brutes de l'API, dans un seul dossier
     │   ├── page_001.json
@@ -50,6 +53,8 @@ source .venv/bin/activate       # Mac / Linux
 ```bash
 pip install -r requirements.txt
 ```
+
+Pour lancer aussi les tests, installer en plus les dépendances de développement : `pip install -r requirements-dev.txt`.
 
 Ensuite, toutes les commandes `python main.py ...` utilisent le Python du `.venv`. Dans VS Code : Ctrl+Shift+P → « Python: Select Interpreter » → choisir `.venv`. Les nouveaux terminaux l'activent alors automatiquement.
 
@@ -330,7 +335,82 @@ Enrichissement externe, rempli par `--enrich-online` puis lu depuis le cache :
 - En cas de réponse `429 Too Many Requests`, le scraper attend le délai indiqué par le serveur (60 s par défaut), puis redemande la même page.
 
 
+## Prédiction de la popularité
+
+**Question :** un événement va-t-il être **populaire**, c'est-à-dire atteindre au moins 10 RSVP (`POPULARITY_THRESHOLD`) ? C'est le cas d'environ 12 % des événements.
+
+**Lancer l'entraînement** (sans aucune requête au site) :
+
+```bash
+python main.py --skip-scraping --train
+```
+
+Le modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec son rapport lisible dans `models/popularite_<date>.json` : métriques, variables utilisées, importance des variables.
+
+### Variables explicatives
+
+| Variable | Construction |
+|---|---|
+| `jour_semaine`, `est_weekend`, `heure`, `mois` | date de l'événement |
+| `jours_avant_evenement` | délai entre la collecte et l'événement |
+| `type_evenement`, `streaming`, `a_un_titre` | nature de l'événement |
+| `ville` | ville de la salle (villes de moins de 20 événements regroupées) |
+| `distance_centre_km` | distance de la salle au centre de Paris, calculée à partir des coordonnées GPS |
+| `nb_evenements_salle` | nombre d'événements de la salle dans les données (taille, activité de la salle) |
+| `nb_evenements_artiste` | nombre de concerts de l'artiste dans les données (indicateur de notoriété) |
+
+`nb_rsvp` et `popularite` sont exclues des variables : elles sont calculées à partir de la cible, et les utiliser reviendrait à tricher (fuite de données).
+
+### Méthode
+
+1. 20 % des événements sont mis de côté (**jeu de test**), en gardant la même proportion d'événements populaires (découpage stratifié).
+2. Pour chacun des trois modèles (régression logistique, random forest, gradient boosting), les **hyperparamètres sont choisis automatiquement** par `RandomizedSearchCV`. Il tire 20 combinaisons (`SEARCH_ITERATIONS`) dans l'espace de recherche défini dans `build_candidate_models`, et évalue chacune par **validation croisée** à 5 plis sur les 80 % restants. Tous les modèles sont pondérés (`class_weight="balanced"`) pour compenser le déséquilibre entre les classes.
+3. Les trois modèles, chacun avec ses meilleurs hyperparamètres, sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est réentraîné sur les 80 %, puis évalué **une seule fois** sur le jeu de test. On le compare à une **référence naïve** qui tire au hasard en respectant les proportions.
+4. L'**importance des variables** est mesurée par permutation : on mélange une variable et on regarde combien la performance baisse.
+
+Toutes les transformations (encodage, imputation des valeurs manquantes, normalisation) font partie d'un `Pipeline` scikit-learn. Elles sont donc apprises uniquement sur les données d'entraînement, et appliquées à l'identique aux nouvelles données.
+
+### Résultats (3892 événements, collecte du 23/10/2026)
+
+| Modèle | Meilleurs hyperparamètres trouvés | ROC-AUC (validation croisée) |
+|---|---|---|
+| Régression logistique | `C=0.075` | 0,710 |
+| Random forest | `n_estimators=400, max_depth=10, min_samples_leaf=10, max_features=0.5` | 0,848 |
+| **Gradient boosting** | `learning_rate=0.018, max_iter=100, max_leaf_nodes=31, min_samples_leaf=20, l2_regularization=0.215` | **0,849** |
+
+Random forest et gradient boosting sont quasiment à égalité : l'écart (0,001) est bien plus petit que la variation d'un pli à l'autre (± 0,015). Sans optimisation, le gradient boosting obtenait 0,842 en validation croisée.
+
+Sur le jeu de test, comparé à la référence naïve :
+
+| Métrique | Gradient boosting | Référence naïve |
+|---|---|---|
+| ROC-AUC | **0,861** | 0,525 |
+| F1 | **0,468** | 0,166 |
+| Précision | 0,343 | 0,162 |
+| Rappel | 0,734 | 0,170 |
+
+Le modèle détecte environ 7 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 3 (précision). Les modèles sont choisis sur le ROC-AUC, qui mesure la capacité à **classer** les événements du moins au plus populaire. Précision et rappel dépendent en plus du seuil de décision (0,5 par défaut), qu'on peut déplacer selon l'usage : plus haut pour se tromper moins souvent, plus bas pour rater moins d'événements populaires.
+
+Variables les plus utiles : l'**heure** de l'événement, le **nombre de concerts de l'artiste**, la **distance au centre de Paris** et le **nombre d'événements de la salle**.
+
+L'optimisation complète prend environ 1 minute (3 modèles × 20 combinaisons × 5 plis).
+
+**Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne contiennent qu'indirectement (`nb_evenements_artiste`). Ajouter une vraie mesure de notoriété (nombre de fans de l'artiste sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
+
+### Tests
+
+```bash
+pytest
+```
+
+Les tests vérifient notamment :
+- l'absence de fuite de données : `nb_rsvp` ne fait pas partie des variables ;
+- le calcul des distances et des comptages ;
+- que le modèle fait mieux que la référence naïve ;
+- que les hyperparamètres de chaque modèle sont optimisés, et que le modèle retenu est bien le meilleur en validation croisée ;
+- que le modèle et son rapport sont bien sauvegardés ;
+- les règles de la transformation (type d'événement, ville, version la plus récente d'un événement).
+
 ## À venir
 
-- Algorithme de prédiction
 - Chargement des événements dans une table BigQuery (GCP)

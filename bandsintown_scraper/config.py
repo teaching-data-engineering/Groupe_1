@@ -27,6 +27,18 @@ EXTERNAL_API_MAX_RETRIES = 3
 # Île-de-France (lon min, lat max, lon max, lat min) : sinon "Montreuil" peut être celui du Pas-de-Calais
 GEOCODING_VIEWBOX = "1.4,49.25,3.6,48.1"
 
+# Prédiction de la popularité
+# Seuil choisi d'après la distribution : 10 RSVP ou plus concerne environ 12 % des événements
+POPULARITY_THRESHOLD = 10
+TEST_SIZE = 0.2
+CV_FOLDS = 5
+# Nombre de combinaisons d'hyperparamètres testées par modèle (chacune évaluée sur CV_FOLDS plis)
+SEARCH_ITERATIONS = 20
+RANDOM_STATE = 42
+# Les villes avec moins d'événements sont regroupées dans une catégorie "autres"
+MIN_EVENTS_PER_CITY = 20
+MODELS_DIR = Path("models")
+
 # Navigateurs imités par curl_cffi, un tiré au hasard à chaque requête. curl_cffi envoie l'empreinte TLS
 # ET le User-Agent du navigateur choisi : les deux restent cohérents, sinon Cloudflare détecte le robot.
 # Uniquement Chrome : testé le 23/10/2026, l'imitation de Firefox est bloquée par Cloudflare (403)
