@@ -39,6 +39,14 @@ RANDOM_STATE = 42
 MIN_EVENTS_PER_CITY = 20
 MODELS_DIR = Path("models")
 
+# Chargement dans BigQuery.
+# Seul le CHEMIN de la clé est ici : la clé elle-même reste dans credentials/, ignoré par git.
+# Le projet GCP (ai-technologies-ur2) est lu directement dans la clé.
+GCP_CREDENTIALS_PATH = Path("credentials/gcp_key.json")
+# Dataset créé par l'enseignant pour le groupe (région europe-west1) : le seul où le compte peut écrire
+BIGQUERY_DATASET = "dataset_group_1"
+BIGQUERY_TABLE = "events_bandsintown"
+
 # Navigateurs imités par curl_cffi, un tiré au hasard à chaque requête. curl_cffi envoie l'empreinte TLS
 # ET le User-Agent du navigateur choisi : les deux restent cohérents, sinon Cloudflare détecte le robot.
 # Uniquement Chrome : testé le 23/10/2026, l'imitation de Firefox est bloquée par Cloudflare (403)

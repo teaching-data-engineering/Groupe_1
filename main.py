@@ -2,8 +2,11 @@ import argparse
 import sys
 from datetime import date
 
+from google.api_core.exceptions import GoogleAPIError
+
 from bandsintown_scraper import load_events_dataframe, scrap_all_events
 from bandsintown_scraper.config import OUTPUT_CSV
+from bandsintown_scraper.loader import load_events_to_bigquery
 from bandsintown_scraper.model import print_report, save_model, train_model
 from bandsintown_scraper.scraper import ScrapingError
 
@@ -38,6 +41,11 @@ def parse_args():
         action="store_true",
         help="entraîner le modèle de prédiction de popularité et le sauvegarder dans models/",
     )
+    parser.add_argument(
+        "--load-bigquery",
+        action="store_true",
+        help="charger les événements dans la table BigQuery (clé dans credentials/gcp_key.json)",
+    )
     args = parser.parse_args()
     if not args.skip_scraping and args.end_date is None:
         parser.error("--end-date est obligatoire pour scraper")
@@ -65,6 +73,14 @@ def main():
         model, report = train_model(events_df)
         print_report(report)
         print(f"\nModèle sauvegardé dans {save_model(model, report)}")
+
+    if args.load_bigquery:
+        print("\nChargement dans BigQuery...")
+        try:
+            table_id, nb_rows = load_events_to_bigquery(events_df)
+        except (FileNotFoundError, GoogleAPIError) as error:
+            sys.exit(f"Chargement BigQuery impossible : {error}")
+        print(f"{nb_rows} événements chargés dans {table_id}")
 
 
 if __name__ == "__main__":

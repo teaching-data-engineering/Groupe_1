@@ -14,9 +14,10 @@ Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) a
 4. [Collecte des données](#collecte-des-données)
 5. [Transformation et enrichissement](#transformation-et-enrichissement)
 6. [Prédiction de la popularité](#prédiction-de-la-popularité)
-7. [Notebooks](#notebooks)
-8. [Tests](#tests)
-9. [En cas d'erreur](#en-cas-derreur)
+7. [Chargement dans BigQuery](#chargement-dans-bigquery)
+8. [Notebooks](#notebooks)
+9. [Tests](#tests)
+10. [En cas d'erreur](#en-cas-derreur)
 
 ## Structure du repository
 
@@ -27,7 +28,8 @@ Groupe_1/
 │   ├── config.py               toutes les constantes : API, en-têtes, délais, dossiers, réglages du modèle
 │   ├── scraper.py              collecte des événements et sauvegarde des pages JSON brutes
 │   ├── transform.py            nettoyage, enrichissement et géocodage → DataFrame pandas
-│   └── model.py                prédiction de la popularité des événements
+│   ├── model.py                prédiction de la popularité des événements
+│   └── loader.py               chargement des événements dans BigQuery
 ├── main.py                     point d'entrée en ligne de commande
 ├── notebooks/                  exploration et analyse du modèle (voir section « Notebooks »)
 │   ├── 01_exploration.ipynb
@@ -40,6 +42,7 @@ Groupe_1/
 │   ├── cache/lieux.json        coordonnées GPS des salles déjà trouvées (Nominatim)
 │   └── events_bandsintown.csv  résultat final : une ligne par événement
 ├── models/                     modèles entraînés (.joblib, ignorés par git) et leurs rapports (.json)
+├── credentials/gcp_key.json    clé du compte de service GCP (ignorée par git, à ne jamais commiter)
 ├── requirements.txt            dépendances du projet
 └── requirements-dev.txt        dépendances pour les tests et les notebooks
 ```
@@ -71,6 +74,7 @@ Quand le `.venv` est activé, `(.venv)` apparaît au début de la ligne du termi
 | `python main.py --skip-scraping` | reconstruit le CSV à partir des pages déjà collectées | aucune |
 | `python main.py --skip-scraping --enrich-online` | ajoute les coordonnées GPS des salles manquantes | Nominatim |
 | `python main.py --skip-scraping --train` | entraîne le modèle de popularité | aucune |
+| `python main.py --skip-scraping --load-bigquery` | charge les événements dans la table BigQuery | BigQuery |
 | `pytest` | lance les tests | aucune |
 | `python main.py --help` | affiche toutes les options | aucune |
 
@@ -253,6 +257,42 @@ Encodage, imputation des valeurs manquantes et normalisation font partie d'un `P
 - **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,50 et le rappel descend à 0,57 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
 - **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
 
+## Chargement dans BigQuery
+
+```bash
+python main.py --skip-scraping --load-bigquery
+```
+
+Les événements enrichis (les mêmes que dans le CSV) sont chargés dans la table **`ai-technologies-ur2.dataset_group_1.events_bandsintown`**. Le dataset `dataset_group_1` (région `europe-west1`) est fourni par l'enseignant : c'est le seul où le compte du groupe peut écrire. On peut combiner les options, par exemple `python main.py --end-date 2026-11-30 --load-bigquery` pour collecter puis charger.
+
+### Accès à GCP
+
+L'accès se fait avec la **clé JSON du compte de service** du groupe (`ur2-group-1`). Le projet GCP est lu dans la clé :
+
+1. placer la clé, telle quelle, dans `credentials/gcp_key.json` ;
+2. vérifier avec `git status` que `credentials/` n'apparaît pas : le dossier est ignoré par git.
+
+> **Ne jamais mettre le contenu de la clé dans le code** (`config.py`…) ni la commiter. Elle donne accès au projet GCP : une fois sur GitHub, n'importe qui pourrait s'en servir, et Google désactive souvent automatiquement les clés publiées. `config.py` ne contient que le **chemin** de la clé.
+
+Le chemin de la clé, le dataset et la table se changent dans `config.py` (`GCP_CREDENTIALS_PATH`, `BIGQUERY_DATASET`, `BIGQUERY_TABLE`).
+
+### Fonctionnement (`loader.py`)
+
+- **Schéma explicite** (`BIGQUERY_SCHEMA`) : chaque colonne a son type (`INTEGER`, `STRING`, `DATETIME`, `DATE`, `FLOAT`, `BOOLEAN`) et une description visible dans la console BigQuery. La détection automatique de BigQuery se trompe sur les colonnes souvent vides comme `fin` ou `titre`.
+- **Envoi direct du DataFrame** (`load_table_from_dataframe`), sans repasser par le CSV, ce qui évite les problèmes d'accents, de séparateurs et de dates.
+- **Remplacement de la table à chaque chargement** (`WRITE_TRUNCATE`) : la table reflète toujours les dernières données, sans doublons, même si on relance plusieurs fois.
+
+### Vérifier le chargement
+
+Dans la console BigQuery (console.cloud.google.com → BigQuery → `dataset_group_1` → `events_bandsintown`), onglet « Aperçu », ou avec une requête :
+
+```sql
+SELECT COUNT(*) AS evenements, COUNTIF(nb_rsvp >= 10) AS populaires, MIN(debut) AS premier, MAX(debut) AS dernier
+FROM `ai-technologies-ur2.dataset_group_1.events_bandsintown`
+```
+
+Premier chargement (27/10/2026) : 3892 événements, 3892 identifiants uniques, du 23/10 au 30/11/2026, dont 468 populaires et 3888 avec leurs coordonnées GPS.
+
 ## Notebooks
 
 Les notebooks servent à **explorer** les données et à **analyser** le modèle. Ils **importent** les fonctions du module (`load_events_dataframe`, `build_features`, `train_model`…) au lieu de recopier leur code, et n'envoient aucune requête à Bandsintown. Ils sont enregistrés avec leurs résultats et leurs graphiques : on peut les lire sur GitHub sans les exécuter.
@@ -280,14 +320,15 @@ pytest              # tous les tests
 pytest -v           # avec le nom de chaque test
 ```
 
-Les tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête et n'écrivent rien dans `data/` ni dans `models/`. Ils vérifient notamment :
+Les tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête (ni à Bandsintown, ni à BigQuery) et n'écrivent rien dans `data/` ni dans `models/`. Ils vérifient notamment :
 
 - l'absence de fuite de données : `nb_rsvp` ne fait pas partie des variables ;
 - le calcul des distances et des comptages ;
 - que le modèle fait mieux que la référence naïve ;
 - que chaque modèle est optimisé et que le meilleur est bien retenu ;
 - que le modèle et son rapport sont bien sauvegardés ;
-- les règles de la transformation : type d'événement, ville, version la plus récente d'un événement.
+- les règles de la transformation : type d'événement, ville, version la plus récente d'un événement ;
+- le chargement BigQuery, avec un faux client : colonnes dans l'ordre du schéma, conversion des types, remplacement de la table, message clair si la clé manque.
 
 ## En cas d'erreur
 
@@ -300,7 +341,6 @@ Les tests utilisent de petites données inventées et des dossiers temporaires :
 | `429 (trop de requêtes), pause de ... s` | trop de requêtes en peu de temps | rien à faire : le scraper attend puis réessaie |
 | `nominatim.openstreetmap.org/search injoignable` | le réseau bloque Nominatim, ou le service est en panne | relancer `--enrich-online` plus tard ou depuis un autre réseau. Le CSV est quand même écrit |
 | `PermissionError` sur `events_bandsintown.csv` | le CSV est ouvert dans Excel ou LibreOffice | fermer le fichier et relancer |
-
-## À venir
-
-- Chargement des événements dans une table BigQuery (GCP)
+| `Chargement BigQuery impossible : Clé GCP introuvable` | la clé n'est pas dans `credentials/gcp_key.json` | placer la clé JSON à cet endroit (voir « Accès à GCP ») |
+| `Chargement BigQuery impossible : 403 ... Access Denied` | le compte n'a pas le droit d'écrire dans ce dataset | vérifier que `BIGQUERY_DATASET` vaut `dataset_group_1` |
+| `No module named 'google'` | les dépendances BigQuery ne sont pas installées | `pip install -r requirements.txt` |
