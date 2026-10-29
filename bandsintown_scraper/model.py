@@ -5,7 +5,7 @@ from datetime import datetime
 import joblib
 import numpy as np
 import pandas as pd
-from scipy.stats import loguniform
+from scipy.stats import loguniform, randint
 from sklearn.compose import ColumnTransformer
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
@@ -92,12 +92,20 @@ def build_preprocessor():
     )
 
 
-def build_candidate_models():
+def build_candidate_models(n_samples):
     """Modèles comparés, chacun avec son espace de recherche d'hyperparamètres.
 
+    Les plages qui dépendent de la quantité de données (taille des feuilles, profondeur) sont calculées
+    à partir de n_samples : elles restent adaptées si la collecte passe de 4 000 à 10 000 événements.
+    Le nombre d'arbres du gradient boosting n'est pas cherché : l'arrêt précoce le choisit.
     class_weight="balanced" compense le déséquilibre (environ 12 % de populaires).
     Les noms d'hyperparamètres sont préfixés par "modele__", le nom de l'étape dans le Pipeline.
     """
+    # Une feuille doit contenir entre 0,1 % et 2 % des événements (1 % au plus pour la random forest)
+    min_leaf = max(5, n_samples // 1000)
+    max_depths = list(range(4, int(np.log2(n_samples)) + 1, 2))
+    # Complexité des arbres du boosting : de 7 feuilles à environ n_samples / 16 (doublée à chaque valeur)
+    max_leaf_nodes = [2**k - 1 for k in range(3, int(np.log2(n_samples)) - 3)]
     candidates = {
         "regression_logistique": (
             LogisticRegression(class_weight="balanced", max_iter=2000),
@@ -106,19 +114,25 @@ def build_candidate_models():
         "random_forest": (
             RandomForestClassifier(class_weight="balanced", random_state=RANDOM_STATE, n_jobs=-1),
             {
-                "modele__n_estimators": [200, 400, 600],
-                "modele__max_depth": [None, 5, 10, 20],
-                "modele__min_samples_leaf": [1, 2, 5, 10],
+                "modele__n_estimators": randint(200, 600),
+                "modele__max_depth": [None, *max_depths],
+                "modele__min_samples_leaf": randint(1, max(2, n_samples // 100)),
                 "modele__max_features": ["sqrt", 0.5, None],
             },
         ),
         "gradient_boosting": (
-            HistGradientBoostingClassifier(class_weight="balanced", random_state=RANDOM_STATE),
+            # learning_rate fixé : plus petit, il gagne toujours un peu en ajoutant beaucoup d'arbres,
+            # ce n'est donc pas un réglage à chercher (testé : 0.003 au lieu de 0.01, ROC-AUC +0.001, 3x plus d'arbres)
+            HistGradientBoostingClassifier(
+                class_weight="balanced",
+                learning_rate=0.01,
+                early_stopping=True,
+                max_iter=1000,
+                random_state=RANDOM_STATE,
+            ),
             {
-                "modele__learning_rate": loguniform(0.01, 0.3),
-                "modele__max_iter": [100, 200, 400],
-                "modele__max_leaf_nodes": [15, 31, 63],
-                "modele__min_samples_leaf": [10, 20, 50],
+                "modele__max_leaf_nodes": max_leaf_nodes,
+                "modele__min_samples_leaf": randint(min_leaf, max(min_leaf + 1, n_samples // 50)),
                 "modele__l2_regularization": loguniform(1e-4, 1.0),
             },
         ),
@@ -169,7 +183,7 @@ def train_model(events_df, n_iter=SEARCH_ITERATIONS):
     )
 
     searches, cv_scores = {}, {}
-    for name, (pipeline, search_space) in build_candidate_models().items():
+    for name, (pipeline, search_space) in build_candidate_models(len(X_train)).items():
         search = tune_model(pipeline, search_space, X_train, y_train, n_iter)
         best_std = search.cv_results_["std_test_score"][search.best_index_]
         searches[name] = search
@@ -184,6 +198,8 @@ def train_model(events_df, n_iter=SEARCH_ITERATIONS):
 
     best_name = max(cv_scores, key=lambda name: cv_scores[name]["roc_auc_moyen"])
     best_model = searches[best_name].best_estimator_
+    if isinstance(best_model.named_steps["modele"], HistGradientBoostingClassifier):
+        cv_scores[best_name]["nb_arbres_arret_precoce"] = best_model.named_steps["modele"].n_iter_
 
     # Référence naïve : tout modèle utile doit faire mieux qu'un tirage respectant les proportions
     baseline = DummyClassifier(strategy="stratified", random_state=RANDOM_STATE).fit(X_train, y_train)

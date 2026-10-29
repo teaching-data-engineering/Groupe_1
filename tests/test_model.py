@@ -5,6 +5,7 @@ import pytest
 from bandsintown_scraper.model import (
     FEATURES,
     TARGET,
+    build_candidate_models,
     build_features,
     haversine_km,
     save_model,
@@ -61,6 +62,17 @@ def test_build_features_counts_events_per_artist(events_df):
     X, _ = build_features(events_df)
     expected = events_df.groupby("artiste")["id"].transform("count")
     assert (X["nb_evenements_artiste"] == expected).all()
+
+
+def test_search_space_grows_with_data():
+    _, small_space = build_candidate_models(3_000)["gradient_boosting"]
+    _, large_space = build_candidate_models(100_000)["gradient_boosting"]
+    small_leaf, large_leaf = small_space["modele__min_samples_leaf"], large_space["modele__min_samples_leaf"]
+    assert large_leaf.support()[1] > small_leaf.support()[1]
+    assert max(large_space["modele__max_leaf_nodes"]) > max(small_space["modele__max_leaf_nodes"])
+    _, large_forest_space = build_candidate_models(100_000)["random_forest"]
+    _, small_forest_space = build_candidate_models(3_000)["random_forest"]
+    assert max(large_forest_space["modele__max_depth"][1:]) > max(small_forest_space["modele__max_depth"][1:])
 
 
 @pytest.fixture

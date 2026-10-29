@@ -231,7 +231,8 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 1. 20 % des événements sont mis de côté (**jeu de test**), en gardant la même proportion d'événements populaires (découpage stratifié).
 2. Pour chacun des trois modèles (régression logistique, random forest, gradient boosting), les **hyperparamètres sont choisis automatiquement** par `RandomizedSearchCV`. Il teste 20 combinaisons (`SEARCH_ITERATIONS`), chacune évaluée par **validation croisée** à 5 plis sur les 80 % restants. Les modèles sont pondérés (`class_weight="balanced"`) pour compenser le déséquilibre entre les classes.
-3. Les trois modèles optimisés sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est évalué **une seule fois** sur le jeu de test, face à une **référence naïve** qui tire au hasard en respectant les proportions.
+   - **Les plages de recherche s'adaptent à la quantité de données.** La taille minimale des feuilles va de 0,1 % à 2 % des événements, et la profondeur maximale des arbres dépend du nombre d'événements. Si une collecte passe de 4 000 à 10 000 événements, il n'y a rien à modifier.
+   - **Le gradient boosting s'arrête tout seul** (arrêt précoce) quand ajouter des arbres n'améliore plus le score : son nombre d'arbres n'est pas cherché.3. Les trois modèles optimisés sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est évalué **une seule fois** sur le jeu de test, face à une **référence naïve** qui tire au hasard en respectant les proportions.
 4. L'**importance des variables** est mesurée par permutation : on mélange une variable et on regarde combien la performance baisse.
 
 Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`), donc les résultats sont reproductibles.
@@ -241,20 +242,20 @@ Encodage, imputation des valeurs manquantes et normalisation font partie d'un `P
 | Modèle | Meilleurs hyperparamètres | ROC-AUC (validation croisée) |
 |---|---|---|
 | Régression logistique | `C=0.075` | 0,710 |
-| Random forest | `n_estimators=400, max_depth=10, min_samples_leaf=10, max_features=0.5` | 0,848 |
-| **Gradient boosting** | `learning_rate=0.018, max_iter=100, max_leaf_nodes=31, min_samples_leaf=20, l2_regularization=0.215` | **0,849** |
+| Random forest | `n_estimators=506, max_depth=None, min_samples_leaf=5, max_features=None` | 0,846 |
+| **Gradient boosting** | `max_leaf_nodes=15, min_samples_leaf=32, l2_regularization=0.013` (216 arbres, arrêt précoce) | **0,847** |
 
 | Métrique (jeu de test) | Gradient boosting | Référence naïve |
 |---|---|---|
-| ROC-AUC | **0,861** | 0,525 |
-| F1 | **0,468** | 0,166 |
-| Précision | 0,343 | 0,162 |
-| Rappel | 0,734 | 0,170 |
+| ROC-AUC | **0,856** | 0,525 |
+| F1 | **0,460** | 0,166 |
+| Précision | 0,340 | 0,162 |
+| Rappel | 0,713 | 0,170 |
 
 - Le modèle retrouve environ 7 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 3 (précision).
 - Random forest et gradient boosting sont quasiment à égalité : l'écart (0,001) est bien plus petit que la variation d'un pli à l'autre (± 0,015).
 - Variables les plus utiles : l'**heure** de l'événement, le **nombre de concerts de l'artiste**, la **distance au centre de Paris** et le **nombre d'événements de la salle**.
-- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,50 et le rappel descend à 0,57 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
+- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,44 et le rappel descend à 0,60 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
 - **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
 
 ## Chargement dans BigQuery
