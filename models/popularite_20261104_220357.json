@@ -1,0 +1,76 @@
+{
+  "date_entrainement": "2026-11-04T22:03:57",
+  "cible": "est_populaire (nb_rsvp >= 10)",
+  "nb_evenements": 4444,
+  "part_populaires": 0.113,
+  "variables": [
+    "jour_semaine",
+    "type_evenement",
+    "ville",
+    "heure",
+    "mois",
+    "jours_avant_evenement",
+    "distance_centre_km",
+    "nb_evenements_salle",
+    "nb_evenements_artiste",
+    "est_weekend",
+    "streaming",
+    "a_un_titre"
+  ],
+  "combinaisons_testees_par_modele": 20,
+  "validation_croisee": {
+    "regression_logistique": {
+      "roc_auc_moyen": 0.695,
+      "ecart_type": 0.04,
+      "hyperparametres": {
+        "C": 0.98467
+      }
+    },
+    "random_forest": {
+      "roc_auc_moyen": 0.847,
+      "ecart_type": 0.015,
+      "hyperparametres": {
+        "max_depth": null,
+        "max_features": 0.5,
+        "min_samples_leaf": 9,
+        "n_estimators": 545
+      }
+    },
+    "gradient_boosting": {
+      "roc_auc_moyen": 0.843,
+      "ecart_type": 0.019,
+      "hyperparametres": {
+        "l2_regularization": 0.00502,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 8
+      }
+    }
+  },
+  "meilleur_modele": "random_forest",
+  "test": {
+    "roc_auc": 0.855,
+    "f1": 0.447,
+    "precision": 0.327,
+    "rappel": 0.703
+  },
+  "test_reference_naive": {
+    "roc_auc": 0.473,
+    "f1": 0.075,
+    "precision": 0.071,
+    "rappel": 0.079
+  },
+  "importance_variables": {
+    "heure": 0.1263,
+    "nb_evenements_salle": 0.1205,
+    "distance_centre_km": 0.07,
+    "nb_evenements_artiste": 0.0572,
+    "ville": 0.0067,
+    "jours_avant_evenement": 0.004,
+    "a_un_titre": 0.0039,
+    "streaming": 0.0,
+    "type_evenement": -0.0002,
+    "mois": -0.0002,
+    "est_weekend": -0.001,
+    "jour_semaine": -0.0044
+  }
+}

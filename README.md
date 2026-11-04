@@ -109,12 +109,12 @@ with requests.Session(impersonate=browser) as session:  # garde les cookies d'un
 
 ### Fonctionnement
 
-1. **Une page** (`scrap_one_page`) : une requête GET pour une période et un numéro de page.
-2. **Plusieurs pages** (`scrap_multiple_pages`) : parcourt les pages d'une période et s'arrête sur :
+1. **Une page** (`scrap_one_page`) : une requête GET pour un jour et un numéro de page.
+2. **Plusieurs pages** (`scrap_multiple_pages`) : parcourt les pages d'un jour et s'arrête sur :
    - une page vide : il n'y a plus de résultats ;
-   - une page répétée : l'API renvoie en boucle une page déjà vue, sa limite est atteinte ;
+   - une page répétée : l'API renvoie en boucle une page déjà vue ce jour-là, sa limite est atteinte ;
    - la limite de 30 pages (`MAX_PAGE`).
-3. **Toutes les périodes** (`scrap_all_events`) : l'API renvoie les événements triés par date, mais limite le nombre de pages par période. Quand une période est coupée, une nouvelle période démarre au jour du dernier événement reçu. Le nombre de périodes s'adapte donc tout seul au volume de données, que la date de fin soit fin novembre ou fin 2030.
+3. **Tous les jours** (`scrap_all_events`) : l'API limite le nombre de pages par requête, donc chaque jour est collecté séparément, de la date de début à la date de fin. Si un jour atteint la limite, un avertissement signale que des événements peuvent manquer.
 4. **Sauvegarde** (`save_json`, `move_pages_to_raw_dir`) : chaque page est enregistrée dès sa réception, d'abord dans un dossier temporaire. Quand la collecte se termine sans erreur, les pages sont déplacées dans `data/raw/`, numérotées à la suite des pages existantes. **Si le site bloque en cours de route, `data/` n'est pas modifié.**
 
 Chaque page garde la réponse brute de l'API, avec les informations de la collecte :
@@ -123,7 +123,7 @@ Chaque page garde la réponse brute de l'API, avec les informations de la collec
 {
   "collectedAt": "2026-10-23",
   "startDate": "2026-10-23",
-  "endDate": "2026-11-30",
+  "endDate": "2026-10-23",
   "page": 1,
   "events": [
     {
@@ -205,7 +205,7 @@ Le CSV étant reconstruit à partir des pages brutes, on peut changer le nettoya
 
 ## Prédiction de la popularité
 
-**Question :** un événement va-t-il atteindre au moins 10 RSVP (`POPULARITY_THRESHOLD`) ? C'est le cas d'environ 12 % des événements.
+**Question :** un événement va-t-il atteindre au moins 10 RSVP (`POPULARITY_THRESHOLD`) ? C'est le cas d'environ 11 % des événements.
 
 ```bash
 python main.py --skip-scraping --train
@@ -237,25 +237,25 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`), donc les résultats sont reproductibles.
 
-### Résultats (3892 événements, collecte du 23/10/2026)
+### Résultats (4444 événements, collectes du 23/10 au 04/11/2026)
 
 | Modèle | Meilleurs hyperparamètres | ROC-AUC (validation croisée) |
 |---|---|---|
-| Régression logistique | `C=0.075` | 0,710 |
-| Random forest | `n_estimators=506, max_depth=None, min_samples_leaf=5, max_features=None` | 0,846 |
-| **Gradient boosting** | `max_leaf_nodes=15, min_samples_leaf=32, l2_regularization=0.013` (216 arbres, arrêt précoce) | **0,847** |
+| Régression logistique | `C=0.985` | 0,695 |
+| **Random forest** | `n_estimators=545, max_depth=None, min_samples_leaf=9, max_features=0.5` | **0,847** |
+| Gradient boosting | `max_leaf_nodes=15, min_samples_leaf=8, l2_regularization=0.005` (arrêt précoce) | 0,843 |
 
-| Métrique (jeu de test) | Gradient boosting | Référence naïve |
+| Métrique (jeu de test) | Random forest | Référence naïve |
 |---|---|---|
-| ROC-AUC | **0,856** | 0,525 |
-| F1 | **0,460** | 0,166 |
-| Précision | 0,340 | 0,162 |
-| Rappel | 0,713 | 0,170 |
+| ROC-AUC | **0,855** | 0,473 |
+| F1 | **0,447** | 0,075 |
+| Précision | 0,327 | 0,071 |
+| Rappel | 0,703 | 0,079 |
 
 - Le modèle retrouve environ 7 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 3 (précision).
-- Random forest et gradient boosting sont quasiment à égalité : l'écart (0,001) est bien plus petit que la variation d'un pli à l'autre (± 0,015).
-- Variables les plus utiles : l'**heure** de l'événement, le **nombre de concerts de l'artiste**, la **distance au centre de Paris** et le **nombre d'événements de la salle**.
-- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,44 et le rappel descend à 0,60 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
+- Random forest et gradient boosting sont quasiment à égalité : l'écart (0,004) est plus petit que la variation d'un pli à l'autre (± 0,015).
+- Variables les plus utiles : l'**heure** de l'événement, le **nombre d'événements de la salle**, la **distance au centre de Paris** et le **nombre de concerts de l'artiste**.
+- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,48 et le rappel descend à 0,60 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
 - **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
 
 ## Chargement dans BigQuery
@@ -305,14 +305,14 @@ Les notebooks servent à **explorer** les données et à **analyser** le modèle
 
 **Ouvrir un notebook :** dans VS Code, ouvrir le fichier `.ipynb`, choisir le noyau `.venv` en haut à droite, puis « Run All ». `02_classification.ipynb` met environ 1 minute à s'exécuter (entraînement du modèle).
 
-**Lire les graphiques de l'exploration :** la ligne pointillée « moyenne 12 % » est la part d'événements populaires sur l'ensemble des données (468 sur 3892). Une barre au-dessus indique une catégorie plus souvent populaire que la moyenne.
+**Lire les graphiques de l'exploration :** la ligne pointillée « moyenne 11 % » est la part d'événements populaires sur l'ensemble des données (504 sur 4444). Une barre au-dessus indique une catégorie plus souvent populaire que la moyenne.
 
 **Ce que montre l'exploration :**
 - l'heure est le signal le plus net : environ 17 % d'événements populaires à 19h-20h, contre 1 à 3 % après 21h ;
-- les salles très actives (plus de 15 événements) ont 16 à 18 % d'événements populaires, contre 5 à 8 % pour les petites salles ;
-- l'effet de la distance au centre n'est pas régulier (6 % à moins de 2 km, 16 % entre 2 et 4 km), d'où l'intérêt des modèles à base d'arbres ;
-- les artistes qui ont beaucoup de dates (spectacles répétés, résidences) ont des événements **moins** populaires (0 % au-delà de 5 dates) ;
-- le week-end n'est pas plus populaire que la semaine (10 % contre 13 %).
+- les salles de 16 à 50 événements ont 17 % d'événements populaires, contre 6 à 8 % pour les petites salles et 10 % pour les plus actives ;
+- l'effet de la distance au centre n'est pas régulier (6 % à moins de 2 km, 14 % entre 2 et 4 km), d'où l'intérêt des modèles à base d'arbres ;
+- les artistes qui ont beaucoup de dates (spectacles répétés, résidences) ont des événements **moins** populaires (moins de 1 % au-delà de 5 dates) ;
+- le week-end n'est pas plus populaire que la semaine (10 % contre 12 %).
 
 ## Tests
 

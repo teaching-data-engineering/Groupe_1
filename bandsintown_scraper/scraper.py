@@ -31,10 +31,10 @@ class ScrapingError(Exception):
     """Le site a refusé une requête (403, 416, 429 répétés...) : la collecte est incomplète."""
 
 
-def scrap_one_page(page_idx, start_date, end_date, session):
+def scrap_one_page(page_idx, day, session):
     """Renvoie la liste brute des événements d'une page. Lève ScrapingError si le site refuse."""
     params = {
-        "date": f"{start_date:%Y-%m-%d}T00:00:00,{end_date:%Y-%m-%d}T23:00:00",
+        "date": f"{day:%Y-%m-%d}T00:00:00,{day:%Y-%m-%d}T23:59:59",
         "page": page_idx,
         "longitude": PARIS_LONGITUDE,
         "latitude": PARIS_LATITUDE,
@@ -51,7 +51,7 @@ def scrap_one_page(page_idx, start_date, end_date, session):
 
     if response.status_code != 200:
         raise ScrapingError(
-            f"page {page_idx} du {start_date:%d/%m/%Y} : échec ({response.status_code}) "
+            f"page {page_idx} du {day:%d/%m/%Y} : échec ({response.status_code}) "
             f"{response.text[:200]}"
         )
 
@@ -65,12 +65,12 @@ def list_page_files(raw_dir=RAW_DATA_DIR):
     return sorted(pages, key=lambda path: int(PAGE_FILE_PATTERN.search(path.name).group(1)))
 
 
-def save_json(events, start_date, end_date, page_idx, file_idx, output_dir):
+def save_json(events, day, page_idx, file_idx, output_dir):
     """Écrit une page brute, avec les informations de sa collecte."""
     page = {
         "collectedAt": date.today().isoformat(),
-        "startDate": start_date.isoformat(),
-        "endDate": end_date.isoformat(),
+        "startDate": day.isoformat(),
+        "endDate": day.isoformat(),
         "page": page_idx,
         "events": events,
     }
@@ -90,34 +90,36 @@ def move_pages_to_raw_dir(staging_dir, raw_dir=RAW_DATA_DIR):
     return len(new_pages)
 
 
-def scrap_multiple_pages(start_date, end_date, max_page, seen_ids, output_dir, session):
-    """Collecte les pages d'une période jusqu'à la fin des résultats ou la limite de l'API.
+def scrap_multiple_pages(day, max_page, seen_ids, output_dir, session):
+    """Collecte les pages d'un jour jusqu'à la fin des résultats ou la limite de l'API.
 
     Renvoie (new_events, page_limit_reached, nb_pages).
-    page_limit_reached vaut True quand la période a été coupée : il reste des événements après.
+    page_limit_reached vaut True quand le jour a été coupé : il peut rester des événements.
     """
     new_events = []
+    day_ids = set()
 
     for page_idx in range(1, max_page + 1):
-        events = scrap_one_page(page_idx, start_date, end_date, session)
+        events = scrap_one_page(page_idx, day, session)
+        time.sleep(random.uniform(MIN_DELAY_SECONDS, MAX_DELAY_SECONDS))
 
         if not events:
             print(f"page {page_idx} : vide, fin des résultats.")
             return new_events, False, page_idx
 
-        # Une fois sa limite atteinte, l'API renvoie en boucle une page déjà vue
-        page_new_events = [event for event in events if event.get("id") not in seen_ids]
-        if not page_new_events:
+        # Une fois sa limite atteinte, l'API renvoie en boucle une page déjà vue ce jour-là
+        page_ids = {event.get("id") for event in events}
+        if page_ids <= day_ids:
             print(f"page {page_idx} : page répétée, limite de l'API atteinte.")
             return new_events, True, page_idx
+        day_ids |= page_ids
 
         file_idx = len(list_page_files(output_dir)) + 1
-        save_json(events, start_date, end_date, page_idx, file_idx, output_dir)
-        seen_ids.update(event.get("id") for event in page_new_events)
+        save_json(events, day, page_idx, file_idx, output_dir)
+        page_new_events = [event for event in events if event.get("id") not in seen_ids]
+        seen_ids.update(page_ids)
         new_events.extend(page_new_events)
         print(f"page {page_idx} : {len(page_new_events)} nouveaux événements.")
-
-        time.sleep(random.uniform(MIN_DELAY_SECONDS, MAX_DELAY_SECONDS))
 
     return new_events, True, max_page
 
@@ -135,48 +137,31 @@ def scrap_all_events(end_date, start_date=None):
     browser = random.choice(IMPERSONATE_BROWSERS)
     print(f"Navigateur imité : {browser}")
     with tempfile.TemporaryDirectory() as staging_dir, requests.Session(impersonate=browser) as session:
-        _scrap_periods(end_date, start_date or date.today(), Path(staging_dir), session)
+        _scrap_days(start_date or date.today(), end_date, Path(staging_dir), session)
         nb_new_pages = move_pages_to_raw_dir(Path(staging_dir))
     print(f"{nb_new_pages} pages ajoutées dans {RAW_DATA_DIR} "
           f"({len(list_page_files())} pages au total).")
 
 
-def _scrap_periods(end_date, cursor, output_dir, session):
-    """Découpe automatiquement la collecte en périodes.
-
-    L'API renvoie les événements triés par date et limite le nombre de pages par période.
-    Quand une période est coupée, la suivante repart du jour du dernier événement reçu :
-    le nombre de périodes dépend donc du volume de données, pas d'un choix arbitraire.
-    """
+def _scrap_days(start_date, end_date, output_dir, session):
+    """Collecte chaque jour séparément : l'API limite le nombre de pages par requête de dates."""
     seen_ids = set()
-    nb_periods = 0
+    nb_days = (end_date - start_date).days + 1
     nb_pages_total = 0
 
-    while cursor <= end_date:
-        nb_periods += 1
-        print(f"=== Période {nb_periods} : du {cursor:%d/%m/%Y} au {end_date:%d/%m/%Y} ===")
+    for day_offset in range(nb_days):
+        day = start_date + timedelta(days=day_offset)
+        print(f"=== {day:%d/%m/%Y} ({day_offset + 1}/{nb_days}) ===")
 
         new_events, page_limit_reached, nb_pages = scrap_multiple_pages(
-            cursor, end_date, MAX_PAGE, seen_ids, output_dir, session
+            day, MAX_PAGE, seen_ids, output_dir, session
         )
         nb_pages_total += nb_pages
-        print(f"période {nb_periods} : {nb_pages} pages, {len(new_events)} nouveaux événements.\n")
+        print(f"{nb_pages} pages, {len(new_events)} nouveaux événements.\n")
 
-        if not page_limit_reached:
-            break
-
-        # Le dernier jour a pu être coupé au milieu : on le redemande, seen_ids filtre les doublons
-        last_day = (
-            date.fromisoformat(max(event["startsAt"] for event in new_events)[:10])
-            if new_events
-            else cursor
-        )
-        if last_day > cursor:
-            cursor = last_day
-        else:
-            print(f"attention : le {cursor:%d/%m/%Y} dépasse à lui seul la limite de pages, "
+        if page_limit_reached:
+            print(f"attention : le {day:%d/%m/%Y} dépasse la limite de pages, "
                   "des événements peuvent manquer.")
-            cursor += timedelta(days=1)
 
-    print(f"{len(seen_ids)} événements collectés en {nb_periods} période(s) "
+    print(f"{len(seen_ids)} événements collectés sur {nb_days} jour(s) "
           f"et {nb_pages_total} pages au total.")
