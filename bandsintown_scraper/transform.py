@@ -30,6 +30,7 @@ FIELDS = {
     "streamingEvent": "streaming",
     "watchLiveText": "watch_live_text",
     "collectedAt": "date_collecte",
+    "timezone": "fuseau_horaire",
 }
 
 EVENT_TYPE_PATTERNS = {

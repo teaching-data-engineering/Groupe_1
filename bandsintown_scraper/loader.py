@@ -19,6 +19,7 @@ BIGQUERY_SCHEMA = [
     bigquery.SchemaField("streaming", "BOOLEAN", description="événement diffusé en ligne"),
     bigquery.SchemaField("watch_live_text", "STRING", description="texte affiché pour le direct"),
     bigquery.SchemaField("date_collecte", "DATE", description="date de collecte de la page"),
+    bigquery.SchemaField("fuseau_horaire", "STRING", description="fuseau horaire de l'événement"),
     bigquery.SchemaField("ville", "STRING", description="ville de la salle"),
     bigquery.SchemaField("jour_semaine", "STRING", description="jour de la semaine de l'événement"),
     bigquery.SchemaField("est_weekend", "BOOLEAN", description="samedi ou dimanche"),

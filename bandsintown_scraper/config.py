@@ -28,7 +28,7 @@ EXTERNAL_API_MAX_RETRIES = 3
 GEOCODING_VIEWBOX = "1.4,49.25,3.6,48.1"
 
 # Prédiction de la popularité
-# Seuil choisi d'après la distribution : 10 RSVP ou plus concerne environ 12 % des événements
+# Seuil choisi d'après la distribution : 10 RSVP ou plus concerne environ 11 % des événements
 POPULARITY_THRESHOLD = 10
 TEST_SIZE = 0.2
 CV_FOLDS = 5

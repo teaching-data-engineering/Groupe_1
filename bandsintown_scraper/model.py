@@ -98,7 +98,7 @@ def build_candidate_models(n_samples):
     Les plages qui dépendent de la quantité de données (taille des feuilles, profondeur) sont calculées
     à partir de n_samples : elles restent adaptées si la collecte passe de 4 000 à 10 000 événements.
     Le nombre d'arbres du gradient boosting n'est pas cherché : l'arrêt précoce le choisit.
-    class_weight="balanced" compense le déséquilibre (environ 12 % de populaires).
+    class_weight="balanced" compense le déséquilibre (environ 11 % de populaires).
     Les noms d'hyperparamètres sont préfixés par "modele__", le nom de l'étape dans le Pipeline.
     """
     # Une feuille doit contenir entre 0,1 % et 2 % des événements (1 % au plus pour la random forest)

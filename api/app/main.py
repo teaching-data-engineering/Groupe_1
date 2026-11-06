@@ -38,9 +38,6 @@ def read_root():
     return {"Hello": "World"}
 
 #------------------------------- Tous les événement ---------------------------------------------
-# version de sécurité :
-#S'il n'y a pas d'autre paramètre, utilise ?token=12345.
-#S'il y a déjà un paramètre, ajoute &token=12345 à la fin.
 
 @app.get("/events")
 def read_events(page: int = Query(1, ge=1)):
@@ -188,6 +185,17 @@ def read_top_artists(critere: Literal["evenements", "rsvp"] = "evenements"):
         GROUP BY artiste
         ORDER BY {order_by} DESC, artiste
         LIMIT {TOP_ARTISTS_LIMIT}
+    """)
+
+
+#-------------------------------- Nombre d'événements par fuseau horaire ----------------------------------------
+@app.get("/events/by-timezone")
+def read_events_by_timezone():
+    return run_query(f"""
+        SELECT fuseau_horaire, COUNT(*) AS nb_evenements
+        FROM `{TABLE}`
+        GROUP BY fuseau_horaire
+        ORDER BY nb_evenements DESC
     """)
 
 

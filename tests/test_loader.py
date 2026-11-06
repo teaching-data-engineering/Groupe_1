@@ -31,6 +31,7 @@ def events_df():
             "streaming": [False, False],
             "watch_live_text": ["Watch Live", "Watch Live"],
             "date_collecte": pd.to_datetime(["2026-10-23", "2026-10-23"]),
+            "fuseau_horaire": ["Europe/Paris", "Europe/Paris"],
             "ville": ["Paris", "Paris"],
             "jour_semaine": ["Friday", "Saturday"],
             "est_weekend": [False, True],

@@ -26,7 +26,7 @@ Bandsintown ──> scraper.py ──> data/raw/*.json ──> transform.py ─�
 | Enrichissement | Colonnes de date, type d'événement, popularité et coordonnées GPS (4440 événements géolocalisés) |
 | Prédiction | Entraînement sur les événements passés : ROC-AUC de 0,797 sur les plus récents, contre 0,499 pour une référence naïve |
 | Chargement | Table BigQuery `dataset_group_1.events_bandsintown`, 4444 lignes |
-| API | 14 routes protégées par un token, avec pagination |
+| API | 15 routes protégées par un token, avec pagination |
 
 ## Sommaire
 
@@ -211,6 +211,7 @@ Chaque morceau ajoute ses pages à la suite des pages existantes, sans rien effa
 |---|---|
 | `id`, `artiste`, `titre`, `lieu`, `localisation`, `debut`, `fin`, `nb_rsvp`, `url_evenement`, `streaming`, `watch_live_text` | champs de l'API, renommés (`FIELDS`) |
 | `date_collecte` | date de collecte de la page |
+| `fuseau_horaire` | fuseau horaire de l'événement (`timezone` dans l'API) |
 | `ville` | ville de la salle, tirée de `localisation` (« PARIS », « Paris 19 Buttes-Chaumont » → « Paris ») |
 | `jour_semaine`, `est_weekend`, `numero_semaine`, `mois`, `heure` | calculés à partir de `debut` |
 | `jours_avant_evenement` | nombre de jours entre `date_collecte` et `debut` |
@@ -275,6 +276,18 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`). Les événements utilisés dépendent de la date de l'entraînement, qui est écrite dans le rapport JSON du modèle.
 
+### Pourquoi ces choix
+
+| Choix | Raison |
+|---|---|
+| Seuil de 10 RSVP | La médiane est à 0 RSVP, et 59 % des événements n'en ont aucun. Le seuil de 10 isole les 11 % d'événements qui sortent du lot, tout en gardant assez d'exemples pour apprendre |
+| Régression logistique | Un modèle simple, qui sert de point de comparaison |
+| Random forest et gradient boosting | Ils captent les effets non réguliers vus dans l'exploration, comme l'heure et la distance au centre |
+| `class_weight="balanced"` | Une erreur sur un événement populaire compte plus. Le modèle en rate moins, au prix de plus de fausses alertes |
+| ROC-AUC pour comparer les modèles | Il mesure la qualité du classement, quel que soit le seuil. L'exactitude serait trompeuse : répondre toujours « pas populaire » donnerait déjà 89 % de bonnes réponses |
+| Référence naïve | Elle tire au hasard en respectant les proportions : elle montre le score obtenu sans rien apprendre |
+| Garder les 12 variables | Elles sont peu nombreuses, et les modèles à base d'arbres se servent peu des variables inutiles. `mois`, `streaming`, `est_weekend` et `jours_avant_evenement` n'apportent rien de mesurable sur cette période |
+
 ### Résultats (entraînement du 06/11/2026)
 
 Sur 4444 événements collectés, 1531 sont passés et 2913 sont à venir, donc exclus. L'entraînement porte sur 1224 événements (jusqu'au 02/11) et le test sur les 307 suivants (jusqu'au 05/11), dont 38 populaires.
@@ -295,7 +308,18 @@ Sur 4444 événements collectés, 1531 sont passés et 2913 sont à venir, donc 
 - Le modèle retrouve environ 8 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 4 (précision).
 - Le ROC-AUC baisse entre la validation croisée (0,844) et le test (0,797) : prédire des événements futurs est plus difficile que prédire des événements mélangés dans le temps. Le test ne compte que 38 événements populaires, ce score reste donc approximatif.
 - Variables les plus utiles : le **nombre d'événements de la salle**, l'**heure** de l'événement, la **distance au centre de Paris** et le **nombre de concerts de l'artiste**.
-- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,28 et le rappel descend à 0,71 (meilleur F1). Le seuil se règle selon l'usage.
+- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,28 et le rappel descend à 0,71 (meilleur F1 parmi les seuils testés). Le seuil se règle selon l'usage.
+
+### Lire les résultats
+
+| Métrique | Ce qu'elle mesure | Résultat au seuil de 0,5 |
+|---|---|---|
+| ROC-AUC | La capacité à classer un événement populaire avant un événement qui ne l'est pas. 0,5 correspond au hasard, 1 à un modèle parfait | 0,797 |
+| Précision | Parmi les événements annoncés populaires, la part qui l'est vraiment | 31 sur 134 annoncés (0,231) |
+| Rappel | Parmi les événements vraiment populaires, la part retrouvée | 31 sur 38 (0,816) |
+| F1 | Un compromis entre la précision et le rappel | 0,360 |
+
+**Usage du modèle :** il sert à **classer** les événements, pour savoir lesquels regarder en premier. Parmi les 20 événements les mieux classés du test, 8 sont vraiment populaires (40 %, contre 12 % en moyenne dans le test). Il ne donne pas de certitude : environ 3 événements annoncés populaires sur 4 ne le sont pas.
 
 ### Essais écartés
 
@@ -417,6 +441,7 @@ print(requests.get("http://127.0.0.1:8000/events", headers={"X-Token": token}).j
 | `GET /events/upcoming` | `page` | événements des 7 prochains jours |
 | `GET /events/rsvp-trend` | | total des RSVP par jour et moyenne glissante sur 7 jours |
 | `GET /events/top-artists` | `critere` (`evenements` ou `rsvp`) | top 5 des artistes |
+| `GET /events/by-timezone` | | nombre d'événements par fuseau horaire |
 | `PUT /events/{event_id}` | événement en JSON | valide l'événement reçu, sans rien écrire dans BigQuery |
 
 Exemples, à compléter avec le token :
@@ -463,16 +488,16 @@ Les notebooks servent à **explorer** les données et à **analyser** le modèle
 | Notebook | Contenu |
 |---|---|
 | `01_exploration.ipynb` | distribution des RSVP, taux d'événements populaires selon l'heure, le jour, le type, la distance, la salle et l'artiste, qualité des données. Justifie les choix du modèle : seuil de 10 RSVP, variables, regroupement des villes |
-| `02_classification.ipynb` | comparaison des modèles, résultats sur le jeu de test, matrice de confusion, précision et rappel selon le seuil, courbe ROC, importance des variables. Ce notebook présente encore l'ancien découpage aléatoire : les résultats à jour sont dans « Prédiction de la popularité » |
+| `02_classification.ipynb` | comparaison des modèles, résultats sur le jeu de test, matrice de confusion, précision et rappel selon le seuil, courbe ROC, importance des variables |
 
-**Ouvrir un notebook :** dans VS Code, ouvrir le fichier `.ipynb`, choisir le noyau `.venv` en haut à droite, puis « Run All ». `02_classification.ipynb` met environ 1 minute à s'exécuter (entraînement du modèle).
+**Ouvrir un notebook :** dans VS Code, ouvrir le fichier `.ipynb`, choisir le noyau `.venv` en haut à droite, puis « Run All ». `02_classification.ipynb` met environ 1 minute à s'exécuter (entraînement du modèle). Relancé un autre jour, il donne d'autres chiffres, car de nouveaux événements deviennent passés.
 
 **Lire les graphiques de l'exploration :** la ligne pointillée « moyenne 11 % » est la part d'événements populaires sur l'ensemble des données (504 sur 4444). Une barre au-dessus indique une catégorie plus souvent populaire que la moyenne.
 
 **Ce que montre l'exploration :**
 - l'heure est le signal le plus net : environ 17 % d'événements populaires à 19h-20h, contre 1 à 3 % après 21h ;
-- les salles de 16 à 50 événements ont 17 % d'événements populaires, contre 6 à 8 % pour les petites salles et 10 % pour les plus actives ;
-- l'effet de la distance au centre n'est pas régulier (6 % à moins de 2 km, 14 % entre 2 et 4 km), d'où l'intérêt des modèles à base d'arbres ;
+- les salles de 16 à 40 événements ont 16 % d'événements populaires et celles de plus de 40 événements 13 %, contre 4 à 8 % pour les salles de 15 événements ou moins ;
+- l'effet de la distance au centre n'est pas régulier (6 % à moins de 2 km, 14 % entre 2 et 4 km, 15 % entre 4 et 6 km), d'où l'intérêt des modèles à base d'arbres ;
 - les artistes qui ont beaucoup de dates (spectacles répétés, résidences) ont des événements **moins** populaires (moins de 1 % au-delà de 5 dates) ;
 - le week-end n'est pas plus populaire que la semaine (10 % contre 12 %).
 
