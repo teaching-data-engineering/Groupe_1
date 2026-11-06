@@ -1,9 +1,0 @@
-.venv/
-models/*.joblib
-# Clés d'accès GCP : ne jamais les commiter
-credentials/
-__pycache__/
-*.pyc
-.~lock*
-*.csv
-!data/events_bandsintown.csv

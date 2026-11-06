@@ -3,11 +3,7 @@ import pandas as pd
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-<<<<<<< HEAD
-from bandsintown_scraper.config import BIGQUERY_DATASET, BIGQUERY_TABLE, GCP_CREDENTIALS_PATH
-=======
 from bandsintown_scraper.config import GCP_CREDENTIALS_PATH
->>>>>>> origin/main
 
 # Schéma explicite : la détection automatique de BigQuery se trompe sur les colonnes souvent vides
 BIGQUERY_SCHEMA = [
@@ -65,11 +61,7 @@ def prepare_for_bigquery(events_df):
     return df
 
 
-<<<<<<< HEAD
-def load_events_to_bigquery(events_df, client=None, dataset=BIGQUERY_DATASET, table=BIGQUERY_TABLE):
-=======
 def load_events_to_bigquery(events_df, client=None, dataset="dataset_group_1", table="events_bandsintown"):
->>>>>>> origin/main
     """Charge les événements dans BigQuery et renvoie (identifiant_de_la_table, nombre_de_lignes).
 
     La table est remplacée à chaque chargement (WRITE_TRUNCATE) : elle reflète toujours le dernier CSV,
