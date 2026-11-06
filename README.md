@@ -4,7 +4,7 @@ Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) a
 
 **écrire votre nom dans Membres**
 
-**Membres :** Alexandre HAYOUN, Hoang , Soro , Mathis
+**Membres :** Alexandre HAYOUN, Hoang , Soro , Matis BOUDELIER
 
 ## Sommaire
 
