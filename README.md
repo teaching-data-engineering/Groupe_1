@@ -71,7 +71,7 @@ Groupe_1/
 │   ├── raw/                    pages brutes de l'API : page_001.json, page_002.json...
 │   ├── cache/lieux.json        coordonnées GPS des salles déjà trouvées (Nominatim)
 │   └── events_bandsintown.csv  résultat final : une ligne par événement
-├── models/                     modèles entraînés (.joblib, ignorés par git) et leurs rapports (.json)
+├── models/                     modèles entraînés (.joblib) et leurs rapports (.json). Seul le modèle final est versionné
 ├── credentials/                secrets, ignorés par git, à ne jamais commiter
 │   ├── gcp_key.json            clé du compte de service GCP
 │   └── api_token.json          token de l'API
@@ -95,7 +95,7 @@ pip install -r requirements-dev.txt  # en plus, pour les tests et les notebooks
 pip install -r requirements_API.txt  # en plus, pour l'API
 ```
 
-`git pull` récupère le code, mais ni les bibliothèques, ni les secrets, ni les modèles `.joblib`. Après un `git pull`, relancer `pip install` si un fichier `requirements` a changé. Les fichiers de `credentials/` se transmettent en privé.
+`git pull` récupère le code, les données et le modèle final, mais ni les bibliothèques, ni les secrets. Après un `git pull`, relancer `pip install` si un fichier `requirements` a changé. Les fichiers de `credentials/` se transmettent en privé.
 
 Quand le `.venv` est activé, `(.venv)` apparaît au début de la ligne du terminal. Dans VS Code : Ctrl+Shift+P → « Python: Select Interpreter » → choisir `.venv`. Les nouveaux terminaux l'activent alors automatiquement.
 
@@ -515,5 +515,5 @@ Les 24 tests utilisent de petites données inventées et des dossiers temporaire
 | `FileNotFoundError: ... api_token.json` au lancement de l'API | le token de l'API manque | créer `credentials/api_token.json` (voir « Sécurité ») |
 | `ERR_CONNECTION_REFUSED` dans le navigateur | l'API n'est pas lancée | lancer `fastapi dev api/app/main.py` et laisser le terminal ouvert |
 | `{"detail":"Token absent ou invalide"}` | le token est absent ou incorrect | envoyer le bon token (voir « Sécurité ») |
-| `{"detail":"Aucun modèle : ..."}` | aucun modèle dans `models/` : les `.joblib` ne sont pas sur git | `python main.py --skip-scraping --train`, puis redémarrer l'API |
+| `{"detail":"Aucun modèle : ..."}` | aucun modèle dans `models/` | `git pull` pour récupérer le modèle final, ou `python main.py --skip-scraping --train`, puis redémarrer l'API |
 | `Internal Server Error` sur la route de prédiction | le rapport `.json` du dernier modèle manque | relancer `python main.py --skip-scraping --train`, puis redémarrer l'API |
