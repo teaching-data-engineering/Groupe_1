@@ -15,9 +15,10 @@ Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) a
 5. [Transformation et enrichissement](#transformation-et-enrichissement)
 6. [Prédiction de la popularité](#prédiction-de-la-popularité)
 7. [Chargement dans BigQuery](#chargement-dans-bigquery)
-8. [Notebooks](#notebooks)
-9. [Tests](#tests)
-10. [En cas d'erreur](#en-cas-derreur)
+8. [API](#api)
+9. [Notebooks](#notebooks)
+10. [Tests](#tests)
+11. [En cas d'erreur](#en-cas-derreur)
 
 ## Structure du repository
 
@@ -293,6 +294,35 @@ FROM `ai-technologies-ur2.dataset_group_1.events_bandsintown`
 ```
 
 Premier chargement (27/10/2026) : 3892 événements, 3892 identifiants uniques, du 23/10 au 30/11/2026, dont 468 populaires et 3888 avec leurs coordonnées GPS.
+
+## API
+
+L'API FastAPI (`api/app/main.py`) lit les événements dans BigQuery. Elle a besoin de `credentials/gcp_key.json`.
+
+```bash
+pip install -r requirements.txt -r requirements_API.txt
+fastapi dev api/app/main.py
+```
+
+Les routes sont décrites sur `http://127.0.0.1:8000/docs`.
+
+Chaque requête doit envoyer le token dans l'en-tête `X-Token`, ou dans l'URL (`/events?token=...`, moins sécurisé), sinon l'API répond **403**. Le token est dans `credentials/api_token.json`, ignoré par git : il ne doit jamais être écrit dans le code et se transmet en privé.
+
+```json
+{
+  "token": "votre_token"
+}
+```
+
+```python
+import json
+from pathlib import Path
+
+import requests
+
+token = json.loads(Path("credentials/api_token.json").read_text())["token"]
+print(requests.get("http://127.0.0.1:8000/events", headers={"X-Token": token}).json())
+```
 
 ## Notebooks
 
