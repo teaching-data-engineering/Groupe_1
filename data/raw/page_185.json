@@ -1,0 +1,36 @@
+{
+  "collectedAt": "2026-11-04",
+  "startDate": "2026-11-22",
+  "endDate": "2026-11-22",
+  "page": 3,
+  "events": [
+    {
+      "id": 1040716003,
+      "rsvpTrue": false,
+      "rsvpSignInText": "Sign up for Bandsintown to get notified when tickets are available from Xaper.",
+      "artistImageSrc": "https://photos.bandsintown.com/thumb/25150001.jpeg",
+      "properlySizedImageURL": "https://media.bandsintown.com/200x200/25150001.webp",
+      "callToActionRedirectUrl": "https://www.bandsintown.com/e/1040716003-xaper-at-studio-56-paris?came_from=257&utm_medium=web&utm_source=home&utm_campaign=ticket_rsvp",
+      "fallbackImageUrl": "https://assets.prod.bandsintown.com/images/homeIcon/placeholder-artist.svg",
+      "artistName": "Xaper",
+      "venueName": "STUDIO 56 PARIS",
+      "streamingEvent": false,
+      "title": null,
+      "locationText": "Paris, France",
+      "pinIconSrc": "https://assets.prod.bandsintown.com/images/pinIcon.svg",
+      "eventUrl": "https://www.bandsintown.com/e/1040716003-xaper-at-studio-56-paris?came_from=257&utm_medium=web&utm_source=home&utm_campaign=event",
+      "artistUrl": "https://www.bandsintown.com/a/15594587-xaper?came_from=257&utm_medium=web&utm_source=home&utm_campaign=event",
+      "watchLiveText": "Watch live",
+      "isPlus": false,
+      "callToActionText": "Tickets & RSVP",
+      "rsvpCount": "0",
+      "rsvpCountInt": 0,
+      "startsAt": "2026-11-22T22:00:00",
+      "timezone": "Europe/Paris",
+      "displayRule": "datetime",
+      "locale": "en",
+      "artistId": 15594587,
+      "shouldDisplayPlayButton": true
+    }
+  ]
+}
