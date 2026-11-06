@@ -6,10 +6,6 @@ import pandas as pd
 from curl_cffi import requests
 from curl_cffi.requests.exceptions import RequestException
 
-<<<<<<< HEAD
-from bandsintown_scraper.config import RAW_DATA_DIR
-from geocode import obtenir_coordonnees 
-=======
 from bandsintown_scraper.config import (
     CACHE_DIR,
     EXTERNAL_API_DELAY_SECONDS,
@@ -20,18 +16,13 @@ from bandsintown_scraper.config import (
     RAW_DATA_DIR,
 )
 from bandsintown_scraper.scraper import list_page_files
->>>>>>> origin/main
 
 FIELDS = {
     "id": "id",
     "artistName": "artiste",
     "title": "titre",
     "venueName": "lieu",
-<<<<<<< HEAD
-    "locationText": "ville",   
-=======
     "locationText": "localisation",
->>>>>>> origin/main
     "startsAt": "debut",
     "endsAt": "fin",
     "rsvpCountInt": "nb_rsvp",
@@ -47,14 +38,6 @@ EVENT_TYPE_PATTERNS = {
 }
 DEFAULT_EVENT_TYPE = "concert"
 
-<<<<<<< HEAD
-def load_events_dataframe(raw_dir=RAW_DATA_DIR, with_gps=True):  # <-- AJOUT : option with_gps
-    """Agrège tous les JSON bruts en un DataFrame, une ligne par événement."""
-    events = []
-    for json_path in sorted(raw_dir.glob("*/page_*.json")):
-        with open(json_path, encoding="utf-8") as file:
-            events.extend(json.load(file))
-=======
 # Seuils choisis d'après la distribution observée : médiane à 0 RSVP, 90 % des événements à 10 ou moins
 POPULARITY_BINS = [-1, 0, 9, 99, float("inf")]
 POPULARITY_LABELS = ["aucune", "faible", "moyenne", "forte"]
@@ -209,32 +192,11 @@ def load_events_dataframe(raw_dir=RAW_DATA_DIR, enrich_online=False):
     """Agrège toutes les pages JSON brutes en un DataFrame enrichi, une ligne par événement."""
     events = read_raw_events(raw_dir)
 
->>>>>>> origin/main
     df = pd.DataFrame(events, columns=list(FIELDS)).rename(columns=FIELDS)
     # Les pages sont lues dans l'ordre de collecte : on garde la version la plus récente (RSVP à jour)
     df = df.drop_duplicates(subset="id", keep="last")
     df["debut"] = pd.to_datetime(df["debut"])
     df["fin"] = pd.to_datetime(df["fin"])
-<<<<<<< HEAD
-    df = df.sort_values("debut").reset_index(drop=True)
-    # ------------------ BLOC GÉOCODAGE (AJOUT) ------------------
-    if with_gps:
-        # 1. On liste uniquement les couples (lieu, ville) uniques pour aller vite
-        lieux_uniques = df[["lieu", "ville"]].drop_duplicates().dropna()
-        print(f"Géocodage de {len(lieux_uniques)} salles uniques...")
-        coords = []
-        for _, row in lieux_uniques.iterrows():
-            lon, lat, src = obtenir_coordonnees(row["lieu"], row["ville"])
-            coords.append({
-                "lieu": row["lieu"],
-                "ville": row["ville"],
-                "longitude": lon,
-                "latitude": lat,
-                "sourceGeocodage": src
-            })
-        # 2. On fusionne les coordonnées avec l'ensemble des concerts
-        df = df.merge(pd.DataFrame(coords), on=["lieu", "ville"], how="left")
-=======
     df["date_collecte"] = pd.to_datetime(df["date_collecte"])
 
     df = add_location_columns(df)
@@ -245,7 +207,6 @@ def load_events_dataframe(raw_dir=RAW_DATA_DIR, enrich_online=False):
 
     # Le pays de la salle ne sert qu'au géocodage : c'est presque toujours la France
     df = df.drop(columns="pays")
->>>>>>> origin/main
     return df.sort_values("debut").reset_index(drop=True)
 
 
