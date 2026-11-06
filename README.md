@@ -1,10 +1,32 @@
 # Groupe_1 — Scraper Bandsintown
 
-Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) autour de Paris, transformation et enrichissement des données, prédiction de la popularité des événements, puis chargement dans BigQuery (GCP).
+Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) autour de Paris, transformation et enrichissement des données, prédiction de la popularité des événements, chargement dans BigQuery (GCP), puis mise à disposition par une API FastAPI.
 
-**écrire votre nom dans Membres**
+**Membres :** Alexandre HAYOUN, Hoang, Soro, Mathis
 
-**Membres :** Alexandre HAYOUN, Hoang , Soro , Mathis
+## Présentation du projet
+
+**Objectif :** repérer à l'avance les concerts qui attireront du public. Une salle ou un organisateur peut ainsi mieux cibler sa promotion et anticiper l'affluence.
+
+**Question posée :** un événement autour de Paris va-t-il atteindre au moins 10 RSVP (personnes qui signalent leur intérêt) ?
+
+```
+Bandsintown ──> scraper.py ──> data/raw/*.json ──> transform.py ──> CSV enrichi
+                                                                       │
+                                  ┌────────────────────────────────────┤
+                                  ▼                                    ▼
+                         model.py (prédiction)                 loader.py (BigQuery)
+                                  │                                    │
+                                  └──────────> API FastAPI <───────────┘
+```
+
+| Étape | Résultat |
+|---|---|
+| Collecte | 4444 événements, du 23/10 au 30/11/2026, dans 208 pages JSON |
+| Enrichissement | Colonnes de date, type d'événement, popularité et coordonnées GPS (4440 événements géolocalisés) |
+| Prédiction | ROC-AUC de 0,855 sur le jeu de test, contre 0,473 pour une référence naïve |
+| Chargement | Table BigQuery `dataset_group_1.events_bandsintown`, 4444 lignes |
+| API | 14 routes protégées par un token, avec pagination |
 
 ## Sommaire
 
@@ -32,35 +54,48 @@ Groupe_1/
 │   ├── model.py                prédiction de la popularité des événements
 │   └── loader.py               chargement des événements dans BigQuery
 ├── main.py                     point d'entrée en ligne de commande
+├── api/                        API FastAPI (voir section « API »)
+│   └── app/
+│       ├── main.py             routes de l'API
+│       ├── data_base.py        requêtes BigQuery, pagination et recherche d'artistes
+│       └── security.py         vérification du token
 ├── notebooks/                  exploration et analyse du modèle (voir section « Notebooks »)
 │   ├── 01_exploration.ipynb
 │   └── 02_classification.ipynb
 ├── tests/                      tests automatiques (pytest)
+│   ├── test_scraper.py
+│   ├── test_transform.py
 │   ├── test_model.py
-│   └── test_transform.py
+│   └── test_loader.py
 ├── data/
 │   ├── raw/                    pages brutes de l'API : page_001.json, page_002.json...
 │   ├── cache/lieux.json        coordonnées GPS des salles déjà trouvées (Nominatim)
 │   └── events_bandsintown.csv  résultat final : une ligne par événement
 ├── models/                     modèles entraînés (.joblib, ignorés par git) et leurs rapports (.json)
-├── credentials/gcp_key.json    clé du compte de service GCP (ignorée par git, à ne jamais commiter)
+├── credentials/                secrets, ignorés par git, à ne jamais commiter
+│   ├── gcp_key.json            clé du compte de service GCP
+│   └── api_token.json          token de l'API
 ├── requirements.txt            dépendances du projet
-└── requirements-dev.txt        dépendances pour les tests et les notebooks
+├── requirements-dev.txt        dépendances pour les tests et les notebooks
+└── requirements_API.txt        dépendances de l'API
 ```
 
 Les pages brutes, le cache et le CSV sont versionnés : un membre du groupe qui fait `git pull` peut travailler sur les données sans refaire la collecte.
 
 ## Installation
 
-Python 3.10 ou plus récent. Les dépendances s'installent dans un environnement virtuel `.venv`, propre au projet et ignoré par git. Toutes les commandes se lancent **depuis le dossier `Groupe_1`**.
+**Python 3.13 requis** (vérifier avec `python --version`). Les dépendances s'installent dans un environnement virtuel `.venv`, propre au projet et ignoré par git. Toutes les commandes se lancent **depuis le dossier `Groupe_1`**.
 
 ```bash
-python -m venv .venv                 # créer le .venv (une seule fois)
+py -3.13 -m venv .venv               # créer le .venv (une seule fois) ; Mac / Linux : python3.13 -m venv .venv
 .venv\Scripts\activate               # l'activer : Windows (PowerShell), à chaque nouveau terminal
 source .venv/bin/activate            #             Mac / Linux
 pip install -r requirements.txt      # installer les dépendances (une seule fois)
 pip install -r requirements-dev.txt  # en plus, pour les tests et les notebooks
+pip install -r requirements_API.txt  # en plus, pour l'API
 ```
+
+`git pull` récupère le code, mais ni les bibliothèques, ni les secrets, ni les modèles `.joblib`. Après un `git pull`, relancer `pip install` si un fichier `requirements` a changé. Les fichiers de `credentials/` se transmettent en privé.
 
 Quand le `.venv` est activé, `(.venv)` apparaît au début de la ligne du terminal. Dans VS Code : Ctrl+Shift+P → « Python: Select Interpreter » → choisir `.venv`. Les nouveaux terminaux l'activent alors automatiquement.
 
@@ -76,6 +111,7 @@ Quand le `.venv` est activé, `(.venv)` apparaît au début de la ligne du termi
 | `python main.py --skip-scraping --enrich-online` | ajoute les coordonnées GPS des salles manquantes | Nominatim |
 | `python main.py --skip-scraping --train` | entraîne le modèle de popularité | aucune |
 | `python main.py --skip-scraping --load-bigquery` | charge les événements dans la table BigQuery | BigQuery |
+| `fastapi dev api/app/main.py` | lance l'API sur `http://127.0.0.1:8000` | BigQuery |
 | `pytest` | lance les tests | aucune |
 | `python main.py --help` | affiche toutes les options | aucune |
 
@@ -93,7 +129,7 @@ GET https://www.bandsintown.com/choose-dates/fetch-next/upcomingEvents
 
 | Paramètre | Exemple | Rôle |
 |---|---|---|
-| `date` | `2026-10-23T00:00:00,2026-11-30T23:00:00` | période : début et fin séparés par une virgule (`--start-date`, `--end-date`) |
+| `date` | `2026-11-14T00:00:00,2026-11-14T23:59:59` | période : début et fin séparés par une virgule. Le scraper envoie un jour à la fois, de `--start-date` à `--end-date` |
 | `page` | `1`, `2`, `3`… | numéro de la page (environ 36 événements par page), géré automatiquement |
 | `latitude`, `longitude` | `48.85341`, `2.3488` | centre de la recherche : Paris (`PARIS_LATITUDE`, `PARIS_LONGITUDE`) |
 | `genre_query` | `all-genres` | tous les genres musicaux (`GENRE_QUERY`) |
@@ -232,8 +268,9 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 1. 20 % des événements sont mis de côté (**jeu de test**), en gardant la même proportion d'événements populaires (découpage stratifié).
 2. Pour chacun des trois modèles (régression logistique, random forest, gradient boosting), les **hyperparamètres sont choisis automatiquement** par `RandomizedSearchCV`. Il teste 20 combinaisons (`SEARCH_ITERATIONS`), chacune évaluée par **validation croisée** à 5 plis sur les 80 % restants. Les modèles sont pondérés (`class_weight="balanced"`) pour compenser le déséquilibre entre les classes.
-   - **Les plages de recherche s'adaptent à la quantité de données.** La taille minimale des feuilles va de 0,1 % à 2 % des événements, et la profondeur maximale des arbres dépend du nombre d'événements. Si une collecte passe de 4 000 à 10 000 événements, il n'y a rien à modifier.
-   - **Le gradient boosting s'arrête tout seul** (arrêt précoce) quand ajouter des arbres n'améliore plus le score : son nombre d'arbres n'est pas cherché.3. Les trois modèles optimisés sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est évalué **une seule fois** sur le jeu de test, face à une **référence naïve** qui tire au hasard en respectant les proportions.
+   - **Les plages de recherche s'adaptent à la quantité de données.** La taille des feuilles, la profondeur des arbres et leur nombre de feuilles sont calculés à partir du nombre d'événements (`build_candidate_models`). Si une collecte passe de 4 000 à 10 000 événements, il n'y a rien à modifier.
+   - **Le gradient boosting s'arrête tout seul** (arrêt précoce) quand ajouter des arbres n'améliore plus le score : son nombre d'arbres n'est pas cherché. Son `learning_rate` est fixé à 0,01.
+3. Les trois modèles optimisés sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est évalué **une seule fois** sur le jeu de test, face à une **référence naïve** qui tire au hasard en respectant les proportions.
 4. L'**importance des variables** est mesurée par permutation : on mélange une variable et on regarde combien la performance baisse.
 
 Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`), donc les résultats sont reproductibles.
@@ -257,7 +294,23 @@ Encodage, imputation des valeurs manquantes et normalisation font partie d'un `P
 - Random forest et gradient boosting sont quasiment à égalité : l'écart (0,004) est plus petit que la variation d'un pli à l'autre (± 0,015).
 - Variables les plus utiles : l'**heure** de l'événement, le **nombre d'événements de la salle**, la **distance au centre de Paris** et le **nombre de concerts de l'artiste**.
 - **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,48 et le rappel descend à 0,60 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
-- **Limite :** la popularité dépend surtout de la notoriété de l'artiste, que les données ne mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) devrait améliorer nettement les prédictions.
+
+### Essais écartés
+
+Ces essais ont été faits à part, sur les 4444 événements. Leur code n'est pas dans le dépôt.
+
+| Essai | Résultat | Décision |
+|---|---|---|
+| SMOTE et SMOTENC à la place de `class_weight` | ROC-AUC de validation croisée de 0,83 environ, contre 0,85. La précision monte au seuil de 0,5, mais le rappel baisse | Garder `class_weight` et régler le seuil de décision |
+| Seuil de 50 RSVP au lieu de 10 | Seulement 131 événements populaires (3 %), dont 26 dans le test. Précision de 0,09 | Garder le seuil de 10 RSVP |
+
+### Limites
+
+- **Notoriété de l'artiste :** la popularité en dépend sûrement beaucoup, et les données ne la mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) pourrait améliorer les prédictions.
+- **Une seule photo dans le temps :** les RSVP sont relevés à la date de collecte, alors qu'ils peuvent encore augmenter jusqu'à l'événement.
+- **Un indicateur indirect :** un RSVP est une intention déclarée sur une plateforme, pas un billet vendu.
+- **Périmètre :** 5 semaines d'événements, dans une seule région.
+- **Seuil de 0,7 :** il a été choisi en regardant le jeu de test, il reste donc indicatif.
 
 ## Chargement dans BigQuery
 
@@ -293,26 +346,43 @@ SELECT COUNT(*) AS evenements, COUNTIF(nb_rsvp >= 10) AS populaires, MIN(debut) 
 FROM `ai-technologies-ur2.dataset_group_1.events_bandsintown`
 ```
 
-Premier chargement (27/10/2026) : 3892 événements, 3892 identifiants uniques, du 23/10 au 30/11/2026, dont 468 populaires et 3888 avec leurs coordonnées GPS.
+Contenu de la table : 4444 événements, du 23/10 au 30/11/2026, dont 504 populaires et 4440 avec leurs coordonnées GPS.
 
 ## API
 
-L'API FastAPI (`api/app/main.py`) lit les événements dans BigQuery. Elle a besoin de `credentials/gcp_key.json`.
+L'API FastAPI lit les événements dans BigQuery, avec la fonction `run_query` de `data_base.py`.
+
+### Lancer l'API
+
+Il faut trois éléments :
+
+1. `credentials/gcp_key.json` : la clé GCP, pour lire BigQuery ;
+2. `credentials/api_token.json` : le token de l'API (voir ci-dessous) ;
+3. un modèle dans `models/`, seulement pour la route de prédiction : `python main.py --skip-scraping --train`.
 
 ```bash
-pip install -r requirements.txt -r requirements_API.txt
 fastapi dev api/app/main.py
 ```
 
-Les routes sont décrites sur `http://127.0.0.1:8000/docs`.
+L'API tourne alors sur `http://127.0.0.1:8000`, et la page `http://127.0.0.1:8000/docs` permet d'essayer chaque route. Laisser le terminal ouvert ; `Ctrl+C` arrête le serveur.
 
-Chaque requête doit envoyer le token dans l'en-tête `X-Token`, ou dans l'URL (`/events?token=...`, moins sécurisé), sinon l'API répond **403**. Le token est dans `credentials/api_token.json`, ignoré par git : il ne doit jamais être écrit dans le code et se transmet en privé.
+### Sécurité
+
+Chaque requête doit envoyer un token, sinon l'API répond **403**. La fonction `verify_token` (`security.py`) est appliquée à toutes les routes par `FastAPI(dependencies=[Depends(verify_token)])`.
+
+Le token n'est pas écrit dans le code : il est lu dans `credentials/api_token.json`, ignoré par git, et se transmet en privé.
 
 ```json
 {
   "token": "votre_token"
 }
 ```
+
+| Où envoyer le token | Exemple |
+|---|---|
+| En-tête `X-Token` (conseillé) | `requests.get(url, headers={"X-Token": token})` |
+| Paramètre d'URL (moins sécurisé : il reste dans l'historique et les logs) | `http://127.0.0.1:8000/events?token=votre_token` |
+| Page `/docs` | champ `x-token` de chaque route, après « Try it out » |
 
 ```python
 import json
@@ -323,6 +393,61 @@ import requests
 token = json.loads(Path("credentials/api_token.json").read_text())["token"]
 print(requests.get("http://127.0.0.1:8000/events", headers={"X-Token": token}).json())
 ```
+
+### Routes
+
+| Route | Paramètres | Ce qu'elle renvoie |
+|---|---|---|
+| `GET /events` | `page` | tous les événements |
+| `GET /events/{event_id}` | | un événement précis |
+| `GET /events/artist/{artistName}` | `page` | les événements d'un artiste. Accepte les majuscules, les accents, les caractères spéciaux et les fautes d'orthographe |
+| `GET /events/by-venue` | | moyenne, médiane, min, max des RSVP et nombre d'événements par salle |
+| `GET /events/popularity` | `popularite`, `page` | événements classés de `forte` à `aucune`, avec un filtre facultatif |
+| `GET /events/predicted-attendance` | `date` (obligatoire) | événements d'une date et leur score de popularité selon le modèle |
+| `GET /events/streaming-vs-in-person` | | nombre d'événements en ligne et en présentiel |
+| `GET /events/weekend` | `page` | événements du samedi et du dimanche |
+| `GET /events/average-rsvp-by-type` | | statistiques des RSVP par type d'événement |
+| `GET /events/upcoming` | `page` | événements des 7 prochains jours |
+| `GET /events/rsvp-trend` | | total des RSVP par jour et moyenne glissante sur 7 jours |
+| `GET /events/top-artists` | `critere` (`evenements` ou `rsvp`) | top 5 des artistes |
+| `PUT /events/{event_id}` | événement en JSON | valide l'événement reçu, sans rien écrire dans BigQuery |
+
+Exemples, à compléter avec le token :
+
+```
+http://127.0.0.1:8000/events?page=2&token=votre_token
+http://127.0.0.1:8000/events/artist/muse?token=votre_token
+http://127.0.0.1:8000/events/popularity?popularite=forte&page=2&token=votre_token
+http://127.0.0.1:8000/events/predicted-attendance?date=2026-11-14&token=votre_token
+http://127.0.0.1:8000/events/top-artists?critere=rsvp&token=votre_token
+```
+
+### Pagination
+
+Les routes qui renvoient une liste d'événements sont paginées : 36 événements par page (`PAGE_SIZE`), avec le paramètre `?page=1`. La fonction `paginate_events` transforme ce numéro en `LIMIT` et `OFFSET` SQL et renvoie aussi des métadonnées :
+
+```json
+{
+  "evenements": ["..."],
+  "meta_data": {
+    "page": 2,
+    "total_pages": 124,
+    "total_results": 4444,
+    "results_per_page": 36,
+    "next_page_url": "/events?page=3"
+  }
+}
+```
+
+`next_page_url` ne contient pas le token, pour ne pas le recopier dans les réponses.
+
+### Choix techniques
+
+- **Requêtes SQL paramétrées :** les valeurs saisies par l'utilisateur passent par `params` (`@ville`, `@popularite`…), jamais directement dans le texte SQL, ce qui évite les injections SQL.
+- **Recherche d'artiste tolérante :** `normalize_name` enlève les majuscules, les accents et les caractères spéciaux, puis `find_artists` cherche un nom identique, puis un nom qui contient la recherche, puis un nom proche (`difflib`).
+- **Prévision d'affluence :** le modèle ne prédit pas un nombre de spectateurs. Il donne à chaque événement un score pour le seuil de 10 RSVP. Ce score sert à comparer les événements : ce n'est pas une vraie probabilité, à cause de `class_weight`. Le modèle a aussi vu une partie de ces événements à l'entraînement.
+- **Événements en approche :** le calcul part de la date du jour, car `jours_avant_evenement` est figé à la date de collecte.
+- **Ordre des routes :** `/events/{event_id}` est déclarée après les routes fixes, sinon elle capterait `/events/weekend`, `/events/by-venue`, etc.
 
 ## Notebooks
 
@@ -351,8 +476,9 @@ pytest              # tous les tests
 pytest -v           # avec le nom de chaque test
 ```
 
-Les tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête (ni à Bandsintown, ni à BigQuery) et n'écrivent rien dans `data/` ni dans `models/`. Ils vérifient notamment :
+Les 22 tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête (ni à Bandsintown, ni à BigQuery) et n'écrivent rien dans `data/` ni dans `models/`. Ils demandent `requirements-dev.txt`. L'API n'a pas de tests automatiques, car elle se connecte à BigQuery dès son démarrage. Les tests vérifient notamment :
 
+- le scraper : requête sur un jour entier, erreur si le site refuse, fin des résultats, limite de l'API ;
 - l'absence de fuite de données : `nb_rsvp` ne fait pas partie des variables ;
 - le calcul des distances et des comptages ;
 - que le modèle fait mieux que la référence naïve ;
@@ -375,3 +501,10 @@ Les tests utilisent de petites données inventées et des dossiers temporaires :
 | `Chargement BigQuery impossible : Clé GCP introuvable` | la clé n'est pas dans `credentials/gcp_key.json` | placer la clé JSON à cet endroit (voir « Accès à GCP ») |
 | `Chargement BigQuery impossible : 403 ... Access Denied` | le compte n'a pas le droit d'écrire dans ce dataset | vérifier que le dataset utilisé est bien `dataset_group_1` |
 | `No module named 'google'` | les dépendances BigQuery ne sont pas installées | `pip install -r requirements.txt` |
+| `No matching distribution found for pandas>=3.0.6` | la version de Python est trop ancienne | installer Python 3.13 et recréer le `.venv` |
+| `The scipy install you are using seems to be broken` | installation abîmée, souvent parce que le `.venv` est dans OneDrive | `python -m pip install --force-reinstall --no-cache-dir scipy`, ou recréer le `.venv` hors de OneDrive |
+| `'fastapi' n'est pas reconnu` | le `.venv` n'est pas activé, ou les dépendances de l'API manquent | activer le `.venv`, puis `pip install -r requirements_API.txt` |
+| `FileNotFoundError: ... api_token.json` au lancement de l'API | le token de l'API manque | créer `credentials/api_token.json` (voir « Sécurité ») |
+| `ERR_CONNECTION_REFUSED` dans le navigateur | l'API n'est pas lancée | lancer `fastapi dev api/app/main.py` et laisser le terminal ouvert |
+| `{"detail":"Token absent ou invalide"}` | le token est absent ou incorrect | envoyer le bon token (voir « Sécurité ») |
+| `{"detail":"Aucun modèle : ..."}` | aucun modèle dans `models/` : les `.joblib` ne sont pas sur git | `python main.py --skip-scraping --train`, puis redémarrer l'API |

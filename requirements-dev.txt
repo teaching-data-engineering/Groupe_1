@@ -2,3 +2,4 @@
 pytest>=8.0
 matplotlib>=3.11
 ipykernel>=7.4
+requests>=2.34.2
