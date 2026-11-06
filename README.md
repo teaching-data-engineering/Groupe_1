@@ -275,7 +275,7 @@ L'accès se fait avec la **clé JSON du compte de service** du groupe (`ur2-grou
 
 > **Ne jamais mettre le contenu de la clé dans le code** (`config.py`…) ni la commiter. Elle donne accès au projet GCP : une fois sur GitHub, n'importe qui pourrait s'en servir, et Google désactive souvent automatiquement les clés publiées. `config.py` ne contient que le **chemin** de la clé.
 
-Le chemin de la clé, le dataset et la table se changent dans `config.py` (`GCP_CREDENTIALS_PATH`, `BIGQUERY_DATASET`, `BIGQUERY_TABLE`).
+Le chemin de la clé se change dans `config.py` (`GCP_CREDENTIALS_PATH`). Le dataset et la table sont écrits dans `loader.py` et `api/app/data_base.py`.
 
 ### Fonctionnement (`loader.py`)
 
@@ -343,5 +343,5 @@ Les tests utilisent de petites données inventées et des dossiers temporaires :
 | `nominatim.openstreetmap.org/search injoignable` | le réseau bloque Nominatim, ou le service est en panne | relancer `--enrich-online` plus tard ou depuis un autre réseau. Le CSV est quand même écrit |
 | `PermissionError` sur `events_bandsintown.csv` | le CSV est ouvert dans Excel ou LibreOffice | fermer le fichier et relancer |
 | `Chargement BigQuery impossible : Clé GCP introuvable` | la clé n'est pas dans `credentials/gcp_key.json` | placer la clé JSON à cet endroit (voir « Accès à GCP ») |
-| `Chargement BigQuery impossible : 403 ... Access Denied` | le compte n'a pas le droit d'écrire dans ce dataset | vérifier que `BIGQUERY_DATASET` vaut `dataset_group_1` |
+| `Chargement BigQuery impossible : 403 ... Access Denied` | le compte n'a pas le droit d'écrire dans ce dataset | vérifier que le dataset utilisé est bien `dataset_group_1` |
 | `No module named 'google'` | les dépendances BigQuery ne sont pas installées | `pip install -r requirements.txt` |
