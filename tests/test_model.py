@@ -9,6 +9,7 @@ from bandsintown_scraper.model import (
     build_features,
     haversine_km,
     save_model,
+    select_past_events,
     train_model,
 )
 
@@ -22,6 +23,7 @@ def events_df():
     return pd.DataFrame(
         {
             "id": range(n),
+            "debut": pd.date_range("2026-01-01", periods=n, freq="6h"),
             "artiste": rng.choice([f"artiste_{i}" for i in range(80)], n),
             "titre": np.where(rng.random(n) < 0.1, "Release Party", None),
             "lieu": rng.choice([f"salle_{i}" for i in range(30)], n),
@@ -38,6 +40,23 @@ def events_df():
             "nb_rsvp": np.where(evening & (rng.random(n) < 0.6), 50, 1),
         }
     )
+
+
+def test_select_past_events_excludes_today_and_future_and_sorts_by_date():
+    events = pd.DataFrame({"id": [1, 2, 3, 4], "debut": pd.to_datetime(
+        ["2026-11-03", "2026-11-01", "2026-11-05", "2026-11-06"]
+    )})
+    past_events = select_past_events(events, today="2026-11-05")
+    assert list(past_events["id"]) == [2, 1]
+
+
+def test_train_model_tests_on_most_recent_past_events(events_df):
+    today = events_df["debut"].iloc[300]
+    _, report = train_model(events_df, n_iter=2, today=today)
+    assert report["nb_evenements"] == 300
+    assert report["nb_evenements_a_venir_exclus"] == 100
+    assert report["dernier_evenement_entrainement"] < report["dernier_evenement_test"]
+    assert pd.Timestamp(report["dernier_evenement_test"]) < today
 
 
 def test_haversine_km_paris_to_versailles():

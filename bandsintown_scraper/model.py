@@ -170,17 +170,24 @@ def tune_model(pipeline, search_space, X_train, y_train, n_iter):
     return search.fit(X_train, y_train)
 
 
-def train_model(events_df, n_iter=SEARCH_ITERATIONS):
+def select_past_events(events_df, today=None):
+    """Événements antérieurs à aujourd'hui, du plus ancien au plus récent."""
+    today = pd.Timestamp.now().normalize() if today is None else pd.Timestamp(today)
+    return events_df[events_df["debut"] < today].sort_values("debut", kind="stable")
+
+
+def train_model(events_df, n_iter=SEARCH_ITERATIONS, today=None):
     """Optimise les hyperparamètres de chaque modèle, garde le meilleur et l'évalue sur un jeu de test.
 
-    Le jeu de test (TEST_SIZE des événements) ne sert ni au choix des hyperparamètres ni au choix
-    du modèle : il n'est utilisé qu'une seule fois, pour l'évaluation finale.
+    Seuls les événements passés sont utilisés : le nombre de RSVP d'un événement à venir peut encore augmenter.
+    Le jeu de test (les TEST_SIZE événements les plus récents) ne sert ni au choix des hyperparamètres ni au
+    choix du modèle : il n'est utilisé qu'une seule fois, pour l'évaluation finale.
     Renvoie (meilleur_modele, rapport).
     """
-    X, y = build_features(events_df)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, stratify=y, random_state=RANDOM_STATE
-    )
+    past_events = select_past_events(events_df, today)
+    X, y = build_features(past_events)
+    # Sans mélange : le modèle apprend sur le passé et il est testé sur les événements suivants
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, shuffle=False)
 
     searches, cv_scores = {}, {}
     for name, (pipeline, search_space) in build_candidate_models(len(X_train)).items():
@@ -215,6 +222,9 @@ def train_model(events_df, n_iter=SEARCH_ITERATIONS):
         "date_entrainement": datetime.now().isoformat(timespec="seconds"),
         "cible": f"{TARGET} (nb_rsvp >= {POPULARITY_THRESHOLD})",
         "nb_evenements": len(X),
+        "nb_evenements_a_venir_exclus": len(events_df) - len(X),
+        "dernier_evenement_entrainement": past_events["debut"].iloc[len(X_train) - 1].isoformat(),
+        "dernier_evenement_test": past_events["debut"].iloc[-1].isoformat(),
         "part_populaires": round(y.mean(), 3),
         "variables": FEATURES,
         "combinaisons_testees_par_modele": n_iter,

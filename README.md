@@ -24,7 +24,7 @@ Bandsintown ──> scraper.py ──> data/raw/*.json ──> transform.py ─�
 |---|---|
 | Collecte | 4444 événements, du 23/10 au 30/11/2026, dans 208 pages JSON |
 | Enrichissement | Colonnes de date, type d'événement, popularité et coordonnées GPS (4440 événements géolocalisés) |
-| Prédiction | ROC-AUC de 0,855 sur le jeu de test, contre 0,473 pour une référence naïve |
+| Prédiction | Entraînement sur les événements passés : ROC-AUC de 0,797 sur les plus récents, contre 0,499 pour une référence naïve |
 | Chargement | Table BigQuery `dataset_group_1.events_bandsintown`, 4444 lignes |
 | API | 14 routes protégées par un token, avec pagination |
 
@@ -48,7 +48,7 @@ Bandsintown ──> scraper.py ──> data/raw/*.json ──> transform.py ─�
 Groupe_1/
 ├── bandsintown_scraper/        module Python
 │   ├── __init__.py
-│   ├── config.py               toutes les constantes : API, en-têtes, délais, dossiers, réglages du modèle
+│   ├── config.py               constantes du pipeline : API, en-têtes, délais, dossiers, réglages du modèle
 │   ├── scraper.py              collecte des événements et sauvegarde des pages JSON brutes
 │   ├── transform.py            nettoyage, enrichissement et géocodage → DataFrame pandas
 │   ├── model.py                prédiction de la popularité des événements
@@ -151,7 +151,7 @@ with requests.Session(impersonate=browser) as session:  # garde les cookies d'un
    - une page vide : il n'y a plus de résultats ;
    - une page répétée : l'API renvoie en boucle une page déjà vue ce jour-là, sa limite est atteinte ;
    - la limite de 30 pages (`MAX_PAGE`).
-3. **Tous les jours** (`scrap_all_events`) : l'API limite le nombre de pages par requête, donc chaque jour est collecté séparément, de la date de début à la date de fin. Si un jour atteint la limite, un avertissement signale que des événements peuvent manquer.
+3. **Tous les jours** (`scrap_all_events`) : l'API limite le nombre de pages par requête, donc chaque jour est collecté séparément, de la date de début à la date de fin. Si un jour atteint la limite, un avertissement signale que des événements peuvent manquer. Les pages 1 à 106 viennent d'une première version, qui collectait par périodes (voir « Limites »).
 4. **Sauvegarde** (`save_json`, `move_pages_to_raw_dir`) : chaque page est enregistrée dès sa réception, d'abord dans un dossier temporaire. Quand la collecte se termine sans erreur, les pages sont déplacées dans `data/raw/`, numérotées à la suite des pages existantes. **Si le site bloque en cours de route, `data/` n'est pas modifié.**
 
 Chaque page garde la réponse brute de l'API, avec les informations de la collecte :
@@ -242,7 +242,7 @@ Le CSV étant reconstruit à partir des pages brutes, on peut changer le nettoya
 
 ## Prédiction de la popularité
 
-**Question :** un événement va-t-il atteindre au moins 10 RSVP (`POPULARITY_THRESHOLD`) ? C'est le cas d'environ 11 % des événements.
+**Question :** un événement va-t-il atteindre au moins 10 RSVP (`POPULARITY_THRESHOLD`) ? Le nombre utilisé est celui relevé à la date de collecte. C'est le cas d'environ 11 % des événements.
 
 ```bash
 python main.py --skip-scraping --train
@@ -266,38 +266,40 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 ### Méthode
 
-1. 20 % des événements sont mis de côté (**jeu de test**), en gardant la même proportion d'événements populaires (découpage stratifié).
+1. **Seuls les événements passés sont utilisés** (`select_past_events`) : le nombre de RSVP d'un événement à venir peut encore augmenter, sa réponse n'est donc pas connue. Ils sont triés par date, et les 20 % les plus récents forment le **jeu de test**. Le modèle apprend ainsi sur le passé et il est évalué sur les événements suivants, comme en situation réelle.
 2. Pour chacun des trois modèles (régression logistique, random forest, gradient boosting), les **hyperparamètres sont choisis automatiquement** par `RandomizedSearchCV`. Il teste 20 combinaisons (`SEARCH_ITERATIONS`), chacune évaluée par **validation croisée** à 5 plis sur les 80 % restants. Les modèles sont pondérés (`class_weight="balanced"`) pour compenser le déséquilibre entre les classes.
    - **Les plages de recherche s'adaptent à la quantité de données.** La taille des feuilles, la profondeur des arbres et leur nombre de feuilles sont calculés à partir du nombre d'événements (`build_candidate_models`). Si une collecte passe de 4 000 à 10 000 événements, il n'y a rien à modifier.
    - **Le gradient boosting s'arrête tout seul** (arrêt précoce) quand ajouter des arbres n'améliore plus le score : son nombre d'arbres n'est pas cherché. Son `learning_rate` est fixé à 0,01.
 3. Les trois modèles optimisés sont comparés sur leur ROC-AUC de validation croisée. Le meilleur est évalué **une seule fois** sur le jeu de test, face à une **référence naïve** qui tire au hasard en respectant les proportions.
 4. L'**importance des variables** est mesurée par permutation : on mélange une variable et on regarde combien la performance baisse.
 
-Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`), donc les résultats sont reproductibles.
+Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`). Les événements utilisés dépendent de la date de l'entraînement, qui est écrite dans le rapport JSON du modèle.
 
-### Résultats (4444 événements, collectes du 23/10 au 30/11/2026)
+### Résultats (entraînement du 06/11/2026)
+
+Sur 4444 événements collectés, 1531 sont passés et 2913 sont à venir, donc exclus. L'entraînement porte sur 1224 événements (jusqu'au 02/11) et le test sur les 307 suivants (jusqu'au 05/11), dont 38 populaires.
 
 | Modèle | Meilleurs hyperparamètres | ROC-AUC (validation croisée) |
 |---|---|---|
-| Régression logistique | `C=0.985` | 0,695 |
-| **Random forest** | `n_estimators=545, max_depth=None, min_samples_leaf=9, max_features=0.5` | **0,847** |
-| Gradient boosting | `max_leaf_nodes=15, min_samples_leaf=8, l2_regularization=0.005` (arrêt précoce) | 0,843 |
+| Régression logistique | `C=70.721` | 0,707 |
+| **Random forest** | `n_estimators=249, max_depth=6, min_samples_leaf=1, max_features=0.5` | **0,844** |
+| Gradient boosting | `max_leaf_nodes=31, min_samples_leaf=15, l2_regularization=0.006` (arrêt précoce) | 0,830 |
 
 | Métrique (jeu de test) | Random forest | Référence naïve |
 |---|---|---|
-| ROC-AUC | **0,855** | 0,473 |
-| F1 | **0,447** | 0,075 |
-| Précision | 0,327 | 0,071 |
-| Rappel | 0,703 | 0,079 |
+| ROC-AUC | **0,797** | 0,499 |
+| F1 | **0,360** | 0,113 |
+| Précision | 0,231 | 0,121 |
+| Rappel | 0,816 | 0,105 |
 
-- Le modèle retrouve environ 7 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 3 (précision).
-- Random forest et gradient boosting sont quasiment à égalité : l'écart (0,004) est plus petit que la variation d'un pli à l'autre (± 0,015).
-- Variables les plus utiles : l'**heure** de l'événement, le **nombre d'événements de la salle**, la **distance au centre de Paris** et le **nombre de concerts de l'artiste**.
-- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,48 et le rappel descend à 0,60 (meilleur F1). Le seuil se règle selon l'usage (détail dans `02_classification.ipynb`).
+- Le modèle retrouve environ 8 événements populaires sur 10 (rappel). Quand il prédit « populaire », il a raison environ 1 fois sur 4 (précision).
+- Le ROC-AUC baisse entre la validation croisée (0,844) et le test (0,797) : prédire des événements futurs est plus difficile que prédire des événements mélangés dans le temps. Le test ne compte que 38 événements populaires, ce score reste donc approximatif.
+- Variables les plus utiles : le **nombre d'événements de la salle**, l'**heure** de l'événement, la **distance au centre de Paris** et le **nombre de concerts de l'artiste**.
+- **Choix du seuil :** au seuil de 0,5, le modèle privilégie le rappel. Au seuil de 0,7, la précision monte à 0,28 et le rappel descend à 0,71 (meilleur F1). Le seuil se règle selon l'usage.
 
 ### Essais écartés
 
-Ces essais ont été faits à part, sur les 4444 événements. Leur code n'est pas dans le dépôt.
+Ces essais ont été faits à part, sur les 4444 événements, avec un découpage aléatoire. Leur code n'est pas dans le dépôt.
 
 | Essai | Résultat | Décision |
 |---|---|---|
@@ -307,9 +309,13 @@ Ces essais ont été faits à part, sur les 4444 événements. Leur code n'est p
 ### Limites
 
 - **Notoriété de l'artiste :** la popularité en dépend sûrement beaucoup, et les données ne la mesurent pas. Une vraie mesure (nombre de fans sur Bandsintown, écoutes…) pourrait améliorer les prédictions.
-- **Une seule photo dans le temps :** les RSVP sont relevés à la date de collecte, alors qu'ils peuvent encore augmenter jusqu'à l'événement.
+- **Une seule photo dans le temps :** les RSVP sont relevés à la date de collecte. Même pour les événements passés, 89 % ont été relevés avant la date de l'événement : leur nombre final de RSVP peut être plus élevé.
+- **Peu de données passées :** le modèle ne porte que sur 1531 événements. Ce nombre augmentera avec le temps, à condition de refaire des collectes.
+- **Collecte incomplète avant le 05/11 :** les événements du 23/10 au 04/11, sauf le 31/10, viennent de la première collecte par périodes, qui a pu en manquer. Ces pages sont gardées, car leurs événements sont réels et les dates passées ne pourraient sans doute plus être collectées.
+- **Comptages :** `nb_evenements_salle` et `nb_evenements_artiste` sont calculés avant le découpage, sur l'entraînement et le test. Ils n'utilisent pas la cible, mais le test influence légèrement ces variables.
+- **Validation croisée :** ses plis mélangent les dates, seul le jeu de test respecte l'ordre du temps.
 - **Un indicateur indirect :** un RSVP est une intention déclarée sur une plateforme, pas un billet vendu.
-- **Périmètre :** 5 semaines d'événements, dans une seule région.
+- **Périmètre :** 5 semaines d'événements collectés, dont 2 semaines passées pour le modèle (du 23/10 au 05/11), dans une seule région.
 - **Seuil de 0,7 :** il a été choisi en regardant le jeu de test, il reste donc indicatif.
 
 ## Chargement dans BigQuery
@@ -358,7 +364,7 @@ Il faut trois éléments :
 
 1. `credentials/gcp_key.json` : la clé GCP, pour lire BigQuery ;
 2. `credentials/api_token.json` : le token de l'API (voir ci-dessous) ;
-3. un modèle dans `models/`, seulement pour la route de prédiction : `python main.py --skip-scraping --train`.
+3. un modèle `.joblib` et son rapport `.json` dans `models/`, seulement pour la route de prédiction : `python main.py --skip-scraping --train`.
 
 ```bash
 fastapi dev api/app/main.py
@@ -398,12 +404,13 @@ print(requests.get("http://127.0.0.1:8000/events", headers={"X-Token": token}).j
 
 | Route | Paramètres | Ce qu'elle renvoie |
 |---|---|---|
+| `GET /` | | un message de test |
 | `GET /events` | `page` | tous les événements |
 | `GET /events/{event_id}` | | un événement précis |
 | `GET /events/artist/{artistName}` | `page` | les événements d'un artiste. Accepte les majuscules, les accents, les caractères spéciaux et les fautes d'orthographe |
 | `GET /events/by-venue` | | moyenne, médiane, min, max des RSVP et nombre d'événements par salle |
 | `GET /events/popularity` | `popularite`, `page` | événements classés de `forte` à `aucune`, avec un filtre facultatif |
-| `GET /events/predicted-attendance` | `date` (obligatoire) | événements d'une date et leur score de popularité selon le modèle |
+| `GET /events/predicted-attendance` | `date` (obligatoire) | événements d'une date, leur score de popularité selon le modèle et les 4 variables les plus importantes du dernier rapport (`importance_variables`) |
 | `GET /events/streaming-vs-in-person` | | nombre d'événements en ligne et en présentiel |
 | `GET /events/weekend` | `page` | événements du samedi et du dimanche |
 | `GET /events/average-rsvp-by-type` | | statistiques des RSVP par type d'événement |
@@ -443,9 +450,9 @@ Les routes qui renvoient une liste d'événements sont paginées : 36 événemen
 
 ### Choix techniques
 
-- **Requêtes SQL paramétrées :** les valeurs saisies par l'utilisateur passent par `params` (`@ville`, `@popularite`…), jamais directement dans le texte SQL, ce qui évite les injections SQL.
+- **Requêtes SQL paramétrées :** les valeurs saisies par l'utilisateur passent par `params` (`@event_id`, `@popularite`, `@artistes`), jamais directement dans le texte SQL, ce qui évite les injections SQL.
 - **Recherche d'artiste tolérante :** `normalize_name` enlève les majuscules, les accents et les caractères spéciaux, puis `find_artists` cherche un nom identique, puis un nom qui contient la recherche, puis un nom proche (`difflib`).
-- **Prévision d'affluence :** le modèle ne prédit pas un nombre de spectateurs. Il donne à chaque événement un score pour le seuil de 10 RSVP. Ce score sert à comparer les événements : ce n'est pas une vraie probabilité, à cause de `class_weight`. Le modèle a aussi vu une partie de ces événements à l'entraînement.
+- **Prévision d'affluence :** le modèle ne prédit pas un nombre de spectateurs. Il donne à chaque événement un score pour le seuil de 10 RSVP. Ce score sert à comparer les événements : ce n'est pas une vraie probabilité, à cause de `class_weight`. Pour une date déjà passée, le modèle a pu voir ces événements à l'entraînement : seuls les scores des dates à venir sont de vraies prédictions. La route calcule les comptages par salle et par artiste sur toute la table, alors que le modèle a appris sur les événements passés : ces scores sont donc à lire avec prudence.
 - **Événements en approche :** le calcul part de la date du jour, car `jours_avant_evenement` est figé à la date de collecte.
 - **Ordre des routes :** `/events/{event_id}` est déclarée après les routes fixes, sinon elle capterait `/events/weekend`, `/events/by-venue`, etc.
 
@@ -456,7 +463,7 @@ Les notebooks servent à **explorer** les données et à **analyser** le modèle
 | Notebook | Contenu |
 |---|---|
 | `01_exploration.ipynb` | distribution des RSVP, taux d'événements populaires selon l'heure, le jour, le type, la distance, la salle et l'artiste, qualité des données. Justifie les choix du modèle : seuil de 10 RSVP, variables, regroupement des villes |
-| `02_classification.ipynb` | comparaison des modèles, résultats sur le jeu de test, matrice de confusion, précision et rappel selon le seuil, courbe ROC, importance des variables |
+| `02_classification.ipynb` | comparaison des modèles, résultats sur le jeu de test, matrice de confusion, précision et rappel selon le seuil, courbe ROC, importance des variables. Ce notebook présente encore l'ancien découpage aléatoire : les résultats à jour sont dans « Prédiction de la popularité » |
 
 **Ouvrir un notebook :** dans VS Code, ouvrir le fichier `.ipynb`, choisir le noyau `.venv` en haut à droite, puis « Run All ». `02_classification.ipynb` met environ 1 minute à s'exécuter (entraînement du modèle).
 
@@ -476,10 +483,11 @@ pytest              # tous les tests
 pytest -v           # avec le nom de chaque test
 ```
 
-Les 22 tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête (ni à Bandsintown, ni à BigQuery) et n'écrivent rien dans `data/` ni dans `models/`. Ils demandent `requirements-dev.txt`. L'API n'a pas de tests automatiques, car elle se connecte à BigQuery dès son démarrage. Les tests vérifient notamment :
+Les 24 tests utilisent de petites données inventées et des dossiers temporaires : ils n'envoient aucune requête (ni à Bandsintown, ni à BigQuery) et n'écrivent rien dans `data/` ni dans `models/`. Ils demandent `requirements-dev.txt`. L'API n'a pas de tests automatiques, car elle se connecte à BigQuery dès son démarrage. Les tests vérifient notamment :
 
 - le scraper : requête sur un jour entier, erreur si le site refuse, fin des résultats, limite de l'API ;
 - l'absence de fuite de données : `nb_rsvp` ne fait pas partie des variables ;
+- que seuls les événements passés sont utilisés, et que le test porte sur les plus récents ;
 - le calcul des distances et des comptages ;
 - que le modèle fait mieux que la référence naïve ;
 - que chaque modèle est optimisé et que le meilleur est bien retenu ;
@@ -508,3 +516,4 @@ Les 22 tests utilisent de petites données inventées et des dossiers temporaire
 | `ERR_CONNECTION_REFUSED` dans le navigateur | l'API n'est pas lancée | lancer `fastapi dev api/app/main.py` et laisser le terminal ouvert |
 | `{"detail":"Token absent ou invalide"}` | le token est absent ou incorrect | envoyer le bon token (voir « Sécurité ») |
 | `{"detail":"Aucun modèle : ..."}` | aucun modèle dans `models/` : les `.joblib` ne sont pas sur git | `python main.py --skip-scraping --train`, puis redémarrer l'API |
+| `Internal Server Error` sur la route de prédiction | le rapport `.json` du dernier modèle manque | relancer `python main.py --skip-scraping --train`, puis redémarrer l'API |

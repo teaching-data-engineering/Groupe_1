@@ -15,6 +15,7 @@ from bandsintown_scraper.model import build_features
 
 TOP_ARTISTS_LIMIT = 5
 PREDICTION_THRESHOLD = 0.5
+TOP_FEATURES_LIMIT = 4
 
 # Le token est vérifié sur toutes les routes de l'application
 app = FastAPI(title="API Bandsintown", dependencies=[Depends(verify_token)])
@@ -32,14 +33,11 @@ class Event(BaseModel):
     popularite: Union[str, None] = None
 
 #-------------------------------- Page d'accueil ----------------------------------------
-#http://127.0.0.1:8000/
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 #------------------------------- Tous les événement ---------------------------------------------
-#http://127.0.0.1:8000/events
-#http://127.0.0.1:8000/events?page=2
 # version de sécurité :
 #S'il n'y a pas d'autre paramètre, utilise ?token=12345.
 #S'il y a déjà un paramètre, ajoute &token=12345 à la fin.
@@ -49,7 +47,6 @@ def read_events(page: int = Query(1, ge=1)):
     return paginate_events("/events", page)
 
 #---------------------------tous les événements associés à un artiste particulier----------------------------------
-#http://127.0.0.1:8000/events/artist/muse
 
 
 @app.get("/events/artist/{artistName}")
@@ -63,14 +60,12 @@ def read_events_by_artist(artistName: str, page: int = Query(1, ge=1)):
 
 
 #-------------------------------- Statistiques RSVPs par venue ----------------------------------------
-#http://127.0.0.1:8000/events/by-venue
 
 @app.get("/events/by-venue")
 def read_rsvp_stats_by_venue():
     return rsvp_stats_by("lieu")
 
 #-------------------------------- Événements en fonction de la popularité ----------------------------------------
-#http://127.0.0.1:8000/events/popularity?popularite=aucune
 
 
 @app.get("/events/popularity")
@@ -98,7 +93,15 @@ def load_latest_model():
     model_paths = sorted(MODELS_DIR.glob("popularite_*.joblib"))
     return joblib.load(model_paths[-1]) if model_paths else None
 
-#http://127.0.0.1:8000/events/predicted-attendance?date=2026-11-14
+
+@lru_cache(maxsize=1)
+def load_top_features():
+    """Variables les plus importantes, lues dans le rapport qui porte le même nom que le dernier modèle."""
+    report_path = sorted(MODELS_DIR.glob("popularite_*.joblib"))[-1].with_suffix(".json")
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    return list(report["importance_variables"])[:TOP_FEATURES_LIMIT]
+
+
 @app.get("/events/predicted-attendance")
 def read_predicted_attendance(date: datetime.date):
     """Événements d'une date avec leur score de popularité (au moins 10 RSVP) calculé par le modèle.
@@ -117,6 +120,8 @@ def read_predicted_attendance(date: datetime.date):
         raise HTTPException(404, f"Aucun événement collecté le {date}")
 
     predictions = events.loc[selected, ["id", "artiste", "lieu", "debut"]].copy()
+    top_features = load_top_features()
+    predictions[top_features] = X.loc[selected, top_features].round(3)
     predictions["score_popularite"] = model.predict_proba(X[selected])[:, 1].round(3)
     predictions = predictions.sort_values("score_popularite", ascending=False)
     return {
@@ -129,7 +134,6 @@ def read_predicted_attendance(date: datetime.date):
 
 
 #-------------------------------- Événements en ligne vs. événements en présentiel ----------------------------------------
-#http://127.0.0.1:8000/events/streaming-vs-in-person
 @app.get("/events/streaming-vs-in-person")
 def read_streaming_vs_in_person():
     rows = run_query(f"SELECT COALESCE(streaming, FALSE) AS en_ligne, COUNT(*) AS total FROM `{TABLE}` GROUP BY en_ligne")
@@ -138,23 +142,18 @@ def read_streaming_vs_in_person():
 
 
 #-------------------------------- Liste des événements en fin de semaine ----------------------------------------
-#http://127.0.0.1:8000/events/weekend
-#http://127.0.0.1:8000/events/weekend?page=2
 @app.get("/events/weekend")
 def read_weekend_events(page: int = Query(1, ge=1)):
     return paginate_events("/events/weekend", page, "est_weekend")
 
 
 #-------------------------------- Statistiques RSVPs par type d'événement ----------------------------------------
-#http://127.0.0.1:8000/events/average-rsvp-by-type
 @app.get("/events/average-rsvp-by-type")
 def read_rsvp_stats_by_type():
     return rsvp_stats_by("type_evenement")
 
 
 #-------------------------------- Événements en approche (dans les 7 jours) ----------------------------------------
-#http://127.0.0.1:8000/events/upcoming
-#http://127.0.0.1:8000/events/upcoming?page=2
 @app.get("/events/upcoming")
 def read_upcoming_events(page: int = Query(1, ge=1)):
     """Calculé depuis la date du jour : jours_avant_evenement est figé à la date de collecte."""
@@ -164,7 +163,6 @@ def read_upcoming_events(page: int = Query(1, ge=1)):
 
 
 #-------------------------------- Évolution du RSVP au fil du temps (Rolling Window) ----------------------------------------
-#http://127.0.0.1:8000/events/rsvp-trend
 @app.get("/events/rsvp-trend")
 def read_rsvp_trend():
     """Total des RSVP par jour et sa moyenne glissante sur les 7 derniers jours calendaires."""
@@ -180,8 +178,6 @@ def read_rsvp_trend():
 
 
 #-------------------------------- Top 5 des artistes les plus populaires ----------------------------------------
-#http://127.0.0.1:8000/events/top-artists
-#http://127.0.0.1:8000/events/top-artists?critere=rsvp
 @app.get("/events/top-artists")
 def read_top_artists(critere: Literal["evenements", "rsvp"] = "evenements"):
     order_by = "nb_evenements" if critere == "evenements" else "total_rsvp"
@@ -197,7 +193,6 @@ def read_top_artists(critere: Literal["evenements", "rsvp"] = "evenements"):
 
 # À garder après les routes fixes : sinon /events/{event_id} capte /events/weekend, /events/by-venue...
 #-------------------------------- Un événement précis ----------------------------------------
-#http://127.0.0.1:8000/events/108878584
 @app.get("/events/{event_id}", response_model=Event)
 def read_event(event_id: int):
     params = [bigquery.ScalarQueryParameter("event_id", "INT64", event_id)]
