@@ -2,7 +2,7 @@
 
 Collecte des concerts proposés par [Bandsintown](https://www.bandsintown.com) autour de Paris, transformation et enrichissement des données, prédiction de la popularité des événements, chargement dans BigQuery (GCP), puis mise à disposition par une API FastAPI.
 
-**Membres :** Alexandre HAYOUN, Hoang, Soro, Mathis
+**Membres :** Alexandre HAYOUN, Nguyen Huy Hoang, Doba Soro, Matis Boudelier
 
 ## Présentation du projet
 
@@ -275,7 +275,7 @@ Le meilleur modèle est sauvegardé dans `models/popularite_<date>.joblib`, avec
 
 Encodage, imputation des valeurs manquantes et normalisation font partie d'un `Pipeline` scikit-learn : ils sont appris uniquement sur les données d'entraînement, et appliqués à l'identique aux nouvelles données. Le hasard est fixé (`RANDOM_STATE`), donc les résultats sont reproductibles.
 
-### Résultats (4444 événements, collectes du 23/10 au 04/11/2026)
+### Résultats (4444 événements, collectes du 23/10 au 30/11/2026)
 
 | Modèle | Meilleurs hyperparamètres | ROC-AUC (validation croisée) |
 |---|---|---|
